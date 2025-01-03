@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.arrays.strings;
+package org.redquark.leetcoding.strings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
