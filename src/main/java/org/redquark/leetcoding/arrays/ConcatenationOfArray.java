@@ -1,6 +1,5 @@
 package org.redquark.leetcoding.arrays;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class ConcatenationOfArray {
