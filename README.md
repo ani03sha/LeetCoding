@@ -10,6 +10,7 @@ My Leetcode grinding journey in Java.
 | 0014 | [Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)   | [Solution](src/main/java/org/redquark/leetcoding/arrays/LongestCommonPrefix.java)  | Easy       | Array               |
 | 0027 | [Remove Element](https://leetcode.com/problems/remove-element/)                 | [Solution](src/main/java/org/redquark/leetcoding/arrays/RemoveElement.java)        | Easy       | Array, Two Pointers |
 | 0049 | [Group Anagrams](https://leetcode.com/problems/group-anagrams/)                 | [Solution](src/main/java/org/redquark/leetcoding/strings/GroupAnagrams.java)       | Medium     | String, Hash Map    |
+| 0075 | [Sort Colors](https://leetcode.com/problems/sort-colors/)                       | [Solution](src/main/java/org/redquark/leetcoding/arrays/SortColors.java)           | Medium     | Array               |
 | 0169 | [Majority Element](https://leetcode.com/problems/majority-element/)             | [Solution](src/main/java/org/redquark/leetcoding/arrays/MajorityElement.java)      | Easy       | Array, Counting     |
 | 0217 | [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)         | [Solution](src/main/java/org/redquark/leetcoding/arrays/ContainsDuplicate.java)    | Easy       | Array, Hash Set     |
 | 0242 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/)                   | [Solution](src/main/java/org/redquark/leetcoding/arrays/ValidAnagram.java)         | Easy       | Array               |
