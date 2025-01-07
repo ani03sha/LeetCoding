@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.dynamicprogramming;
+package org.redquark.leetcoding.twopointers;
 
 public class LongestPalindromicSubstring {
 
