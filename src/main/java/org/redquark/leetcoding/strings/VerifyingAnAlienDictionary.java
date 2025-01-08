@@ -4,7 +4,7 @@ public class VerifyingAnAlienDictionary {
 
     public boolean isAlienSorted(String[] words, String order) {
         // Special case
-        if (words == null || words.length == 0 || order == null || order.length() == 0) {
+        if (words == null || words.length == 0 || order == null || order.isEmpty()) {
             return false;
         }
         // Array to keep track of correct order
