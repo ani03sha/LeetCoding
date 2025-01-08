@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.strings;
+package org.redquark.leetcoding.graphs;
 
 public class TownJudge {
 
