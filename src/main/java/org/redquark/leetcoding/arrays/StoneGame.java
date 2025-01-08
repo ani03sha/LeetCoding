@@ -4,7 +4,7 @@ public class StoneGame {
 
     public boolean stoneGame(int[] piles) {
         if (piles == null || piles.length == 0) {
-            throw new IllegalArgumentException("Invalid input");
+            throw new IllegalArgumentException("Invalid input!");
         }
         /*
          * Alice is first to pick pile.
