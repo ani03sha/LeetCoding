@@ -4,10 +4,10 @@ public class EditDistance {
 
     public int minDistance(String word1, String word2) {
         // Base conditions
-        if (word1 == null || word1.length() == 0) {
+        if (word1 == null || word1.isEmpty()) {
             return word2.length();
         }
-        if (word2 == null || word2.length() == 0) {
+        if (word2 == null || word2.isEmpty()) {
             return word1.length();
         }
         final int m = word1.length();
