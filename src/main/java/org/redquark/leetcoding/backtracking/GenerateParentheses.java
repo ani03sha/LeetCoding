@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.backtracjing;
+package org.redquark.leetcoding.backtracking;
 
 import java.util.ArrayList;
 import java.util.List;
