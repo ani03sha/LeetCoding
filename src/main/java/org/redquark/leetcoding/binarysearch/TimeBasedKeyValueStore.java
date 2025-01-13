@@ -24,7 +24,7 @@ public class TimeBasedKeyValueStore {
         }
 
         public String get(String key, int timestamp) {
-            if (!this.entries.containsKey(key) || timestamp < this.entries.get(key).get(0).timestamp) {
+            if (!this.entries.containsKey(key) || timestamp < this.entries.get(key).getFirst().timestamp) {
                 return "";
             }
             final List<ValueTimeStore> valueTimeStores = this.entries.get(key);
