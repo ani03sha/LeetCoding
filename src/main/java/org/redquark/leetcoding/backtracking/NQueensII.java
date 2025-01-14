@@ -16,11 +16,11 @@ public class NQueensII {
         // Board to place queens
         final int[][] board = new int[n][n];
         // Perform backtracking
-        backtrack(board, 0, positions);
+        backtrack(board, 0);
         return queenCount;
     }
 
-    private void backtrack(int[][] board, int column, List<List<String>> positions) {
+    private void backtrack(int[][] board, int column) {
         if (column == board.length) {
             queenCount++;
             return;
@@ -30,7 +30,7 @@ public class NQueensII {
             // Check if we can place the queen
             if (canPlace(board, row, column)) {
                 board[row][column] = 1;
-                backtrack(board, column + 1, positions);
+                backtrack(board, column + 1);
                 board[row][column] = 0;
             }
         }
