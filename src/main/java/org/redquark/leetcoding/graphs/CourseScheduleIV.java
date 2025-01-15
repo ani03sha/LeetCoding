@@ -47,7 +47,6 @@ public class CourseScheduleIV {
         }
         // Map to store prerequisites of every node
         final Map<Integer, Set<Integer>> prerequisiteMap = new HashMap<>();
-        int index = 0;
         while (!zeroIndegreeNodes.isEmpty()) {
             int node = zeroIndegreeNodes.remove();
             for (int neighbor : graph.get(node)) {
