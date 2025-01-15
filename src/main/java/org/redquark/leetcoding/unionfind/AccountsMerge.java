@@ -36,7 +36,7 @@ public class AccountsMerge {
             String email = entry.getKey();
             int accountIndex = entry.getValue();
             int leader = unionFind.find(accountIndex);
-            emailGroup.computeIfAbsent(leader, k -> new TreeSet<>()).add(email);
+            emailGroup.computeIfAbsent(leader, _ -> new TreeSet<>()).add(email);
         }
         // Add merged accounts with account names
         for (Map.Entry<Integer, Set<String>> entry : emailGroup.entrySet()) {
@@ -44,7 +44,7 @@ public class AccountsMerge {
             Set<String> emails = entry.getValue();
             List<String> mergedAccount = new ArrayList<>();
             // Add account name (first element of the leader's account)
-            mergedAccount.add(accounts.get(leader).get(0));
+            mergedAccount.add(accounts.get(leader).getFirst());
             // Add sorted emails
             mergedAccount.addAll(emails);
             mergedAccounts.add(mergedAccount);
