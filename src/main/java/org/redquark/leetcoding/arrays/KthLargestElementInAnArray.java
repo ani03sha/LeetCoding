@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.heaps;
+package org.redquark.leetcoding.arrays;
 
 public class KthLargestElementInAnArray {
 
