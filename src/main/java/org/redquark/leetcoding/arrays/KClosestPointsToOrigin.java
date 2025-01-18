@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class KClosestPointToOrigin {
+public class KClosestPointsToOrigin {
 
     public int[][] kClosest(int[][] points, int k) {
         // Special case
@@ -82,16 +82,16 @@ public class KClosestPointToOrigin {
     }
 
     public static void main(String[] args) {
-        final KClosestPointToOrigin kClosestPointToOrigin = new KClosestPointToOrigin();
+        final KClosestPointsToOrigin kClosestPointsToOrigin = new KClosestPointsToOrigin();
 
         int[][] points = new int[][]{{1, 3}, {-2, 2}};
         int k = 1;
-        System.out.println(Arrays.deepToString(kClosestPointToOrigin.kClosest(points, k)));
-        System.out.println(Arrays.deepToString(kClosestPointToOrigin.kClosestOptimized(points, k)));
+        System.out.println(Arrays.deepToString(kClosestPointsToOrigin.kClosest(points, k)));
+        System.out.println(Arrays.deepToString(kClosestPointsToOrigin.kClosestOptimized(points, k)));
 
         points = new int[][]{{3, 3}, {5, -1}, {-2, 4}};
         k = 2;
-        System.out.println(Arrays.deepToString(kClosestPointToOrigin.kClosest(points, k)));
-        System.out.println(Arrays.deepToString(kClosestPointToOrigin.kClosestOptimized(points, k)));
+        System.out.println(Arrays.deepToString(kClosestPointsToOrigin.kClosest(points, k)));
+        System.out.println(Arrays.deepToString(kClosestPointsToOrigin.kClosestOptimized(points, k)));
     }
 }
