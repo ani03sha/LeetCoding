@@ -10,7 +10,7 @@ public class MaximumAverageSubarrayI {
         // Sum of k elements
         int sum = 0;
         // Max sum of k elements
-        int maxSum = 0;
+        int maxSum;
         // Calculate the sum of first k elements
         for (int i = 0; i < k; i++) {
             sum += nums[i];
