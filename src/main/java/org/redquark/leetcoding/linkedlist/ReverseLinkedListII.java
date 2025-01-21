@@ -1,9 +1,6 @@
 package org.redquark.leetcoding.linkedlist;
 
 import org.redquark.leetcoding.utils.ListNode;
-import org.w3c.dom.ls.LSException;
-
-import java.util.List;
 
 public class ReverseLinkedListII {
 
