@@ -38,7 +38,7 @@ public class DecodeString {
                 decodedString = new StringBuilder();
                 index++;
             }
-            // If the current character is a closing bracker
+            // If the current character is a closing bracket
             else if (c == ']') {
                 // Now, repeat the string that is at top of parts stack,
                 // number of times that is a top of counts stack
