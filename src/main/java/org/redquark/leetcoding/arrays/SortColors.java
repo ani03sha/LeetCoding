@@ -9,21 +9,26 @@ public class SortColors {
         if (nums == null || nums.length == 0) {
             return;
         }
-        // Pointers to track left, middle and right
-        int i = 0;
-        int j = 0;
-        int k = nums.length - 1;
+        // Pointers to keep track of zeroes, ones and twos respectively
+        int start = 0;
+        int middle = 0;
+        int end = nums.length - 1;
         // Process the array
-        while (j <= k) {
-            if (nums[j] == 0) {
-                swap(nums, i, j);
-                i++;
-                j++;
-            } else if (nums[j] == 1) {
-                j++;
-            } else {
-                swap(nums, j, k);
-                k--;
+        while (middle <= end) {
+            // If the current element is 0, we push it to the left
+            if (nums[middle] == 0) {
+                swap(nums, start, middle);
+                start++;
+                middle++;
+            }
+            // If the current element is 1, we keep it as is
+            else if (nums[middle] == 1) {
+                middle++;
+            }
+            // If the current element is 2, we push it to the right
+            else {
+                swap(nums, middle, end);
+                end--;
             }
         }
     }
