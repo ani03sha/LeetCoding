@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.slidingwindow;
+package org.redquark.leetcoding.arrays;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
