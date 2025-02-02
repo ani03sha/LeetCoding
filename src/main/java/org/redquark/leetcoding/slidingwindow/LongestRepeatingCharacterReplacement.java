@@ -4,26 +4,28 @@ public class LongestRepeatingCharacterReplacement {
 
     public int characterReplacement(String s, int k) {
         // Special case
-        if (s == null || s.isEmpty() || k < 0) {
+        if (s == null || s.isEmpty()) {
             return 0;
         }
         final int n = s.length();
-        // Left and right pointers
+        // Left and right pointers of the sliding window
         int left = 0;
         int right = 0;
-        // Longest length of the window
+        // Longest length
         int longestLength = 0;
-        // Max count of the most popular character
-        int maxCount = 0;
-        // Array to store the frequencies of the characters
+        // Most popular character frequency
+        int mostPopularCharacterFrequency = 0;
+        // Array to store the frequencies of characters
         final int[] frequencies = new int[26];
         // Process the string
         while (right < n) {
-            int frequency = ++frequencies[s.charAt(right) - 'A'];
-            maxCount = Math.max(maxCount, frequency);
-            // If there are more than k characters that are not the same as
-            // the most popular character, we shift the window
-            if (right - left + 1 - maxCount > k) {
+            // Update the frequency of current character
+            final int frequency = ++frequencies[s.charAt(right) - 'A'];
+            mostPopularCharacterFrequency = Math.max(mostPopularCharacterFrequency, frequency);
+            // Check if there are more than k characters that are
+            // not the same as the most popular character, we shift
+            // the window
+            if (right - left + 1 - mostPopularCharacterFrequency > k) {
                 frequencies[s.charAt(left) - 'A']--;
                 left++;
             }
