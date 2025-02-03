@@ -1,7 +1,6 @@
 package org.redquark.leetcoding.slidingwindow;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.TreeSet;
 
@@ -11,13 +10,11 @@ public class SlidingWindowMedian {
         final int n = nums.length;
         // Array to store the medians
         final double[] medians = new double[n - k + 1];
-        final Comparator<Integer> comparator = new Comparator<>() {
-            public int compare(Integer a, Integer b) {
-                if (nums[a] != nums[b]) {
-                    return Integer.compare(nums[a], nums[b]);
-                } else {
-                    return a - b;
-                }
+        final Comparator<Integer> comparator = (a, b) -> {
+            if (nums[a] != nums[b]) {
+                return Integer.compare(nums[a], nums[b]);
+            } else {
+                return a - b;
             }
         };
         // We will create two Tree Sets - one for storing values that are less than median
