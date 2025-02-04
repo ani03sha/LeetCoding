@@ -1,7 +1,5 @@
 package org.redquark.leetcoding.dynamicprogramming;
 
-import java.util.Arrays;
-
 public class LongestIncreasingSubsequence {
 
     public int lengthOfLIS(int[] nums) {
@@ -10,19 +8,20 @@ public class LongestIncreasingSubsequence {
             return 0;
         }
         final int n = nums.length;
-        // Lookup table to store LIS until the index i
+        // Lookup table to store the LIS until the current index
         final int[] lookup = new int[n];
-        // Every element is an LIS of 1
-        Arrays.fill(lookup, 1);
+        lookup[0] = 1;
         // Longest LIS
         int longestLIS = 1;
-        // Process the array
         for (int i = 1; i < n; i++) {
+            // Since every element is an LIS of length 1
+            lookup[i] = 1;
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
                     lookup[i] = Math.max(lookup[i], 1 + lookup[j]);
                 }
             }
+            // Updated longest LIS length, if required
             longestLIS = Math.max(longestLIS, lookup[i]);
         }
         return longestLIS;
