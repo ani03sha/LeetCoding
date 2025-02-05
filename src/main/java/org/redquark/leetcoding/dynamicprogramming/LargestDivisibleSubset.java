@@ -16,13 +16,11 @@ public class LargestDivisibleSubset {
         final int n = nums.length;
         // Sort the array
         Arrays.sort(nums);
-        // Lookup table to store largest subset upto that index
+        // Lookup table to store the largest subset up to that index
         final int[] lookup = new int[n];
         // Array to store the previous index of the number that
         // perfectly divides the current number
         final int[] previous = new int[n];
-        // Length of the longest subset that satisfies the condition
-        int longestSubsetLength = 0;
         int maxIndex = 0;
         // Process all elements in the array
         for (int i = 0; i < n; i++) {
