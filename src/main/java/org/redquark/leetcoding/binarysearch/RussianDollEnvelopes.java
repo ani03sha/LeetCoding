@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.dynamicprogramming;
+package org.redquark.leetcoding.binarysearch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
