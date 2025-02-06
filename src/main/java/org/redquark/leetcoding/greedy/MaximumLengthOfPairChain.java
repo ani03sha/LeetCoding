@@ -10,7 +10,6 @@ public class MaximumLengthOfPairChain {
         if (pairs == null || pairs.length == 0) {
             return 0;
         }
-        final int n = pairs.length;
         // Sort the pairs by their second element
         Arrays.sort(pairs, Comparator.comparingInt(a -> a[1]));
         // Length of the longest chain
