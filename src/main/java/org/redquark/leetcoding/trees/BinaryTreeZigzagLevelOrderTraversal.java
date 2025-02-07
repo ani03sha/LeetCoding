@@ -2,39 +2,39 @@ package org.redquark.leetcoding.trees;
 
 import org.redquark.leetcoding.utils.TreeNode;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class BinaryTreeZigzagLevelOrderTraversal {
 
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        // List to store zigzag traversal
+        // List to store the final output
         final List<List<Integer>> result = new ArrayList<>();
         // Special case
         if (root == null) {
             return result;
         }
         // Queue to perform BFS
-        final Queue<TreeNode> nodes = new ArrayDeque<>();
+        final Queue<TreeNode> nodes = new LinkedList<>();
         nodes.offer(root);
-        // Flag to keep track of reverse
-        boolean reverse = false;
+        // Flag to check if reverse traversal is needed
+        boolean isReverseTraversal = true;
         // Process all nodes in the queue
         while (!nodes.isEmpty()) {
+            // Process all nodes at the current level
             final int size = nodes.size();
             // List to store nodes at the current level
-            final List<Integer> current = new ArrayList<>();
+            final List<Integer> currentLevel = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                // Get the node at the front
                 final TreeNode node = nodes.remove();
-                if (reverse) {
-                    current.addFirst(node.val);
+                if (isReverseTraversal) {
+                    currentLevel.add(node.val);
                 } else {
-                    current.add(node.val);
+                    currentLevel.addFirst(node.val);
                 }
-                // Add left and right children to the queue
+                // Add both children to the queue, if present
                 if (node.left != null) {
                     nodes.offer(node.left);
                 }
@@ -42,8 +42,9 @@ public class BinaryTreeZigzagLevelOrderTraversal {
                     nodes.offer(node.right);
                 }
             }
-            result.add(current);
-            reverse = !reverse;
+            // Toggle flag
+            isReverseTraversal = !isReverseTraversal;
+            result.add(currentLevel);
         }
         return result;
     }
