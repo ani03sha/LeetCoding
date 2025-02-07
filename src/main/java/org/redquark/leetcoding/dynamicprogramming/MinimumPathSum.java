@@ -10,24 +10,21 @@ public class MinimumPathSum {
         // Dimensions of the grid
         final int m = grid.length;
         final int n = grid[0].length;
-        // Lookup table to store minimum path sum for a cell i, j
+        // Lookup table to store the maximum path sum until the current cell
         final int[][] lookup = new int[m][n];
+        lookup[0][0] = grid[0][0];
         // For the first column
-        int rowSum = 0;
-        for (int i = 0; i < m; i++) {
-            rowSum += grid[i][0];
-            lookup[i][0] = rowSum;
+        for (int i = 1; i < m; i++) {
+            lookup[i][0] = lookup[i - 1][0] + grid[i][0];
         }
-        // For the first row
-        int columnSum = 0;
-        for (int j = 0; j < n; j++) {
-            columnSum += grid[0][j];
-            lookup[0][j] = columnSum;
+        // For the first cell
+        for (int j = 1; j < n; j++) {
+            lookup[0][j] = lookup[0][j - 1] + grid[0][j];
         }
-        // For the remaining positions
+        // Remaining cells
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                lookup[i][j] = Math.min(lookup[i - 1][j], lookup[i][j - 1]) + grid[i][j];
+                lookup[i][j] = grid[i][j] + Math.min(lookup[i - 1][j], lookup[i][j - 1]);
             }
         }
         return lookup[m - 1][n - 1];
