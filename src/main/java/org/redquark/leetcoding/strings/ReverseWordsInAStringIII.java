@@ -7,9 +7,6 @@ public class ReverseWordsInAStringIII {
         if (s == null || s.isEmpty()) {
             return s;
         }
-        // Left and right pointers
-        int left = 0;
-        int right = s.length() - 1;
         // Words in the string
         final String[] words = s.split(" ");
         // String Builder for final output
