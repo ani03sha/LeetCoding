@@ -5,81 +5,91 @@ import java.util.Map;
 
 public class LRUCache {
 
-    // Dummy head and tail nodes
-    private final Entry head;
-    private final Entry tail;
+    // Map to store the key and their respective LRUCacheNode
+    private final Map<Integer, LRUCacheNode> entries;
+    // Doubly linked list represented by head and tail,
+    // These are the fake nodes
+    private final LRUCacheNode head;
+    private final LRUCacheNode tail;
     // Capacity of the cache
     private final int capacity;
-    // Map that represents cache
-    private final Map<Integer, Entry> cache;
 
     public LRUCache(int capacity) {
-        this.head = new Entry();
-        this.tail = new Entry();
+        this.entries = new HashMap<>();
+        this.head = new LRUCacheNode();
+        this.tail = new LRUCacheNode();
         this.capacity = capacity;
-        this.cache = new HashMap<>(capacity);
-        // Connecting head and tail to each other
-        this.head.next = this.tail;
-        this.tail.previous = this.head;
+        // Connect head and tail
+        this.head.next = tail;
+        this.tail.previous = head;
     }
 
     public int get(int key) {
-        // Check if the entry exists
-        if (cache.containsKey(key)) {
-            final Entry entry = this.cache.get(key);
-            // Remove and add the node to the front of the list
-            remove(entry);
-            add(entry);
-            return entry.value;
+        // Check if the key is present in the cache
+        if (this.entries.containsKey(key)) {
+            // Get node corresponding to that key
+            final LRUCacheNode node = this.entries.get(key);
+            // Get value from this node
+            final int value = node.value;
+            // Since, this node is accessed, we need to make it
+            // most recently used
+            remove(node);
+            add(node);
+            return value;
         }
         return -1;
     }
 
     public void put(int key, int value) {
-        // Get the node from the given key
-        final Entry entry = cache.get(key);
-        if (entry != null) {
-            // Update the value
-            entry.value = value;
-            // Remove and add the node to the front of the list
-            remove(entry);
-            add(entry);
-        } else {
-            // If we have exhausted the capacity of the cache
-            if (this.cache.size() == this.capacity) {
-                // Remove oldest node
-                this.cache.remove(tail.previous.key);
+        // Check if the node already exists in the cache
+        if (this.entries.containsKey(key)) {
+            // Get node corresponding to the key
+            final LRUCacheNode node = this.entries.get(key);
+            // Update the value at the node
+            node.value = value;
+            // Since, this node is accessed, we need to make it
+            // most recently used
+            remove(node);
+            add(node);
+        }
+        // If this is a new key-value entry in the cache
+        else {
+            // Check for the capacity of the cache
+            if (this.entries.size() >= this.capacity) {
+                // Remove least recently used entry
+                this.entries.remove(tail.previous.key);
                 remove(tail.previous);
             }
-            final Entry newEntry = new Entry();
-            newEntry.key = key;
-            newEntry.value = value;
-            this.cache.put(key, newEntry);
-            // Add to the front of the linked list
-            add(newEntry);
+            final LRUCacheNode node = new LRUCacheNode();
+            node.key = key;
+            node.value = value;
+            this.entries.put(key, node);
+            // Make this node more recently used
+            add(node);
         }
     }
 
-    private void add(Entry entry) {
-        final Entry nextHead = head.next;
-        head.next = entry;
-        entry.previous = head;
-        entry.next = nextHead;
-        nextHead.previous = entry;
+    private void add(LRUCacheNode node) {
+        // Get next of the current head
+        final LRUCacheNode nextHead = this.head.next;
+        this.head.next = node;
+        node.previous = this.head;
+        node.next = nextHead;
+        nextHead.previous = node;
     }
 
-    private void remove(Entry entry) {
-        final Entry next = entry.next;
-        Entry previous = entry.previous;
+    private void remove(LRUCacheNode node) {
+        final LRUCacheNode next = node.next;
+        final LRUCacheNode previous = node.previous;
         previous.next = next;
         next.previous = previous;
     }
 
-    static class Entry {
-        int key;
-        int value;
-        Entry previous;
-        Entry next;
+    static class LRUCacheNode {
+        private int key;
+        private int value;
+        LRUCacheNode next;
+        LRUCacheNode previous;
     }
 
     public static void main(String[] args) {
