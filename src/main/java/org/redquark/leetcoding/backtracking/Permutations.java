@@ -6,7 +6,7 @@ import java.util.List;
 public class Permutations {
 
     public List<List<Integer>> permute(int[] nums) {
-        // List to store all permutation
+        // List to store all permutations
         final List<List<Integer>> permutations = new ArrayList<>();
         // Special case
         if (nums == null || nums.length == 0) {
@@ -47,16 +47,21 @@ public class Permutations {
     private void backtrack(int[] nums, int index, List<List<Integer>> permutations) {
         // Base case
         if (index == nums.length) {
+            // Create a list with the current permutation of nums
             final List<Integer> permutation = new ArrayList<>();
             for (int num : nums) {
                 permutation.add(num);
             }
-            permutations.add(new ArrayList<>(permutation));
+            permutations.add(permutation);
             return;
         }
+        // Create combinations of numbers
         for (int i = index; i < nums.length; i++) {
+            // Swap elements at i and index
             swap(nums, i, index);
+            // Backtrack with next index
             backtrack(nums, index + 1, permutations);
+            // Re-swap elements i and index
             swap(nums, i, index);
         }
     }
