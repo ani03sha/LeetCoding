@@ -1,5 +1,7 @@
 package org.redquark.leetcoding.design;
 
+import org.redquark.leetcoding.utils.LRUCacheNode;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,13 +85,6 @@ public class LRUCache {
         final LRUCacheNode previous = node.previous;
         previous.next = next;
         next.previous = previous;
-    }
-
-    static class LRUCacheNode {
-        private int key;
-        private int value;
-        LRUCacheNode next;
-        LRUCacheNode previous;
     }
 
     public static void main(String[] args) {
