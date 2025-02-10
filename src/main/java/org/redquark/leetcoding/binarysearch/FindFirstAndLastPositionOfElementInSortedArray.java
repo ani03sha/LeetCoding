@@ -5,19 +5,20 @@ import java.util.Arrays;
 public class FindFirstAndLastPositionOfElementInSortedArray {
 
     public int[] searchRange(int[] nums, int target) {
-        // Array to store the final output
-        final int[] output = new int[]{-1, -1};
+        // Array to store first and last index of the target in nums
+        final int[] indices = {-1, -1};
         // Special case
         if (nums == null || nums.length == 0) {
-            return output;
+            return indices;
         }
-        output[0] = findFirstOccurrence(nums, target);
-        output[1] = findLastOccurrence(nums, target);
-        return output;
+        // Find the first and last occurrence of the target in nums
+        indices[0] = findFirstOccurrence(nums, target);
+        indices[1] = findLastOccurrence(nums, target);
+        return indices;
     }
 
     private int findFirstOccurrence(int[] nums, int target) {
-        // Left and right pointers
+        // Left and right pointers for searching
         int left = 0;
         int right = nums.length - 1;
         // Index of first occurrence
@@ -28,7 +29,7 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
             if (nums[middle] == target) {
                 firstOccurrence = middle;
                 right = middle - 1;
-            } else if (nums[middle] > target) {
+            } else if (target < nums[middle]) {
                 right = middle - 1;
             } else {
                 left = middle + 1;
@@ -38,10 +39,10 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
     }
 
     private int findLastOccurrence(int[] nums, int target) {
-        // Left and right pointers
+        // Left and right pointers for searching
         int left = 0;
         int right = nums.length - 1;
-        // Index of last occurrence
+        // Index of the last occurrence
         int lastOccurrence = -1;
         // Perform binary search
         while (left <= right) {
@@ -49,10 +50,10 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
             if (nums[middle] == target) {
                 lastOccurrence = middle;
                 left = middle + 1;
-            } else if (nums[middle] > target) {
-                right = middle - 1;
-            } else {
+            } else if (target > nums[middle]) {
                 left = middle + 1;
+            } else {
+                right = middle - 1;
             }
         }
         return lastOccurrence;
