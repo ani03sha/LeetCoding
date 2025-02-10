@@ -12,16 +12,19 @@ public class DailyTemperatures {
             return temperatures;
         }
         final int n = temperatures.length;
-        // Array to store the answer
+        // Array to store the final output
         final int[] answer = new int[n];
-        // Stack to store the elements of the temperatures array
+        // Stack to store the index of the next greater temperature
         final Deque<Integer> stack = new ArrayDeque<>();
         // Process all temperatures
         for (int i = 0; i < n; i++) {
+            // Keep popping elements from the stack until the top is equal to or
+            // greater than the current temperature
             while (!stack.isEmpty() && temperatures[stack.peek()] < temperatures[i]) {
-                int index = stack.pop();
+                final int index = stack.pop();
                 answer[index] = i - index;
             }
+            // Add current index to the stack
             stack.push(i);
         }
         return answer;
