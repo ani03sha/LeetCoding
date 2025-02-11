@@ -14,12 +14,12 @@ public class PaintHouse {
             int previousBlue = blue;
             int previousGreen = green;
             // If we choose red color for the current house, then we can choose
-            // minimum of greed or blue for the previous house, and so on
+            // minimum of green or blue for the previous house, and so on
             red = cost[0] + Math.min(previousBlue, previousGreen);
             blue = cost[1] + Math.min(previousRed, previousGreen);
             green = cost[2] + Math.min(previousRed, previousBlue);
         }
-        // Find minimum of all three choices
+        // Find the minimum of all three choices
         return Math.min(red, Math.min(blue, green));
     }
 
