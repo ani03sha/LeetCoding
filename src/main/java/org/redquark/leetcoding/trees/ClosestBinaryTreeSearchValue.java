@@ -1,9 +1,6 @@
 package org.redquark.leetcoding.trees;
 
-import org.redquark.leetcoding.strings.ClearDigits;
 import org.redquark.leetcoding.utils.TreeNode;
-
-import java.util.Map;
 
 public class ClosestBinaryTreeSearchValue {
 
