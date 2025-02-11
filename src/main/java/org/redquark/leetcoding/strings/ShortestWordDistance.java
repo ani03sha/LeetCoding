@@ -3,7 +3,7 @@ package org.redquark.leetcoding.strings;
 public class ShortestWordDistance {
 
     public int shortestDistance(String[] wordsDict, String word1, String word2) {
-        // Indices of both works
+        // Indices of both words
         int i = -1;
         int j = -1;
         // Shortest distance
