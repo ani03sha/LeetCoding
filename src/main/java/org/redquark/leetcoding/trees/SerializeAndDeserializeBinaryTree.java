@@ -8,22 +8,29 @@ import java.util.Queue;
 
 public class SerializeAndDeserializeBinaryTree {
 
-    static class Codec {
+    static public class Codec {
 
         // Encodes a tree to a single string.
         public String serialize(TreeNode root) {
             final StringBuilder serializedTree = new StringBuilder();
-            return serialize(root, serializedTree).toString();
+            serialize(root, serializedTree);
+            return serializedTree.toString();
         }
 
-        private StringBuilder serialize(TreeNode root, StringBuilder serializedTree) {
-            if (root==null) {
-                return serializedTree.append("null");
+        private void serialize(TreeNode root, StringBuilder serializedTree) {
+            if (root == null) {
+                serializedTree.append("null");
+                return;
             }
-            serializedTree.append(root.val).append(",");
-            serialize(root.left, serializedTree).append(",");
+            // Perform preorder traversal of tree
+            // 1. Add the current node's value to the tree
+            serializedTree.append(root.val);
+            serializedTree.append(", ");
+            // 2. Traverse the left child of the tree
+            serialize(root.left, serializedTree);
+            serializedTree.append(", ");
+            // 3. Traverse the right child of the tree
             serialize(root.right, serializedTree);
-            return serializedTree;
         }
 
         // Decodes your encoded data to tree.
@@ -32,19 +39,22 @@ public class SerializeAndDeserializeBinaryTree {
             if (data == null || data.isEmpty()) {
                 return null;
             }
-            // Split the string to get nodes
-            final String[] dataSplit = data.split(",");
+            // Get all nodes of the tree
+            final String[] nodeArray = data.split(", ");
             // Create a queue from these nodes
-            final Queue<String> nodes = new ArrayDeque<>(Arrays.asList(dataSplit));
+            final Queue<String> nodes = new ArrayDeque<>(Arrays.asList(nodeArray));
+            // Perform deserialization
             return deserialize(nodes);
         }
 
         private TreeNode deserialize(Queue<String> nodes) {
-            final String val = nodes.remove();
-            if (val.equals("null")) {
+            // Get current node's value
+            final String value = nodes.remove();
+            // Special case
+            if (value.equals("null")) {
                 return null;
             }
-            final TreeNode root = new TreeNode(Integer.parseInt(val));
+            final TreeNode root = new TreeNode(Integer.parseInt(value));
             root.left = deserialize(nodes);
             root.right = deserialize(nodes);
             return root;
