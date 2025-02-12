@@ -11,42 +11,55 @@ import java.util.TreeSet;
 public class AccountsMerge {
 
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        // List to store merged accounts
+        // List to store the merged accounts
         final List<List<String>> mergedAccounts = new ArrayList<>();
         // Special case
         if (accounts == null || accounts.isEmpty()) {
             return mergedAccounts;
         }
-        final UnionFind unionFind = new UnionFind(accounts.size());
-        // Map to store emails and their indices
+        final int n = accounts.size();
+        // Create an instance of union find data structure
+        final UnionFind unionFind = new UnionFind(n);
+        // Map to store email and their indices
         final Map<String, Integer> emailToAccount = new HashMap<>();
-        for (int i = 0; i < accounts.size(); i++) {
-            for (int j = 1; j < accounts.get(i).size(); j++) {
-                final String email = accounts.get(i).get(j);
+        // Process every account
+        for (int i = 0; i < n; i++) {
+            // Current account we are processing
+            final List<String> account = accounts.get(i);
+            // Now, combine emails in this account using union function
+            for (int j = 1; j < account.size(); j++) {
+                final String email = account.get(j);
+                // If we have already encountered this email, we merge
                 if (emailToAccount.containsKey(email)) {
                     unionFind.union(i, emailToAccount.get(email));
-                } else {
+                }
+                // If this is a new email, we add it to the map
+                else {
                     emailToAccount.put(email, i);
                 }
             }
         }
-        // Group emails by their leader
-        Map<Integer, Set<String>> emailGroup = new HashMap<>();
+        // At this point, emails are merged, and we need to find the root of every email.
+        // Once we find it, we add it to the group in sorted order
+        final Map<Integer, Set<String>> emailGroup = new HashMap<>();
         for (Map.Entry<String, Integer> entry : emailToAccount.entrySet()) {
-            String email = entry.getKey();
-            int accountIndex = entry.getValue();
-            int leader = unionFind.find(accountIndex);
-            emailGroup.computeIfAbsent(leader, _ -> new TreeSet<>()).add(email);
+            final String email = entry.getKey();
+            final int accountIndex = entry.getValue();
+            // Find the root of the group
+            final int leaderIndex = unionFind.find(accountIndex);
+            // Add this to the group
+            emailGroup.computeIfAbsent(leaderIndex, _ -> new TreeSet<>()).add(email);
         }
-        // Add merged accounts with account names
+        // Add the above-created group with the names of account holders
         for (Map.Entry<Integer, Set<String>> entry : emailGroup.entrySet()) {
-            int leader = entry.getKey();
-            Set<String> emails = entry.getValue();
-            List<String> mergedAccount = new ArrayList<>();
-            // Add account name (first element of the leader's account)
-            mergedAccount.add(accounts.get(leader).getFirst());
-            // Add sorted emails
+            final int leaderIndex = entry.getKey();
+            final Set<String> emails = entry.getValue();
+            // Create a list for this merged account
+            final List<String> mergedAccount = new ArrayList<>();
+            mergedAccount.add(accounts.get(leaderIndex).getFirst());
+            // Add all emails to the mergedAccount list
             mergedAccount.addAll(emails);
+            // Add this list to final output
             mergedAccounts.add(mergedAccount);
         }
         return mergedAccounts;
@@ -59,28 +72,33 @@ public class AccountsMerge {
         UnionFind(int n) {
             this.parents = new int[n];
             this.ranks = new int[n];
+            // In the beginning, every node is its own parent
             Arrays.setAll(this.parents, i -> i);
+            // Every node has rank one in the beginning
             Arrays.fill(this.ranks, 1);
         }
 
-        public void union(int a, int b) {
+        void union(int a, int b) {
+            // Find parents of both a and b
             final int rootA = find(a);
             final int rootB = find(b);
+            // If both nodes belong to the same group, we return
             if (rootA == rootB) {
                 return;
             }
-            if (this.ranks[rootA] >= this.ranks[rootB]) {
-                this.parents[rootB] = rootA;
+            // Merge nodes
+            if (this.ranks[rootA] > this.ranks[rootB]) {
+                this.parents[rootB] = this.parents[rootA];
                 this.ranks[rootA] += this.ranks[rootB];
             } else {
-                this.parents[rootA] = rootB;
+                this.parents[rootA] = this.parents[rootB];
                 this.ranks[rootB] += this.ranks[rootA];
             }
         }
 
-
-        private int find(int a) {
+        int find (int a) {
             if (this.parents[a] != a) {
+                // Path compression
                 this.parents[a] = find(this.parents[a]);
             }
             return this.parents[a];
