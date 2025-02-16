@@ -5,7 +5,7 @@ public class DesignHashMap {
     static class MyHashMap {
 
         // A random prime number for hash calculation. This number should
-        // not be too small to avoid frequent hash collisions, and it is
+        // not be too small to avoid frequent hash collisions, and it
         // also should not be too large to avoid huge memory allocation.
         private static final int PRIME = 8011;
         // Array of nodes to store the key value pairs
@@ -16,7 +16,7 @@ public class DesignHashMap {
         }
 
         public void put(int key, int value) {
-            // Get bucket location based on key
+            // Get bucket location based on a key
             final int bucketLocation = getBucketLocation(key);
             // Get the node at the bucket location
             Node node = this.entries[bucketLocation];
@@ -35,7 +35,7 @@ public class DesignHashMap {
                 // Else move on the next node
                 node = node.next;
             }
-            // At this point add a new node at the front
+            // At this point, add a new node at the front
             this.entries[bucketLocation] = new Node(key, value, this.entries[bucketLocation]);
         }
 
@@ -60,7 +60,7 @@ public class DesignHashMap {
             // Get the bucket location and corresponding node
             final int bucketLocation = getBucketLocation(key);
             Node node = this.entries[bucketLocation];
-            // If node is null, then there is nothing to remove
+            // If the node is null, then there is nothing to remove
             if (node == null) {
                 return;
             }
