@@ -1,51 +1,48 @@
 package org.redquark.leetcoding.arrays;
 
+import java.util.Random;
+
 public class KthLargestElementInAnArray {
 
     public int findKthLargest(int[] nums, int k) {
-        // Special case
-        if (nums == null || nums.length < k) {
-            throw new IllegalArgumentException("Invalid inputs!");
-        }
-        // Perform quick select
-        return quickSelect(nums, 0, nums.length - 1, nums.length - k);
-    }
-
-    private int quickSelect(int[] nums, int left, int right, int kSmallest) {
-        // Base case - when left and right pointers meet, we have
-        // found the kth smallest element
-        if (left == right) {
-            return nums[left];
-        }
-        // Find the pivot index
-        final int pivot = nums[left + (right - left) / 2];
-        // Pointers for the partitioning step
-        int start = left - 1;
-        int end = right + 1;
-        // Process elements
-        while (start < end) {
-            // Move start right past any element that is smaller than the pivot
-            do {
-                start++;
-            } while (nums[start] < pivot);
-            // Move end left past any element that is greater than the pivot
-            do {
-                end--;
-            } while (nums[end] > pivot);
-            // Swap elements at start and end if they are out of order
-            if (start < end) {
-                final int temp = nums[start];
-                nums[start] = nums[end];
-                nums[end] = temp;
+        final int n = nums.length;
+        k = n - k;  // Convert to kth smallest
+        int left = 0;
+        int right = n - 1;
+        while (left <= right) {
+            int pivotIndex = partition(nums, left, right);
+            if (pivotIndex == k) {
+                return nums[pivotIndex];
+            } else if (pivotIndex < k) {
+                left = pivotIndex + 1;
+            } else {
+                right = pivotIndex - 1;
             }
         }
-        // After partitioning, pivot should be at index end
-        // If we found kth smallest element, return it
-        if (end >= kSmallest) {
-            return quickSelect(nums, left, end, kSmallest);
+        return -1;  // This line won't be reached
+    }
+
+    private int partition(int[] nums, int left, int right) {
+        int pivotIndex = left + new Random().nextInt(right - left + 1);
+        int pivot = nums[pivotIndex];
+        // Move pivot to the end
+        swap(nums, pivotIndex, right);
+        int storeIndex = left;
+        for (int i = left; i < right; i++) {
+            if (nums[i] < pivot) {
+                swap(nums, storeIndex, i);
+                storeIndex++;
+            }
         }
-        // Otherwise, continue the search in the right partition
-        return quickSelect(nums, end + 1, right, kSmallest);
+        // Move pivot to its final place
+        swap(nums, storeIndex, right);
+        return storeIndex;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 
     public static void main(String[] args) {
