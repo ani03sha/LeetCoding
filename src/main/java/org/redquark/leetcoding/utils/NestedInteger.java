@@ -1,7 +1,5 @@
 package org.redquark.leetcoding.utils;
 
-import org.redquark.leetcoding.dfs.NestedListWeightSum;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class NestedInteger {
         return value != null;
     }
 
-    // @return the single integer that this NestedInteger holds, if it holds a single integer
+    // @return the single integer that this NestedInteger holds if it holds a single integer
     // Return null if this NestedInteger holds a nested list
     public Integer getInteger() {
         return value;
@@ -47,7 +45,7 @@ public class NestedInteger {
         this.list.add(ni);
     }
 
-    // @return the nested list that this NestedInteger holds, if it holds a nested list
+    // @return the nested list that this NestedInteger holds if it holds a nested list
     // Return empty list if this NestedInteger holds a single integer
     public List<NestedInteger> getList() {
         return list != null ? list : new ArrayList<>();
