@@ -1,7 +1,5 @@
 package org.redquark.leetcoding.dynamicprogramming;
 
-import java.util.Arrays;
-
 public class PaintHouseII {
 
     public int minCostII(int[][] costs) {
