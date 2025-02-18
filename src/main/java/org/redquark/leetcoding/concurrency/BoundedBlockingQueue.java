@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.design;
+package org.redquark.leetcoding.concurrency;
 
 import java.util.LinkedList;
 import java.util.Queue;
