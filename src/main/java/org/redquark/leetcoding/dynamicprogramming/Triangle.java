@@ -1,8 +1,5 @@
 package org.redquark.leetcoding.dynamicprogramming;
 
-import org.redquark.leetcoding.utils.ListNode;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Triangle {
