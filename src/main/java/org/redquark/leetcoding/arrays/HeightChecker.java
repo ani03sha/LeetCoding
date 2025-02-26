@@ -15,10 +15,10 @@ public class HeightChecker {
         }
         // Create a count array of size max + 1
         final int[] counts = new int[max + 1];
-        // Populate the counts array with the frequencies of elements
+        // Populate the 'counts' array with the frequencies of elements
         // in the original array
-        for (int i = 0; i < n; i++) {
-            counts[heights[i]]++;
+        for (int height : heights) {
+            counts[height]++;
         }
         // Store the cumulative sum of the array
         for (int i = 1; i < max + 1; i++) {
@@ -27,7 +27,7 @@ public class HeightChecker {
         // Array with correct height order
         final int[] expected = new int[n];
         // Find the index of each element of the original array in the count array, and
-        // place the elements in output array
+        // place the elements in the output array
         for (int i = n - 1; i >= 0; i--) {
             expected[counts[heights[i]] - 1] = heights[i];
             counts[heights[i]]--;
