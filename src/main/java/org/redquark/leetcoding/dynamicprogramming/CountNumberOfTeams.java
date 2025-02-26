@@ -1,7 +1,5 @@
 package org.redquark.leetcoding.dynamicprogramming;
 
-import org.redquark.leetcoding.trees.CousinsInBinaryTree;
-
 public class CountNumberOfTeams {
 
     public int numTeamsBruteForce(int[] rating) {
