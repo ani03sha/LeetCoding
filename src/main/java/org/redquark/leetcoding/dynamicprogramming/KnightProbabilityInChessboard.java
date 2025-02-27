@@ -31,4 +31,20 @@ public class KnightProbabilityInChessboard {
         }
         return lookup[row][column][k] = probability;
     }
+
+    public static void main(String[] args) {
+        final KnightProbabilityInChessboard knightProbabilityInChessboard = new KnightProbabilityInChessboard();
+
+        int n = 3;
+        int k = 2;
+        int row = 0;
+        int column = 0;
+        System.out.println(knightProbabilityInChessboard.knightProbability(n, k, row, column));
+
+        n = 1;
+        k = 0;
+        row = 0;
+        column = 0;
+        System.out.println(knightProbabilityInChessboard.knightProbability(n, k, row, column));
+    }
 }
