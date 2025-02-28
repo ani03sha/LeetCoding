@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.arrays;
+package org.redquark.leetcoding.twopointers;
 
 import java.util.Arrays;
 
