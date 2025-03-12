@@ -9,7 +9,7 @@ public class AddTwoNumbersII {
         ListNode reverseL1 = reverseList(l1);
         ListNode reverseL2 = reverseList(l2);
         // Variables to keep track of carry and sum
-        int sum = 0;
+        int sum;
         int carry = 0;
         // Head of the final list
         ListNode head = null;
