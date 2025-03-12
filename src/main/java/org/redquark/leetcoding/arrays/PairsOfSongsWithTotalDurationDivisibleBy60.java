@@ -10,7 +10,6 @@ public class PairsOfSongsWithTotalDurationDivisibleBy60 {
         if (time == null || time.length == 0) {
             return 0;
         }
-        final int n = time.length;
         // Map to store the frequencies of the remainder of elements of the array
         // when divided by 60
         final Map<Integer, Integer> frequencies = new HashMap<>();
