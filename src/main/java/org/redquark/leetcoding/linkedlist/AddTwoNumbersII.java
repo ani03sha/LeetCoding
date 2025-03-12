@@ -31,8 +31,6 @@ public class AddTwoNumbersII {
             reverseL1 = reverseL1.next;
             reverseL2 = reverseL2.next;
         }
-        // Reset sum
-        sum = 0;
         // Add remaining nodes, if any
         while (reverseL1 != null) {
             sum = reverseL1.val + carry;
