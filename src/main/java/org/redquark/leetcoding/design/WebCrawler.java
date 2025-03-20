@@ -1,5 +1,8 @@
 package org.redquark.leetcoding.design;
 
+import org.redquark.leetcoding.utils.HtmlParser;
+import org.redquark.leetcoding.utils.HtmlParserImpl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,23 +45,6 @@ public class WebCrawler {
         return domain.split("/")[0];
     }
 
-    interface HtmlParser {
-        List<String> getUrls(String url);
-    }
-
-    static class HtmlParserImpl implements HtmlParser {
-
-        private final Map<String, List<String>> webGraph;
-
-        HtmlParserImpl(Map<String, List<String>> webGraph) {
-            this.webGraph = webGraph;
-        }
-
-        @Override
-        public List<String> getUrls(String url) {
-            return webGraph.getOrDefault(url, new ArrayList<>());
-        }
-    }
     public static void main(String[] args) {
         // Given input data
         List<String> urls = Arrays.asList(
