@@ -1,7 +1,5 @@
 package org.redquark.leetcoding.utils;
 
-import org.redquark.leetcoding.design.WebCrawler;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
