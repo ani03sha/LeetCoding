@@ -5,22 +5,22 @@ import org.redquark.leetcoding.utils.TreeNode;
 public class DiameterOfBinaryTree {
 
     public int diameterOfBinaryTree(TreeNode root) {
-        // Variable to keep track of max height of the binary tree.
-        // Since values in Java is not pass by reference, I am using
+        // Variable to keep track of the max height of the binary tree.
+        // Since values in Java are not passed by reference, I am using
         // Array of 1 element to keep track of it
         final int[] diameter = new int[1];
-        getHeightAndDiameter(root, diameter);
+        getModifiedHeight(root, diameter);
         return diameter[0];
     }
 
-    private int getHeightAndDiameter(TreeNode root, int[] diameter) {
+    private int getModifiedHeight(TreeNode root, int[] diameter) {
         // Base case
         if (root == null) {
             return 0;
         }
         // Get left and right heights
-        int leftHeight = getHeightAndDiameter(root.left, diameter);
-        int rightHeight = getHeightAndDiameter(root.right, diameter);
+        final int leftHeight = getModifiedHeight(root.left, diameter);
+        final int rightHeight = getModifiedHeight(root.right, diameter);
         // Update, diameter if needed
         diameter[0] = Math.max(diameter[0], leftHeight + rightHeight);
         return 1 + Math.max(leftHeight, rightHeight);
