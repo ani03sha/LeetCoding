@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.arrays;
+package org.redquark.leetcoding.heaps;
 
 import java.util.Arrays;
 import java.util.Comparator;
