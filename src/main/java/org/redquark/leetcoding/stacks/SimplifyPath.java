@@ -12,14 +12,16 @@ public class SimplifyPath {
         }
         // Stack to store the directory structure
         final Deque<String> stack = new ArrayDeque<>();
-        // Split the path with directories
+        // Split the bath by slashes
         final String[] directories = path.split("/");
-        // Process all directories
+        // Process all directory one by one
         for (String directory : directories) {
             if (directory.equals("..") && !stack.isEmpty()) {
                 // Move one directory up
                 stack.pop();
-            } else if (!directory.equals("..") && !directory.equals(".") && !directory.isEmpty()) {
+            }
+            // For normal directory name
+            else if (!directory.equals("..") && !directory.equals(".") && !directory.isEmpty()) {
                 stack.push(directory);
             }
         }
