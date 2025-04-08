@@ -2,6 +2,8 @@ package org.redquark.leetcoding.arrays;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class MeetingRoomsII {
 
@@ -10,16 +12,21 @@ public class MeetingRoomsII {
         if (intervals == null || intervals.length == 0) {
             return 0;
         }
-        // Sort the intervals by their start times
+        // Sort the intervals by their start time
         Arrays.sort(intervals, Comparator.comparingInt(interval -> interval[0]));
-        // Count of meeting rooms required
-        int count = 0;
+        // Min heap to store end times of meetings
+        final Queue<Integer> minHeap = new PriorityQueue<>();
+        minHeap.offer(intervals[0][1]);
+        // Process remaining intervals
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][1] > intervals[i][0]) {
-                count++;
+            // If meetings don't overlap, we remove the earliest end
+            if (intervals[i][0] >= minHeap.peek()) {
+                minHeap.remove();
             }
+            // Add the current end to the heap
+            minHeap.offer(intervals[i][1]);
         }
-        return count;
+        return minHeap.size();
     }
 
     public int minMeetingRoomsOptimized(int[][] intervals) {
