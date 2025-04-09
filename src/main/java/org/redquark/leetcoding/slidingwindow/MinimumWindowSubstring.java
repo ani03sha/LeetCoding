@@ -14,20 +14,20 @@ public class MinimumWindowSubstring {
         int right = 0;
         // Length of the minimum window
         int minLength = Integer.MAX_VALUE;
-        // Count of characters in t that need to be matched
+        // Count of characters in t that needs to be matched
         int count = t.length();
         // Start index of the window
         int start = 0;
         // Process the string s
         while (right < n) {
-            // If current character in s is a part of characters in t,
+            // If the current character in s is a part of characters in t,
             // it means we have matched one character
             if (frequencies[s.charAt(right)] > 0) {
                 count--;
             }
             frequencies[s.charAt(right)]--;
             right++;
-            // Check if count is 0
+            // Check if the count is 0
             while (count == 0) {
                 if (right - left < minLength) {
                     minLength = right - left;
