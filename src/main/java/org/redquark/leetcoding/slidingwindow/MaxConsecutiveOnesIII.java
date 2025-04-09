@@ -17,7 +17,7 @@ public class MaxConsecutiveOnesIII {
         int right = 0;
         // Longest length
         int longestLength = 0;
-        // Current length of valid window
+        // Current length of a valid window
         int currentLength = 0;
         // Process the binary array
         while (right < n) {
@@ -33,11 +33,11 @@ public class MaxConsecutiveOnesIII {
                 k--;
                 right++;
             }
-            // If we encounter zero, but we don't have margin to flip it
+            // If we encounter zero, but we don't have a margin to flip it
             else {
                 // Update the longestLength
                 longestLength = Math.max(longestLength, right - left);
-                // Move left pointer to the first zero
+                // Move a left pointer to the first zero
                 while (nums[left] == 1) {
                     left++;
                 }
