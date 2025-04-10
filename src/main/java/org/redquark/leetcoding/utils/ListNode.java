@@ -20,4 +20,17 @@ public class ListNode {
         }
         System.out.println(temp.val);
     }
+
+    public void printCircularLinkedList(ListNode head) {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        ListNode current = head;
+        do {
+            System.out.print(current.val + " -> ");
+            current = current.next;
+        } while (current != head);
+        System.out.println("(back to head: " + head.val + ")");
+    }
 }
