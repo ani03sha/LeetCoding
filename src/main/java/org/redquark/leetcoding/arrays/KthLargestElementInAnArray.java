@@ -1,8 +1,23 @@
 package org.redquark.leetcoding.arrays;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 public class KthLargestElementInAnArray {
+
+    public int findKthLargestWithHeap(int[] nums, int k) {
+        // Min heap
+        final Queue<Integer> minHeap = new PriorityQueue<>();
+        // Traverse through the array
+        for (int num : nums) {
+            minHeap.offer(num);
+            if (minHeap.size() > k) {
+                minHeap.remove();
+            }
+        }
+        return minHeap.remove();
+    }
 
     public int findKthLargest(int[] nums, int k) {
         final int n = nums.length;
@@ -50,10 +65,17 @@ public class KthLargestElementInAnArray {
 
         int[] nums = new int[]{3, 2, 1, 5, 6, 4};
         int k = 2;
+        System.out.println("Using heap:");
+        System.out.println(kthLargestElementInAnArray.findKthLargestWithHeap(nums, k));
+        System.out.println("Using Quick Select");
         System.out.println(kthLargestElementInAnArray.findKthLargest(nums, k));
+        System.out.println();
 
         nums = new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6};
         k = 4;
+        System.out.println("Using heap:");
+        System.out.println(kthLargestElementInAnArray.findKthLargestWithHeap(nums, k));
+        System.out.println("Using Quick Select");
         System.out.println(kthLargestElementInAnArray.findKthLargest(nums, k));
     }
 }
