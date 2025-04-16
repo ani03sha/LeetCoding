@@ -7,19 +7,20 @@ public class ValidPalindrome {
         if (s == null || s.isEmpty()) {
             return true;
         }
-        // Left and right pointers
+        // Two pointers
         int left = 0;
         int right = s.length() - 1;
-        // Process string from both ends
-        while (left <= right) {
-            if (isNotAlphanumeric(s.charAt(left))) {
+        // Process the string from both ends
+        while (left < right) {
+            // Check for non-alphanumeric characters from left and right.
+            // If there are any, ignore them
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
                 left++;
-                continue;
             }
-            if (isNotAlphanumeric(s.charAt(right))) {
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
                 right--;
-                continue;
             }
+            // Check if characters at both ends match
             if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
                 return false;
             }
@@ -27,12 +28,6 @@ public class ValidPalindrome {
             right--;
         }
         return true;
-    }
-
-    private boolean isNotAlphanumeric(char c) {
-        return (c < 'a' || c > 'z')
-                && (c < '0' || c > '9')
-                && (c < 'A' || c > 'Z');
     }
 
     public static void main(String[] args) {
