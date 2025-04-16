@@ -10,7 +10,7 @@ public class TreeNodeNAry {
 
     public TreeNodeNAry(int _val) {
         val = _val;
-        children = new ArrayList<TreeNodeNAry>();
+        children = new ArrayList<>();
     }
 
 }
