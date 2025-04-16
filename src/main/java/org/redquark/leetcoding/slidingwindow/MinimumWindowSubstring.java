@@ -3,43 +3,57 @@ package org.redquark.leetcoding.slidingwindow;
 public class MinimumWindowSubstring {
 
     public String minWindow(String s, String t) {
-        // Array to store frequencies of characters in t
-        final int[] frequencies = new int[128];
-        for (char c : t.toCharArray()) {
-            frequencies[c]++;
+        // Special case
+        if (s == null || s.isEmpty() || t == null || t.isEmpty()) {
+            return "";
         }
-        final int n = s.length();
+        // Array to store the frequencies of the characters in t
+        final int[] tFrequencies = new int[128];
+        for (char c : t.toCharArray()) {
+            tFrequencies[c]++;
+        }
+        // The characters required to be matched in s
+        int required = 0;
+        for (int tFrequency : tFrequencies) {
+            if (tFrequency > 0) {
+                required++;
+            }
+        }
+        // Array to store the frequencies of characters in the
+        // current window
+        final int[] windowFrequencies = new int[128];
+        // Number of characters currently satisfying their frequencies
+        int formed = 0;
         // Left and right pointers of the sliding window
         int left = 0;
         int right = 0;
-        // Length of the minimum window
-        int minLength = Integer.MAX_VALUE;
-        // Count of characters in t that needs to be matched
-        int count = t.length();
-        // Start index of the window
+        // Start pointer of the minimum window substring
         int start = 0;
-        // Process the string s
-        while (right < n) {
-            // If the current character in s is a part of characters in t,
-            // it means we have matched one character
-            if (frequencies[s.charAt(right)] > 0) {
-                count--;
+        // Minimum length of the window
+        int minLength = Integer.MAX_VALUE;
+        // Traverse the string s
+        while (right < s.length()) {
+            final char rightCharacter = s.charAt(right);
+            windowFrequencies[rightCharacter]++;
+            // Check if all frequencies of c are matched, a character
+            // is formed
+            if (tFrequencies[rightCharacter] > 0 && windowFrequencies[rightCharacter] == tFrequencies[rightCharacter]) {
+                formed++;
             }
-            frequencies[s.charAt(right)]--;
-            right++;
-            // Check if the count is 0
-            while (count == 0) {
-                if (right - left < minLength) {
-                    minLength = right - left;
+            // Now, try to shrink the window
+            while (formed == required) {
+                if (right - left + 1 < minLength) {
+                    minLength = right - left + 1;
                     start = left;
                 }
-                // Check if the character at left exists in the substring
-                if (frequencies[s.charAt(left)] == 0) {
-                    count++;
+                char leftCharacter = s.charAt(left);
+                windowFrequencies[leftCharacter]--;
+                if (tFrequencies[leftCharacter] > 0 && windowFrequencies[leftCharacter] < tFrequencies[leftCharacter]) {
+                    formed--;
                 }
-                frequencies[s.charAt(left)]++;
                 left++;
             }
+            right++;
         }
         return minLength == Integer.MAX_VALUE ? "" : s.substring(start, start + minLength);
     }
