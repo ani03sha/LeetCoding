@@ -7,20 +7,23 @@ public class MinimumAddToMakeParenthesesValid {
         if (s == null || s.isEmpty()) {
             return 0;
         }
-        // Number of '(' and ')' we need to add
-        int left = 0;
-        int right = 0;
-        // Process the string
+        // Variable to keep track of unbalanced left parentheses
+        int unbalanced = 0;
+        // Variable to keep track of dangling right parentheses
+        int dangling = 0;
+        // Process through the string
         for (char c : s.toCharArray()) {
             if (c == '(') {
-                right++;
-            } else if (right > 0) {
-                right--;
+                unbalanced++;
             } else {
-                left++;
+                if (unbalanced == 0) {
+                    dangling++;
+                } else {
+                    unbalanced--;
+                }
             }
         }
-        return left + right;
+        return unbalanced + dangling;
     }
 
     public static void main(String[] args) {
