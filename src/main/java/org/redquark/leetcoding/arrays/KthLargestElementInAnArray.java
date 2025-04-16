@@ -25,7 +25,7 @@ public class KthLargestElementInAnArray {
         int left = 0;
         int right = n - 1;
         while (left <= right) {
-            int pivotIndex = partition(nums, left, right);
+            final int pivotIndex = partition(nums, left, right);
             if (pivotIndex == k) {
                 return nums[pivotIndex];
             } else if (pivotIndex < k) {
@@ -38,8 +38,8 @@ public class KthLargestElementInAnArray {
     }
 
     private int partition(int[] nums, int left, int right) {
-        int pivotIndex = left + new Random().nextInt(right - left + 1);
-        int pivot = nums[pivotIndex];
+        final int pivotIndex = left + new Random().nextInt(right - left + 1);
+        final int pivot = nums[pivotIndex];
         // Move pivot to the end
         swap(nums, pivotIndex, right);
         int storeIndex = left;
@@ -55,7 +55,7 @@ public class KthLargestElementInAnArray {
     }
 
     private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
+        final int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
     }
