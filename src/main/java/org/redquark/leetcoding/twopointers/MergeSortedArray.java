@@ -8,9 +8,9 @@ public class MergeSortedArray {
         // Pointers to keep track of elements in the arrays
         int i = m - 1;
         int j = n - 1;
-        // Index of final array
+        // Index of the final array
         int index = m + n - 1;
-        // Process both arrays
+        // Process both arrays from right to left
         while (i >= 0 && j >= 0) {
             if (nums1[i] >= nums2[j]) {
                 nums1[index] = nums1[i];
