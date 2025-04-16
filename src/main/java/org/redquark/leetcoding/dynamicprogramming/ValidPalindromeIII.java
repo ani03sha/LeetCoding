@@ -8,9 +8,9 @@ public class ValidPalindromeIII {
         // from a string to make it palindrome
         final int[] lookup = new int[n];
         // Previously required values from lookup
-        int previous = 0;
-        int current = 0;
-        // Generate all combinations of i and j in correct order
+        int previous;
+        int current;
+        // Generate all combinations of i and j in the correct order
         for (int i = n - 2; i >= 0; i--) {
             // previous stores the value at lookup[i + 2][j - 1]
             previous = 0;
