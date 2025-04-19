@@ -3,50 +3,26 @@ package org.redquark.leetcoding.slidingwindow;
 public class MaxConsecutiveOnesIII {
 
     public int longestOnes(int[] nums, int k) {
-        // Special case
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        final int n = nums.length;
-        // One more special case
-        if (n < k) {
-            return n;
-        }
-        // Left and right pointers of the sliding window
+        // Count of maximum consecutive ones
+        int maxOnesCount = 0;
+        // Left and right pointers for the sliding window
         int left = 0;
         int right = 0;
-        // Longest length
-        int longestLength = 0;
-        // Current length of a valid window
-        int currentLength = 0;
-        // Process the binary array
-        while (right < n) {
-            // If the current element is one
-            if (nums[right] == 1) {
-                currentLength++;
-                right++;
-            }
-            // If the current element is zero, but we have margin
-            // to flip it
-            else if (nums[right] == 0 && k > 0) {
-                currentLength++;
+        // Process all elements in the array
+        while (right < nums.length) {
+            if (nums[right] == 0) {
                 k--;
-                right++;
             }
-            // If we encounter zero, but we don't have a margin to flip it
-            else {
-                // Update the longestLength
-                longestLength = Math.max(longestLength, right - left);
-                // Move a left pointer to the first zero
-                while (nums[left] == 1) {
-                    left++;
+            while (k < 0) {
+                if (nums[left] == 0) {
+                    k++;
                 }
                 left++;
-                right++;
-                currentLength = right - left;
             }
+            maxOnesCount = Math.max(maxOnesCount, right - left + 1);
+            right++;
         }
-        return Math.max(currentLength, longestLength);
+        return maxOnesCount;
     }
 
     public static void main(String[] args) {
