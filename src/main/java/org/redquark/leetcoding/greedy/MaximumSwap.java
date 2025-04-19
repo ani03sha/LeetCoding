@@ -5,35 +5,32 @@ import java.util.Arrays;
 public class MaximumSwap {
 
     public int maximumSwap(int num) {
-        // Convert the number to the char array
+        // Convert the number to a character array for easy access
         final char[] digits = String.valueOf(num).toCharArray();
-        // Total number of digits
-        final int n = digits.length;
-        // Array to store the index of maximum value to the right
-        // of the current value
-        final int[] maxRightIndex = new int[n];
-        Arrays.setAll(maxRightIndex, i -> i);
-        // Traverse the digit array from right to left excluding
-        // the right most digit
-        for (int i = n - 2; i >= 0; i--) {
-            if (digits[i] <= digits[maxRightIndex[i + 1]]) {
-                maxRightIndex[i] = maxRightIndex[i + 1];
+        // Array to store the last index of every digit from 0-9
+        final int[] lastIndex = new int[10];
+        Arrays.fill(lastIndex, -1);
+        for (int i = 0; i < digits.length; i++) {
+            lastIndex[digits[i] - '0'] = i;
+        }
+        // Now, we get the maximum swap by swapping the left most digit
+        // with the largest digit to its right.
+        // However, if there are multiple occurrences of the largest digit,
+        // we swap it with the rightmost occurrence.
+        for (int i = 0; i < digits.length; i++) {
+            // Check for the largest digit starting from 9 to 0
+            for (int j = 9; j > digits[i] - '0'; j--) {
+                // If a larger digit is found to the right, swap it
+                if (lastIndex[j] > i) {
+                    final char temp = digits[i];
+                    digits[i] = digits[lastIndex[j]];
+                    digits[lastIndex[j]] = temp;
+                    return Integer.parseInt(new String(digits));
+                }
             }
         }
-        // Traverse from right to left to determine the first digit
-        // that is smaller than the max digit to its right
-        for (int i = 0; i < n; i++) {
-            final int maxIndex = maxRightIndex[i];
-            // If such a digit is found, swap it with the max digit
-            // to its right
-            if (digits[i] < digits[maxIndex]) {
-                final char temp = digits[maxIndex];
-                digits[maxIndex] = digits[i];
-                digits[i] = temp;
-                break;
-            }
-        }
-        return Integer.parseInt(new String(digits));
+        // If no swap it made, return the original number
+        return num;
     }
 
     public static void main(String[] args) {
