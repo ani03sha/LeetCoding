@@ -35,4 +35,8 @@ public class TreeNode {
         }
         return levelOrderRepresentation.toString();
     }
+
+    public String toString() {
+        return String.valueOf(this.val);
+    }
 }
