@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.dfs;
+package org.redquark.leetcoding.backtracking;
 
 import org.redquark.leetcoding.utils.Robot;
 import org.redquark.leetcoding.utils.RobotImpl;
