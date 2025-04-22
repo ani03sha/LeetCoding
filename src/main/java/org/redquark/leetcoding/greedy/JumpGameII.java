@@ -3,7 +3,6 @@ package org.redquark.leetcoding.greedy;
 public class JumpGameII {
 
     public int jump(int[] nums) {
-        final int n = nums.length;
         // Jumps required
         int jumps = 0;
         // Current position
