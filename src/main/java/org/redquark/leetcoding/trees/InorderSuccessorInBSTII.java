@@ -1,6 +1,5 @@
 package org.redquark.leetcoding.trees;
 
-import org.redquark.leetcoding.utils.TreeNode;
 import org.redquark.leetcoding.utils.TreeNodeWithParent;
 
 public class InorderSuccessorInBSTII {
