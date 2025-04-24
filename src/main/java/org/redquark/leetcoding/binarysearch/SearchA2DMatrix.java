@@ -1,6 +1,6 @@
 package org.redquark.leetcoding.binarysearch;
 
-public class SearchInA2DMatrix {
+public class SearchA2DMatrix {
 
     public boolean searchMatrix(int[][] matrix, int target) {
         // Special case
@@ -46,7 +46,7 @@ public class SearchInA2DMatrix {
     }
 
     public static void main(String[] args) {
-        final SearchInA2DMatrix searchInA2DMatrix = new SearchInA2DMatrix();
+        final SearchA2DMatrix searchA2DMatrix = new SearchA2DMatrix();
 
         int[][] matrix = new int[][]{
                 {1, 3, 5, 7},
@@ -54,7 +54,7 @@ public class SearchInA2DMatrix {
                 {23, 30, 34, 60}
         };
         int target = 3;
-        System.out.println(searchInA2DMatrix.searchMatrix(matrix, target));
+        System.out.println(searchA2DMatrix.searchMatrix(matrix, target));
 
         matrix = new int[][]{
                 {1, 3, 5, 7},
@@ -62,6 +62,6 @@ public class SearchInA2DMatrix {
                 {23, 30, 34, 60}
         };
         target = 13;
-        System.out.println(searchInA2DMatrix.searchMatrix(matrix, target));
+        System.out.println(searchA2DMatrix.searchMatrix(matrix, target));
     }
 }
