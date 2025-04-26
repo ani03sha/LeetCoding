@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class MinimumTimeToCollectAllApplesInATree {
 
-    public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+    public int minTime(int[][] edges, List<Boolean> hasApple) {
         // Map to create a graph
         final Map<Integer, List<Integer>> graph = new HashMap<>();
         for (int[] edge : edges) {
@@ -27,7 +27,7 @@ public class MinimumTimeToCollectAllApplesInATree {
         // Total time
         int totalTime = 0;
         // Time for child subtree
-        int childTime = 0;
+        int childTime;
         for (int child : graph.get(node)) {
             if (child == parent) {
                 continue;
@@ -43,12 +43,11 @@ public class MinimumTimeToCollectAllApplesInATree {
     public static void main(String[] args) {
         final MinimumTimeToCollectAllApplesInATree minimumTimeToCollectAllApplesInATree = new MinimumTimeToCollectAllApplesInATree();
 
-        int n = 7;
         int[][] edges = new int[][]{{0, 1}, {0, 2}, {1, 4}, {1, 5}, {2, 3}, {2, 6}};
         List<Boolean> hasApple = List.of(false, false, true, false, true, true, false);
-        System.out.println(minimumTimeToCollectAllApplesInATree.minTime(n, edges, hasApple));
+        System.out.println(minimumTimeToCollectAllApplesInATree.minTime(edges, hasApple));
 
         hasApple = List.of(false, false, true, false, false, true, false);
-        System.out.println(minimumTimeToCollectAllApplesInATree.minTime(n, edges, hasApple));
+        System.out.println(minimumTimeToCollectAllApplesInATree.minTime(edges, hasApple));
     }
 }
