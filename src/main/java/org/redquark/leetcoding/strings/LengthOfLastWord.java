@@ -1,12 +1,10 @@
 package org.redquark.leetcoding.strings;
 
-import java.util.List;
-
 public class LengthOfLastWord {
 
     public int lengthOfLastWord(String s) {
         int index = s.length() - 1;
-        // Length of last word
+        // Length of the last word
         int count = 0;
         // Skip spaces from the right of string
         while (s.charAt(index) == ' ') {
