@@ -3,42 +3,42 @@ package org.redquark.leetcoding.twopointers;
 public class ValidWordAbbreviation {
 
     public boolean validWordAbbreviation(String word, String abbr) {
-        if (word == null || abbr == null || word.isEmpty() || abbr.isEmpty()) {
+        // Special case
+        if (word == null || word.isEmpty() || abbr == null || abbr.isEmpty()) {
             return false;
         }
-
-        int wordIndex = 0; // Pointer for the word
-        int abbrIndex = 0; // Pointer for the abbreviation
-
-        while (wordIndex < word.length() && abbrIndex < abbr.length()) {
-            char abbrChar = abbr.charAt(abbrIndex);
-
-            // Case 1: If the current abbreviation character is a letter
-            if (!Character.isDigit(abbrChar)) {
-                if (word.charAt(wordIndex) != abbrChar) {
-                    return false; // Mismatch in characters
+        final int m = word.length();
+        final int n = abbr.length();
+        // Pointers to keep track of current index in both
+        // word and abbr strings
+        int wordIndex = 0;
+        int abbrIndex = 0;
+        // Process both strings simultaneously
+        while (wordIndex < m && abbrIndex < n) {
+            // If the current character in abbr string is not a digit
+            if (!Character.isDigit(abbr.charAt(abbrIndex))) {
+                if (word.charAt(wordIndex) != abbr.charAt(abbrIndex)) {
+                    return false;
                 }
                 wordIndex++;
                 abbrIndex++;
             }
-            // Case 2: If the current abbreviation character is a digit
+            // If the current character in abbr string is a digit
             else {
-                // Leading zero is invalid
-                if (abbrChar == '0') {
+                // Ignore leading zeroes
+                if (abbr.charAt(abbrIndex) == '0') {
                     return false;
                 }
-                int num = 0;
-                // Build the full number (can be multiple digits)
-                while (abbrIndex < abbr.length() && Character.isDigit(abbr.charAt(abbrIndex))) {
-                    num = num * 10 + (abbr.charAt(abbrIndex) - '0');
+                int value = 0;
+                while (abbrIndex < n && Character.isDigit(abbr.charAt(abbrIndex))) {
+                    value = value * 10 + abbr.charAt(abbrIndex) - '0';
                     abbrIndex++;
                 }
-
-                wordIndex += num; // Skip `num` characters in word
+                wordIndex += value;
             }
         }
-        // Both strings should be completely processed
-        return wordIndex == word.length() && abbrIndex == abbr.length();
+        // At this point, both indices should reach the end of their respective strings
+        return wordIndex == m && abbrIndex == n;
     }
 
     public static void main(String[] args) {
