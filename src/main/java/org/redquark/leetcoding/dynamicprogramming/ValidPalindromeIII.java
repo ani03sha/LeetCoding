@@ -2,7 +2,35 @@ package org.redquark.leetcoding.dynamicprogramming;
 
 public class ValidPalindromeIII {
 
-    public boolean isValidPalindrome(String s, int k) {
+    public boolean isValidPalindromeTopDown(String s, int k) {
+        final int n = s.length();
+        // Memo table
+        final Integer[][] memo = new Integer[n][n];
+        return helper(s, 0, n - 1, memo) <= k;
+    }
+
+    private int helper(String s, int left, int right, Integer[][] memo) {
+        // If there's only character remaining
+        if (left == right) {
+            return 0;
+        }
+        // If there are only two characters
+        if (left == right - 1) {
+            return s.charAt(left) != s.charAt(right) ? 1 : 0;
+        }
+        // If we have already calculated this combination
+        if (memo[left][right] != null) {
+            return memo[left][right];
+        }
+        // If both the characters are same
+        if (s.charAt(left) == s.charAt(right)) {
+            return memo[left][right] = helper(s, left + 1, right - 1, memo);
+        }
+        // If the characters are not equal
+        return memo[left][right] = 1 + Math.min(helper(s, left + 1, right, memo), helper(s, left, right - 1, memo));
+    }
+
+    public boolean isValidPalindromeBottomUp(String s, int k) {
         final int n = s.length();
         // Lookup table to store minimum characters to remove
         // from a string to make it palindrome
@@ -35,7 +63,10 @@ public class ValidPalindromeIII {
     public static void main(String[] args) {
         final ValidPalindromeIII validPalindromeIII = new ValidPalindromeIII();
 
-        System.out.println(validPalindromeIII.isValidPalindrome("abcdeca", 2));
-        System.out.println(validPalindromeIII.isValidPalindrome("abbababa", 1));
+        System.out.println(validPalindromeIII.isValidPalindromeTopDown("abcdeca", 2));
+        System.out.println(validPalindromeIII.isValidPalindromeBottomUp("abcdeca", 2));
+
+        System.out.println(validPalindromeIII.isValidPalindromeTopDown("abbababa", 1));
+        System.out.println(validPalindromeIII.isValidPalindromeBottomUp("abcdeca", 2));
     }
 }
