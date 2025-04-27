@@ -7,7 +7,43 @@ import java.util.Set;
 
 public class LowestCommonAncestorOfABinaryTreeIII {
 
-    public TreeNodeWithParent lowestCommonAncestor(TreeNodeWithParent p, TreeNodeWithParent q) {
+    public TreeNodeWithParent lowestCommonAncestorIntuitive(TreeNodeWithParent p, TreeNodeWithParent q) {
+        // Special case
+        if (p == null || q == null) {
+            throw new IllegalArgumentException("Invalid input!");
+        }
+        // Find the depths of both nodes from the given tree
+        int pDepth = getDepth(p);
+        int qDepth = getDepth(q);
+        // Traverse the deeper node alone so that both nodes
+        // are at the same level
+        while (pDepth > qDepth) {
+            p = p.parent;
+            pDepth--;
+        }
+        while (qDepth > pDepth) {
+            q = q.parent;
+            qDepth--;
+        }
+        // Now, move both nodes upwards together until they reach
+        // the common node; this will be the LCA
+        while (p != q) {
+            p = p.parent;
+            q = q.parent;
+        }
+        return p;
+    }
+
+    private int getDepth(TreeNodeWithParent node) {
+        int depth = 0;
+        while (node != null) {
+            depth++;
+            node = node.parent;
+        }
+        return depth;
+    }
+
+    public TreeNodeWithParent lowestCommonAncestorWithSet(TreeNodeWithParent p, TreeNodeWithParent q) {
         // Set to store the nodes that come from p to q
         final Set<TreeNodeWithParent> pPath = new HashSet<>();
         while (p != null) {
@@ -50,7 +86,8 @@ public class LowestCommonAncestorOfABinaryTreeIII {
         root.left.right.right = new TreeNodeWithParent(4, root.left.right);
         TreeNodeWithParent p = root.left;
         TreeNodeWithParent q = root.right;
-        System.out.println(lowestCommonAncestorOfABinaryTreeIII.lowestCommonAncestor(p, q).val);
+        System.out.println(lowestCommonAncestorOfABinaryTreeIII.lowestCommonAncestorIntuitive(p, q).val);
+        System.out.println(lowestCommonAncestorOfABinaryTreeIII.lowestCommonAncestorWithSet(p, q).val);
         System.out.println(lowestCommonAncestorOfABinaryTreeIII.lowestCommonAncestorOptimal(p, q).val);
     }
 }
