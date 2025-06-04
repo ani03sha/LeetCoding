@@ -29,6 +29,42 @@ public class MeetingRoomsII {
         return minHeap.size();
     }
 
+    public int minMeetingRoomsChronologicalOrdering(int[][] intervals) {
+        // Special case
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
+        final int n = intervals.length;
+        // Start and end times of the meetings
+        final int[] startTimes = new int[n];
+        final int[] endTimes = new int[n];
+        for (int i = 0; i < n; i++) {
+            startTimes[i] = intervals[i][0];
+            endTimes[i] = intervals[i][1];
+        }
+        // Sort both arrays
+        Arrays.sort(startTimes);
+        Arrays.sort(endTimes);
+        // Number of rooms required
+        int requiredRooms = 0;
+        // Pointers to keep track of start time and end time
+        int i = 0;
+        int j = 0;
+        // Process all intervals
+        while (i < n) {
+            // If there's a meeting that has ended by the current meeting starts,
+            // we can use the existing room for it
+            if (startTimes[i] >= endTimes[j]) {
+                requiredRooms -= 1;
+                j++;
+            }
+            // We do this irrespective if a room is available or not
+            requiredRooms += 1;
+            i++;
+        }
+        return requiredRooms;
+    }
+
     public int minMeetingRoomsOptimized(int[][] intervals) {
         // Special case
         if (intervals == null || intervals.length == 0) {
@@ -56,10 +92,12 @@ public class MeetingRoomsII {
 
         int[][] intervals = new int[][]{{0, 30}, {5, 10}, {15, 20}};
         System.out.println(meetingRoomsII.minMeetingRooms(intervals));
+        System.out.println(meetingRoomsII.minMeetingRoomsChronologicalOrdering(intervals));
         System.out.println(meetingRoomsII.minMeetingRoomsOptimized(intervals));
 
         intervals = new int[][]{{7, 10}, {2, 4}};
         System.out.println(meetingRoomsII.minMeetingRooms(intervals));
+        System.out.println(meetingRoomsII.minMeetingRoomsChronologicalOrdering(intervals));
         System.out.println(meetingRoomsII.minMeetingRoomsOptimized(intervals));
     }
 }
