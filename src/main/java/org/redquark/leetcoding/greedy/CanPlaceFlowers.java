@@ -4,21 +4,20 @@ public class CanPlaceFlowers {
 
     public boolean canPlaceFlowers(int[] flowerbed, int k) {
         // Special case
-        if (flowerbed == null || flowerbed.length < k) {
+        if (flowerbed == null || flowerbed.length == 0) {
             return false;
         }
         final int n = flowerbed.length;
-        // Count of empty spaces
-        int emptySpaces = 0;
-        // Process the array greedily
+        // Process the flowerbed greedily
         for (int i = 0; i < n; i++) {
-            // If current plot is empty
+            // Flower can only be planted if the current spot and its left and
+            // right adjacent spots are empty
             if (flowerbed[i] == 0 && (i == 0 || flowerbed[i - 1] == 0) && (i == n - 1 || flowerbed[i + 1] == 0)) {
                 flowerbed[i] = 1;
-                emptySpaces++;
+                k--;
             }
         }
-        return emptySpaces >= k;
+        return k <= 0;
     }
 
     public static void main(String[] args) {
