@@ -9,33 +9,37 @@ public class RussianDollEnvelopes {
         if (envelopes == null || envelopes.length == 0) {
             return 0;
         }
-        // Sort the array based on width in ascending order,
-        // if widths are same, sort it based on the height
-        // in the descending order
+        // Sort the envelopes by their widths in the following way
+        // 1. If the widths of two envelopes are equal, sort them in decreasing
+        //    order of their heights
+        // 2. If the widths of two envelopes are different, sort them in a
+        //    straightforward way
         Arrays.sort(envelopes, (a, b) -> {
             if (a[0] != b[0]) {
                 return Integer.compare(a[0], b[0]);
             }
             return Integer.compare(b[1], a[1]);
         });
-        // Perform LIS on the second dimension of the envelopes
+        // LIS length
+        int lis = 0;
+        // Lookup table to store the LIS
         final int[] lookup = new int[envelopes.length];
-        // Total number of envelopes that can be inserted
-        int length = 0;
+        // Process all envelopes
         for (int[] envelope : envelopes) {
-            // Find the correct position of the current envelope's
-            // height to be inserted
-            int index = Arrays.binarySearch(lookup, 0, length, envelope[1]);
+            // Find the index of current envelope in LIS
+            int index = Arrays.binarySearch(lookup, 0, lis, envelope[1]);
+            // If this element is greater than everything else in
+            // the LIS array
             if (index < 0) {
                 index = -(index + 1);
             }
+            // Set the element at the index
             lookup[index] = envelope[1];
-            // If the list is already sorted, increase the count
-            if (index == length) {
-                length++;
+            if (index == lis) {
+                lis++;
             }
         }
-        return length;
+        return lis;
     }
 
     public static void main(String[] args) {
