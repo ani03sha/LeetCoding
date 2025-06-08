@@ -6,50 +6,46 @@ import java.util.List;
 public class MajorityElementII {
 
     public List<Integer> majorityElement(int[] nums) {
-        // List to store the majority elements
-        final List<Integer> result = new ArrayList<>();
-        if (nums == null || nums.length == 0) {
-            return result;
-        }
         final int n = nums.length;
-        // There can only be at most two majority elements as
-        // (more thab n/3 + more than n/3 == more than 2n/3)
+        // There can only be two elements that can occur more than  n/3 times
+        // Let them be x and y and their respective counts be xCount and yCount
         int x = nums[0];
         int y = 0;
-        int countX = 1;
-        int countY = 0;
-        // Process elements in the array
+        int xCount = 1;
+        int yCount = 0;
+        // Process all elements in the array
         for (int i = 1; i < n; i++) {
             if (nums[i] == x) {
-                countX++;
+                xCount++;
             } else if (nums[i] == y) {
-                countY++;
-            } else if (countX == 0) {
+                yCount++;
+            } else if (xCount == 0) {
                 x = nums[i];
-                countX = 1;
-            } else if (countY == 0) {
+                xCount = 1;
+            } else if (yCount == 0) {
                 y = nums[i];
-                countY = 1;
+                yCount = 1;
             } else {
-                countX--;
-                countY--;
+                xCount--;
+                yCount--;
             }
         }
-        // At this point, we have identified our candidates - x and y.
-        // Let's see if they occur more than n / 3 times or not
-        countX = 0;
-        countY = 0;
+        // Verify if x and y occur more than n/3 times
+        xCount = 0;
+        yCount = 0;
         for (int num : nums) {
             if (num == x) {
-                countX++;
+                xCount++;
             } else if (num == y) {
-                countY++;
+                yCount++;
             }
         }
-        if (countX > n / 3) {
+        // List to store output
+        final List<Integer> result = new ArrayList<>();
+        if (xCount > n / 3) {
             result.add(x);
         }
-        if (countY > n / 3) {
+        if (yCount > n / 3) {
             result.add(y);
         }
         return result;
