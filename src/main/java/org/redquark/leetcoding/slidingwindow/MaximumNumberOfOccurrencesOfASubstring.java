@@ -29,7 +29,7 @@ public class MaximumNumberOfOccurrencesOfASubstring {
         return maxOccurrences;
     }
 
-    public int maxFreqOptimized(String s, int maxLetters, int minSize, int maxSize) {
+    public int maxFreqOptimized(String s, int maxLetters, int minSize) {
         // Map to store counts of substrings
         final Map<String, Integer> counts = new HashMap<>();
         // Frequency of characters in a sliding window
@@ -74,6 +74,8 @@ public class MaximumNumberOfOccurrencesOfASubstring {
         final MaximumNumberOfOccurrencesOfASubstring maximumNumberOfOccurrencesOfASubstring = new MaximumNumberOfOccurrencesOfASubstring();
 
         System.out.println(maximumNumberOfOccurrencesOfASubstring.maxFreq("aababcaab", 2, 3));
+        System.out.println(maximumNumberOfOccurrencesOfASubstring.maxFreqOptimized("abcabcab", 2, 3));
         System.out.println(maximumNumberOfOccurrencesOfASubstring.maxFreq("aaaa", 1, 3));
+        System.out.println(maximumNumberOfOccurrencesOfASubstring.maxFreqOptimized("aaaa", 1, 3));
     }
 }
