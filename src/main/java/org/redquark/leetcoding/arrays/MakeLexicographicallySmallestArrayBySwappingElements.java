@@ -1,4 +1,4 @@
-package org.redquark.leetcoding.unionfind;
+package org.redquark.leetcoding.arrays;
 
 import java.util.Arrays;
 import java.util.HashMap;
