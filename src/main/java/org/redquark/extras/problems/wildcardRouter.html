@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wildcard Route Matching</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f7f8fa;
+          color: #1a1a1a;
+          margin: 0;
+          padding: 20px;
+        }
+        .container {
+          max-width: 800px;
+          margin: auto;
+          background: white;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          border-radius: 6px;
+          padding: 30px;
+        }
+        h1 {
+          color: #2d3748;
+          font-size: 28px;
+          margin-bottom: 20px;
+        }
+        .section-title {
+          font-weight: 600;
+          margin-top: 30px;
+          font-size: 20px;
+          color: #4a5568;
+        }
+        pre {
+          background: #f6f8fa;
+          padding: 12px;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        code {
+          font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        }
+        ul {
+          padding-left: 20px;
+        }
+        li {
+          margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Wildcard Route Matching</h1>
+    <div class="section">
+        <div class="section-title">Problem Description</div>
+        <p>
+            Design a system to register routes and support wildcard path matching. Each route consists of a string path such as <code>"/a/b/c"</code> and is associated with a value. When querying the system, the caller can use a wildcard (<code>*</code>) to match exactly one path segment.
+        </p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Function Signatures</div>
+        <ul>
+            <li><code>void addRoute(String path, String value)</code> – Registers a new path with an associated value.</li>
+            <li><code>String getRoute(String query)</code> – Returns the value of a matching path. Supports <code>*</code> as a wildcard for one path segment.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Example</div>
+        <pre><code>AddRoute("/a/b/c", "value1");
+getRoute("/a/*/c"); // returns "value1"
+
+AddRoute("/a", "test");
+getRoute("/a"); // returns "test"</code></pre>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Notes</div>
+        <ul>
+            <li>The wildcard <code>*</code> matches exactly one path segment.</li>
+            <li>If multiple paths match, the system may return any one valid result (implementations may differ).</li>
+            <li>Paths are case-sensitive and should be normalized (no trailing slash).</li>
+            <li>Assume all inputs are valid and well-formed.</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
