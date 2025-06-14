@@ -502,3 +502,13 @@ My Leetcode grinding journey in Java.
 | 3442 | [Maximum Difference Between Even And Odd Frequency I](https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/)                                                    | [Solution](src/main/java/org/redquark/leetcoding/arrays/MaximumDifferenceBetweenEvenAndOddFrequencyI.java)                           | Easy       | Array, Simulation                     |                         |
 | 3447 | [Assign Elements To Groups With Constraints](https://leetcode.com/problems/assign-elements-to-groups-with-constraints/)                                                                      | [Solution](src/main/java/org/redquark/leetcoding/math/AssignElementsToGroupsWithConstraints.java)                                    | Medium     | Math, Sieve Of Eratosthenes           |                         |
 | 3461 | [Check If Digits Are Equal In String After Operations I](https://leetcode.com/problems/check-if-digits-are-equal-in-string-after-operations-i/)                                              | [Solution](src/main/java/org/redquark/leetcoding/strings/CheckIfDigitsAreEqualInStringAfterOperationsI.java)                         | Easy       | String, Simulation                    |                         |
+
+## Extras
+
+> Extra questions asked in companies
+
+These questions are based on LeetCode discussions and comments
+
+| #    | Title                                                                             | Solutions                                                                         | Difficulty | Tag       | Company   |
+|------|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|------------|-----------|-----------|
+| 0001 | [Wildcard Router](src/main/java/org/redquark/extras/problems/wildcardRouter.html) | [Solution](src/main/java/org/redquark/extras/solutions/tries/WildcardRouter.java) | Easy       | Trie, DFS | Atlassian |
