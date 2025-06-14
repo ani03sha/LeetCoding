@@ -509,6 +509,7 @@ My Leetcode grinding journey in Java.
 
 These questions are based on LeetCode discussions and comments
 
-| #    | Title                                                                             | Solutions                                                                         | Difficulty | Tag       | Company   |
-|------|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|------------|-----------|-----------|
-| 0001 | [Wildcard Router](src/main/java/org/redquark/extras/problems/wildcardRouter.html) | [Solution](src/main/java/org/redquark/extras/solutions/tries/WildcardRouter.java) | Easy       | Trie, DFS | Atlassian |
+| #    | Title                                                                               | Solutions                                                                          | Difficulty | Tag       | Company   |
+|------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|------------|-----------|-----------|
+| 0001 | [Wildcard Router](src/main/java/org/redquark/extras/problems/wildcardRouter.html)   | [Solution](src/main/java/org/redquark/extras/solutions/tries/WildcardRouter.java)  | Medium     | Trie, DFS | Atlassian |
+| 0002 | [Court Assignment](src/main/java/org/redquark/extras/problems/courtAssignment.html) | [Solution](src/main/java/org/redquark/extras/solutions/heaps/CourtAssignment.java) | Medium     | Heap      | Atlassian |
