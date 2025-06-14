@@ -12,7 +12,7 @@ public class KokoEatingBananas {
         for (int pile : piles) {
             max = Math.max(max, pile);
         }
-        // Now, Koko can eat minimum of 1 banana and maximum of "max" bananas
+        // Now, Koko can eat a minimum of 1 banana and maximum of "max" bananas
         int left = 1;
         int right = max;
         // Minimum rate at which Koko needs to eat
@@ -23,7 +23,7 @@ public class KokoEatingBananas {
             // Time taken to eat all bananas
             int time = 0;
             for (int pile : piles) {
-                time += (int) Math.ceil(1.0 * pile / currentRate);
+                time += Math.ceil(1.0 * pile / currentRate);
             }
             if (time <= h) {
                 minRate = currentRate;
