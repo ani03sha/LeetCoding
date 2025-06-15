@@ -511,11 +511,12 @@ My Leetcode grinding journey in Java.
 
 These questions are based on LeetCode discussions and comments
 
-| #    | Title                                                                                      | Solutions                                                                              | Difficulty | Tag       | Company   |
-|------|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|------------|-----------|-----------|
-| 0001 | [Wildcard Router](src/main/java/org/redquark/extras/problems/wildcardRouter.html)          | [Solution](src/main/java/org/redquark/extras/solutions/tries/WildcardRouter.java)      | Medium     | Trie, DFS | Atlassian |
-| 0002 | [Court Assignment](src/main/java/org/redquark/extras/problems/courtAssignment.html)        | [Solution](src/main/java/org/redquark/extras/solutions/heaps/CourtAssignment.java)     | Medium     | Heap      | Atlassian |
-| 0003 | [Snake Game](src/main/java/org/redquark/extras/problems/snakeGame.html)                    | [Solution](src/main/java/org/redquark/extras/solutions/design/SnakeGame.java)          | Medium     | Design    | Atlassian |
-| 0004 | [Most Popular Tracker](src/main/java/org/redquark/extras/problems/mostPopularTracker.html) | [Solution](src/main/java/org/redquark/extras/solutions/design/MostPopularTracker.java) | Medium     | Design    | Atlassian |
-| 0005 | [Cost Explorer](src/main/java/org/redquark/extras/problems/costExplorer.html)              | [Solution](src/main/java/org/redquark/extras/solutions/design/CostExplorer.java)       | Medium     | Design    | Atlassian |
-| 0006 | [Teleport Dice Game](src/main/java/org/redquark/extras/problems/teleportingDiceGame.html)  | [Solution](src/main/java/org/redquark/extras/solutions/design/TeleportDiceGame.java)   | Medium     | Design    | Atlassian |
+| #    | Title                                                                                            | Solutions                                                                                | Difficulty | Tag       | Company   |
+|------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|------------|-----------|-----------|
+| 0001 | [Wildcard Router](src/main/java/org/redquark/extras/problems/wildcardRouter.html)                | [Solution](src/main/java/org/redquark/extras/solutions/tries/WildcardRouter.java)        | Medium     | Trie, DFS | Atlassian |
+| 0002 | [Court Assignment](src/main/java/org/redquark/extras/problems/courtAssignment.html)              | [Solution](src/main/java/org/redquark/extras/solutions/heaps/CourtAssignment.java)       | Medium     | Heap      | Atlassian |
+| 0003 | [Snake Game](src/main/java/org/redquark/extras/problems/snakeGame.html)                          | [Solution](src/main/java/org/redquark/extras/solutions/design/SnakeGame.java)            | Medium     | Design    | Atlassian |
+| 0004 | [Most Popular Tracker](src/main/java/org/redquark/extras/problems/mostPopularTracker.html)       | [Solution](src/main/java/org/redquark/extras/solutions/design/MostPopularTracker.java)   | Medium     | Design    | Atlassian |
+| 0005 | [Cost Explorer](src/main/java/org/redquark/extras/problems/costExplorer.html)                    | [Solution](src/main/java/org/redquark/extras/solutions/design/CostExplorer.java)         | Medium     | Design    | Atlassian |
+| 0006 | [Teleport Dice Game](src/main/java/org/redquark/extras/problems/teleportingDiceGame.html)        | [Solution](src/main/java/org/redquark/extras/solutions/design/TeleportDiceGame.java)     | Medium     | Design    | Atlassian |
+| 0007 | [Find Closest Department](src/main/java/org/redquark/extras/problems/findClosestDepartment.html) | [Solution](src/main/java/org/redquark/extras/solutions/trees/FindClosestDepartment.java) | Medium     | Tree      | Atlassian |
