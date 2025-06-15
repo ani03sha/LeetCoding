@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Closest Department</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { color: #333; }
+        pre, code { background-color: #f4f4f4; padding: 1rem; border-radius: 6px; display: block; overflow-x: auto; }
+        ul { padding-left: 1.5rem; }
+    </style>
+</head>
+<body>
+<h1>Find Closest Department</h1>
+<p><strong>Difficulty:</strong> Medium</p>
+
+<h2>Problem Statement</h2>
+<p>
+    You're given a hierarchical structure of a company. It consists of:
+</p>
+<ul>
+    <li>A root node representing the <b>Company</b></li>
+    <li>Each <b>Department</b> belongs to the company or another department</li>
+    <li>Each <b>Employee</b> belongs to exactly one department</li>
+</ul>
+<p>
+    Given a list of employees, find the <strong>closest common department</strong> that contains all of them (directly
+    or via their ancestors).
+</p>
+
+<h2>Input</h2>
+<ul>
+    <li><b>Map&lt;String, List&lt;String&gt;&gt;</b> orgChart — hierarchy from parent to children</li>
+    <li><b>Map&lt;String, String&gt;</b> employeeToDepartment — map of employee to department</li>
+    <li><b>List&lt;String&gt;</b> employees — employees to analyze</li>
+</ul>
+
+<h2>Example</h2>
+<h3>Input:</h3>
+<pre><code>orgChart = {
+  "Company": ["Engineering", "Sales"],
+  "Engineering": ["Platform", "Infra"],
+  "Platform": ["Frontend", "Backend"]
+}
+employeeToDepartment = {
+  "Alice": "Frontend",
+  "Bob": "Backend",
+  "Carol": "Infra"
+}
+employees = ["Alice", "Bob"]
+
+</code></pre>
+<h3>Output:</h3>
+<pre><code>"Platform"</code></pre>
+
+<h2>Constraints</h2>
+<ul>
+    <li>Hierarchy is a valid tree rooted at "Company"</li>
+    <li>No cycles</li>
+    <li>All employees exist in employeeToDepartment</li>
+</ul>
+</body>
+</html>
