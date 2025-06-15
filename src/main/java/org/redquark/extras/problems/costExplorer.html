@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cost Explorer</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        h1, h2 { color: #1a1a1a; }
+        pre { background: #f4f4f4; padding: 1rem; border-radius: 4px; overflow-x: auto; }
+        code { font-family: "Courier New", monospace; }
+    </style>
+</head>
+<body>
+<h1>Cost Explorer</h1>
+<p><strong>Difficulty:</strong> Medium</p>
+
+<h2>Problem Statement</h2>
+<p>
+    You're part of a payments team building a <strong>Cost Explorer</strong>. Customers subscribe to various products,
+    and your goal is to provide them with a cost estimate for the rest of the year.
+</p>
+<p>
+    The <strong>Cost Explorer</strong> must calculate:
+<ul>
+    <li>Monthly cost report for the current year (including future months)</li>
+    <li>Total yearly cost estimate</li>
+</ul>
+</p>
+
+<h2>Plans</h2>
+<pre><code>[
+  { BASIC, 9.99 },
+  { STANDARD, 49.99 },
+  { PREMIUM, 249.99 }
+]</code></pre>
+
+<h2>Function Signature</h2>
+<pre><code>public class CostExplorer {
+    public Map&lt;Month, Double&gt; getMonthlyReport(LocalDate startDate, Plan plan);
+    public double getYearlyEstimate(LocalDate startDate, Plan plan);
+  }</code></pre>
+
+<h2>Example</h2>
+<pre><code>Input:
+startDate = 2025-06-15
+plan = STANDARD
+
+Output:
+Monthly Report:
+JUNE: 49.99
+JULY: 49.99
+...
+DECEMBER: 49.99
+
+Yearly Estimate:
+349.93</code></pre>
+
+<h2>Follow-up</h2>
+<p>
+    Incorporate a <strong>trial period</strong> (in days). During the trial, the customer is not billed.
+</p>
+
+<h2>Constraints</h2>
+<ul>
+    <li>All subscriptions start in the current year</li>
+    <li>Ignore leap years</li>
+    <li>Prices are monthly (flat rate)</li>
+</ul>
+</body>
+</html>
