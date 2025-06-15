@@ -35,7 +35,7 @@ public class TextJustification {
     private String createLine(List<String> currentLineWords, int index, String[] words, int maxWidth) {
         // To offset no space after last word, we start baseLength with -1
         int baseLength = -1;
-        // Traverse the words that need to be placed in current line
+        // Traverse the words that need to be placed in the current line
         for (String word : currentLineWords) {
             baseLength += word.length() + 1;
         }
