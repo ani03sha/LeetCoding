@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Game - Custom Version</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 2em; line-height: 1.6; background-color: #f8f9fa; color: #212529; }
+        h1 { color: #1a73e8; }
+        h2 { margin-top: 1.5em; }
+        code { background: #eee; padding: 2px 5px; border-radius: 4px; }
+        pre { background: #f1f3f5; padding: 1em; border-radius: 5px; overflow-x: auto; }
+        .section { margin-bottom: 2em; }
+    </style>
+</head>
+<body>
+
+<h1>Design Snake Game (Custom Version)</h1>
+
+<div class="section">
+    <h2>Description</h2>
+    <p>Design the classic Snake game logic as described below.</p>
+    <p>The snake can move in four directions — up, down, left, or right — on a square board of fixed size. Initially,
+        the snake has a length of 3 and grows by 1 unit every 5 moves.</p>
+    <p>The game ends when the snake hits itself.</p>
+</div>
+
+<div class="section">
+    <h2>Interface</h2>
+    <pre><code>interface SnakeGame {
+    void moveSnake(String snakeDirection); // "U", "D", "L", "R"
+    boolean isGameOver();
+}</code></pre>
+</div>
+
+<div class="section">
+    <h2>Rules</h2>
+    <ul>
+        <li>The board is square and has a fixed size.</li>
+        <li>The snake only moves when <code>moveSnake</code> is called.</li>
+        <li>The snake grows by 1 unit after every 5 moves.</li>
+        <li>The game ends when the snake hits its own body.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Constraints</h2>
+    <ul>
+        <li>1 ≤ board size ≤ 100</li>
+        <li>Initial snake length is 3</li>
+        <li>The direction is always valid (within board boundaries)</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Example</h2>
+    <pre><code>Input:
+SnakeGame game = new SnakeGame(10);
+game.moveSnake("R");
+game.moveSnake("D");
+...
+game.isGameOver();
+
+Output:
+false</code></pre>
+</div>
+
+</body>
+</html>
