@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>File Collection Report</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f7f8fa;
+          color: #333;
+          padding: 2rem;
+          max-width: 800px;
+          margin: auto;
+        }
+        h1 {
+          color: #1e1e1e;
+        }
+        pre {
+          background: #eee;
+          padding: 1rem;
+          overflow-x: auto;
+        }
+        code {
+          font-family: Consolas, monospace;
+        }
+        .section {
+          margin-bottom: 2rem;
+        }
+        .example-box {
+          background-color: #f0f0f0;
+          padding: 1rem;
+          border-left: 4px solid #007acc;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📁 File Collection Report</h1>
+
+<div class="section">
+    <h2>📝 Problem Statement</h2>
+    <p>You are given a list of <code>File</code> objects. Each file has:</p>
+    <ul>
+        <li>a <code>fileId</code> (unique),</li>
+        <li>a <code>size</code> (positive integer),</li>
+        <li>and one or more <code>collectionIds</code> to which the file belongs.</li>
+    </ul>
+    <p>Your task is to:</p>
+    <ol>
+        <li>Generate a report that includes the <strong>total size</strong> of all files.</li>
+        <li>Compute the <strong>top N collections by cumulative size</strong>, where the size of a collection is the sum
+            of sizes of all files associated with it.
+        </li>
+    </ol>
+    <p><strong>Note:</strong> If a file belongs to multiple collections, its size should be <em>fully counted</em> for
+        each associated collection.</p>
+</div>
+
+<div class="section">
+    <h2>🚀 Follow-Up</h2>
+    <p>Modify your implementation to <strong>scale in a multithreaded environment</strong>. Assume the input can contain
+        millions of files, and you have access to multiple CPU cores.</p>
+</div>
+
+<div class="section">
+    <h2>📘 Example</h2>
+    <div class="example-box">
+      <pre><code>
+Input:
+files = [
+  File(fileId="f1", size=100, collectionIds=["c1"]),
+  File(fileId="f2", size=200, collectionIds=["c1", "c2"]),
+  File(fileId="f3", size=300, collectionIds=["c3"]),
+  File(fileId="f4", size=50, collectionIds=["c2"])
+]
+N = 2
+
+Output:
+Total size: 650
+
+Top 2 Collections:
+c1 -> 300
+c2 -> 250
+      </code></pre>
+    </div>
+    <p><strong>Explanation:</strong></p>
+    <ul>
+        <li>Total size = 100 + 200 + 300 + 50 = <code>650</code></li>
+        <li><code>c1</code>: f1 (100) + f2 (200) = 300</li>
+        <li><code>c2</code>: f2 (200) + f4 (50) = 250</li>
+        <li><code>c3</code>: f3 (300)</li>
+    </ul>
+    <p>So, top 2 collections by size are: <code>c1</code>, <code>c2</code>.</p>
+</div>
+
+<div class="section">
+    <h2>🔧 Constraints</h2>
+    <ul>
+        <li><code>1 &lt;= files.length &lt;= 10^6</code></li>
+        <li><code>1 &lt;= file.size &lt;= 10^6</code></li>
+        <li><code>1 &lt;= collectionIds.length &lt;= 10</code></li>
+        <li><code>1 &lt;= N &lt;= 1000</code></li>
+    </ul>
+</div>
+
+</body>
+</html>
