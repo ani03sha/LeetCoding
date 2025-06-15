@@ -514,3 +514,4 @@ These questions are based on LeetCode discussions and comments
 |------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|------------|-----------|-----------|
 | 0001 | [Wildcard Router](src/main/java/org/redquark/extras/problems/wildcardRouter.html)   | [Solution](src/main/java/org/redquark/extras/solutions/tries/WildcardRouter.java)  | Medium     | Trie, DFS | Atlassian |
 | 0002 | [Court Assignment](src/main/java/org/redquark/extras/problems/courtAssignment.html) | [Solution](src/main/java/org/redquark/extras/solutions/heaps/CourtAssignment.java) | Medium     | Heap      | Atlassian |
+| 0003 | [Snake Game](src/main/java/org/redquark/extras/problems/snakeGame.html)             | [Solution](src/main/java/org/redquark/extras/solutions/design/SnakeGame.java)      | Medium     | Design    | Atlassian |
