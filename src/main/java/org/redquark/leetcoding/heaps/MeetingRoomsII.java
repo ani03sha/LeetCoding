@@ -35,7 +35,7 @@ public class MeetingRoomsII {
             return 0;
         }
         final int n = intervals.length;
-        // Start and end times of the meetings
+        // Store start and end times of the meetings in separate arrays
         final int[] startTimes = new int[n];
         final int[] endTimes = new int[n];
         for (int i = 0; i < n; i++) {
@@ -55,11 +55,11 @@ public class MeetingRoomsII {
             // If there's a meeting that has ended by the current meeting starts,
             // we can use the existing room for it
             if (startTimes[i] >= endTimes[j]) {
-                requiredRooms -= 1;
+                requiredRooms--;
                 j++;
             }
             // We do this irrespective if a room is available or not
-            requiredRooms += 1;
+            requiredRooms++;
             i++;
         }
         return requiredRooms;
