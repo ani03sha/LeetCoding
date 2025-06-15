@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teleporting Dice Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { color: #333; }
+        pre, code { background-color: #f4f4f4; padding: 1rem; border-radius: 6px; display: block; overflow-x: auto; }
+        ul { padding-left: 1.5rem; }
+    </style>
+</head>
+<body>
+<h1>Teleporting Dice Game</h1>
+<p><strong>Difficulty:</strong> Medium</p>
+
+<h2>Problem Statement</h2>
+<p>
+    You're given a linear board with positions numbered from <b>0</b> to <b>lastNumber</b>. You begin at
+    <b>startPosition</b> and can roll a die with face values from <b>1</b> to <b>maxDieValue</b>.
+    After a roll, you move forward by the rolled number. If you land on a cell with a teleporter, you are instantly
+    moved to its target cell.
+</p>
+<p>
+    If a die roll moves you past the last cell, you are teleported directly to <b>lastNumber</b>.
+</p>
+
+<h2>Input</h2>
+<ul>
+    <li><b>int lastNumber</b> — Final board position</li>
+    <li><b>int startPosition</b> — Starting cell</li>
+    <li><b>int maxDieValue</b> — Maximum value of the die</li>
+    <li><b>List&lt;String&gt; teleporters</b> — Each in format "src,dest"</li>
+</ul>
+
+<h2>Part 1</h2>
+<p><strong>Find all final positions</strong> reachable by rolling the die once (values 1 to maxDieValue), applying
+    teleporters and edge-wrapping rule.</p>
+
+<h2>Example</h2>
+<h3>Input:</h3>
+<pre><code>lastNumber = 10
+startPosition = 3
+maxDieValue = 6
+teleporters = ["3,1", "5,10", "8,2"]
+</code></pre>
+<h3>Output:</h3>
+[1, 6, 7, 10, 9]
+
+<h2>Part 2 (Follow-up)</h2>
+<p><strong>Can you reach <b>lastNumber</b></strong> from <b>startPosition</b> using any number of die rolls?
+</p>
+
+<h2>Constraints</h2>
+<ul>
+    <li>0 ≤ startPosition ≤ lastNumber ≤ 10<sup>4</sup></li>
+    <li>1 ≤ maxDieValue ≤ 20</li>
+    <li>teleporters are valid and do not create infinite loops</li>
+</ul>
+</body>
+</html>
