@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Rate Limiter with Credit System</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f9f9fb;
+          padding: 2rem;
+          max-width: 800px;
+          margin: auto;
+        }
+        h1 {
+          color: #222;
+        }
+        code, pre {
+          background-color: #f0f0f0;
+          padding: 0.75rem;
+          display: block;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        .section {
+          margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🚦 Rate Limiter with Credit System</h1>
+
+<div class="section">
+    <h2>📝 Problem Statement</h2>
+    <p>
+        You need to design a <strong>rate limiter</strong> that allows a user to make at most <b>X</b> requests
+        every <b>Y</b> seconds.
+    </p>
+    <p>Your implementation should:</p>
+    <ul>
+        <li>Allow or reject requests based on this limit</li>
+        <li>Support a <strong>credit system</strong>: unused requests are stored and can be carried forward</li>
+        <li>Cap total credits at <i>2 * X</i> per user</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>🚀 Follow-Up</h2>
+    <p>Handle high concurrency in a multithreaded environment with millions of users and frequent requests.</p>
+</div>
+
+<div class="section">
+    <h2>📘 Example</h2>
+    <code>
+        Initialize RateLimiter with X = 5, Y = 10
+        <br/>
+        <br />
+        t=0: user1 -> allowed<br/>
+        t=1: user1 -> allowed<br/>
+        t=2: user1 -> allowed<br/>
+        t=3: user1 -> allowed<br/>
+        t=4: user1 -> allowed<br/>
+        t=5: user1 -> rejected<br/>
+
+        t=15: user1 -> allowed<br/>
+        t=20: user1 makes 2 requests → 3 credits earned<br/>
+        t=30: user1 makes 8 requests → 5 base + 3 credits → all allowed
+    </code>
+</div>
+
+<div class="section">
+    <h2>🔧 Constraints</h2>
+    <ul>
+        <li><b>1 ≤ X ≤ 1000</b></li>
+        <li><b>1 ≤ Y ≤ 3600</b></li>
+        <li>Requests may arrive concurrently</li>
+        <li>Time precision can be assumed to be in milliseconds</li>
+    </ul>
+</div>
+</body>
+</html>
