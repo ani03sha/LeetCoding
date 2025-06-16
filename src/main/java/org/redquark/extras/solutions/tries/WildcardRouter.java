@@ -29,7 +29,7 @@ public class WildcardRouter {
         // Get all directories in the path
         final String[] directories = path.split("/");
         // Perform DFS on the trie
-        return dfs(root, directories, 1);
+        return dfs(this.root, directories, 1);
     }
 
     private String dfs(TrieNodeWithDynamicChildren node, String[] directories, int index) {
@@ -67,5 +67,9 @@ public class WildcardRouter {
         System.out.println(wildcardRouter.getRoute("/a"));     // Output: test
         System.out.println(wildcardRouter.getRoute("/a/x/c")); // Output: null
         System.out.println(wildcardRouter.getRoute("/a/b"));   // Output: null
+        System.out.println(wildcardRouter.getRoute("/*")); // Output: test
+        System.out.println(wildcardRouter.getRoute("/*/*")); // Output: null
+        System.out.println(wildcardRouter.getRoute("/*/*/*")); // Output: value1
+        System.out.println(wildcardRouter.getRoute(""));
     }
 }
