@@ -9,24 +9,24 @@ import java.util.TreeMap;
 public class MostPopularTracker {
 
     // Map to store content id and their popularity count
-    private final Map<Integer, Integer> contentPopularityMappings;
+    private final Map<Integer, Integer> contentToPopularityMappings;
     // Map to store popularity and list of content ids with same popularity
     private final TreeMap<Integer, Set<Integer>> popularityToContentIdMappings;
     // Most recent top
     private int mostRecentTop;
 
     public MostPopularTracker() {
-        this.contentPopularityMappings = new HashMap<>();
+        this.contentToPopularityMappings = new HashMap<>();
         this.popularityToContentIdMappings = new TreeMap<>();
         this.mostRecentTop = -1;
     }
 
     public void increasePopularity(int contentId) {
         // Get old popularity for this content id
-        final int oldPopularity = this.contentPopularityMappings.getOrDefault(contentId, 0);
+        final int oldPopularity = this.contentToPopularityMappings.getOrDefault(contentId, 0);
         // Updated popularity
         final int newPopularity = oldPopularity + 1;
-        this.contentPopularityMappings.put(contentId, newPopularity);
+        this.contentToPopularityMappings.put(contentId, newPopularity);
         // Remove from old popularity
         if (oldPopularity > 0) {
             final Set<Integer> contentIds = this.popularityToContentIdMappings.get(oldPopularity);
@@ -45,12 +45,12 @@ public class MostPopularTracker {
 
     public void decreasePopularity(int contentId) {
         // Get old popularity
-        final int oldPopularity = this.contentPopularityMappings.getOrDefault(contentId, 0);
+        final int oldPopularity = this.contentToPopularityMappings.getOrDefault(contentId, 0);
         if (oldPopularity == 0) {
             return;
         }
         final int newPopularity = oldPopularity - 1;
-        this.contentPopularityMappings.put(contentId, newPopularity);
+        this.contentToPopularityMappings.put(contentId, newPopularity);
         // Remove from old popularity
         final Set<Integer> contentIds = this.popularityToContentIdMappings.get(oldPopularity);
         contentIds.remove(contentId);
