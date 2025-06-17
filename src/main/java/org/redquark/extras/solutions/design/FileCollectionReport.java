@@ -8,23 +8,24 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FileCollectionReport {
 
     public ReportResult generateReport(List<File> files, int topN) {
-        // Map to store collections and their respective sizes
-        final ConcurrentHashMap<String, Long> collectionSizeMappings = new ConcurrentHashMap<>();
-        final AtomicLong size = new AtomicLong(0);
+        // Map to store collections and respective sizes
+        final Map<String, Long> collectionSizeMappings = new ConcurrentHashMap<>();
+        // Variable to keep track of total size
+        final AtomicLong totalSize = new AtomicLong(0);
         // Process all files
         for (File file : files) {
-            size.addAndGet(file.size);
+            totalSize.addAndGet(file.size);
             for (String collectionId : file.collectionIds) {
                 collectionSizeMappings.merge(collectionId, (long) file.size, Long::sum);
             }
         }
-        // Find top collections
-        final List<Map.Entry<String, Long>> topCollections = collectionSizeMappings.entrySet()
+        List<Map.Entry<String, Long>> topCollections = collectionSizeMappings
+                .entrySet()
                 .stream()
                 .sorted((a, b) -> Long.compare(b.getValue(), a.getValue()))
                 .limit(topN)
                 .toList();
-        return new ReportResult(size.get(), topCollections);
+        return new ReportResult(totalSize.get(), topCollections);
     }
 
     record File(String fileId, int size, List<String> collectionIds) {
