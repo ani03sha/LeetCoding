@@ -12,7 +12,7 @@ import java.util.Set;
 public class LowestCommonAncestorOfABinaryTree {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        // Special case
+        // Base case
         if (root == null || root == p || root == q) {
             return root;
         }
@@ -30,22 +30,22 @@ public class LowestCommonAncestorOfABinaryTree {
 
     public TreeNode lowestCommonAncestorRecursive(TreeNode root, TreeNode p, TreeNode q) {
         dfs(root, p, q);
-        return lca;
+        return this.lca;
     }
 
-    private boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
+    private boolean dfs(TreeNode node, TreeNode p, TreeNode q) {
         // If we have reached to the leaf node
-        if (root == null) {
+        if (node == null) {
             return false;
         }
         // Recurse left and right subtrees
-        final boolean left = dfs(root.left, p, q);
-        final boolean right = dfs(root.right, p, q);
+        final boolean left = dfs(node.left, p, q);
+        final boolean right = dfs(node.right, p, q);
         // If the current node is either p or q
-        final boolean middle = root == p || root == q;
+        final boolean middle = node == p || node == q;
         // If any of the two flags are true, we have found the LCA
         if ((left && right) || (middle && (left || right))) {
-            this.lca = root;
+            this.lca = node;
         }
         return left || right || middle;
     }
@@ -54,19 +54,20 @@ public class LowestCommonAncestorOfABinaryTree {
         // Traverse the tree using stack
         final Deque<TreeNode> stack = new ArrayDeque<>();
         // Map to store node as a key and its parent as value
-        final Map<TreeNode, TreeNode> childParentMapping = new HashMap<>();
+        final Map<TreeNode, TreeNode> childParentMappings = new HashMap<>();
         stack.push(root);
-        childParentMapping.put(root, null);
+        // Root node has no parent, hence setting as null
+        childParentMappings.put(root, null);
         // Traverse the tree until we find both p and q
-        while (!childParentMapping.containsKey(p) || !childParentMapping.containsKey(q)) {
+        while (!childParentMappings.containsKey(p) || !childParentMappings.containsKey(q)) {
             // Get the current node
             final TreeNode current = stack.pop();
             if (current.left != null) {
-                childParentMapping.put(current.left, current);
+                childParentMappings.put(current.left, current);
                 stack.push(current.left);
             }
             if (current.right != null) {
-                childParentMapping.put(current.right, current);
+                childParentMappings.put(current.right, current);
                 stack.push(current.right);
             }
         }
@@ -74,12 +75,12 @@ public class LowestCommonAncestorOfABinaryTree {
         final Set<TreeNode> ancestors = new HashSet<>();
         while (p != null) {
             ancestors.add(p);
-            p = childParentMapping.get(p);
+            p = childParentMappings.get(p);
         }
         // Traverse similarly for q and stop at the first node that
         // is present in ancestors
         while (!ancestors.contains(q)) {
-            q = childParentMapping.get(q);
+            q = childParentMappings.get(q);
         }
         return q;
     }
