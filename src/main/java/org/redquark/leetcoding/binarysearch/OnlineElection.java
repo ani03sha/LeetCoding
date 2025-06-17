@@ -9,7 +9,7 @@ public class OnlineElection {
         // Array to store winner at each timestamp
         private final int[] winners;
 
-    public TopVotedCandidate(int[] persons, int[] times) {
+        public TopVotedCandidate(int[] persons, int[] times) {
             final int n = persons.length;
             this.times = times;
             this.winners = new int[n];
