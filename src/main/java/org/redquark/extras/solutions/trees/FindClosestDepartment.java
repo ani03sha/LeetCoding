@@ -10,30 +10,26 @@ import java.util.Set;
 public class FindClosestDepartment {
 
     public String findClosestDepartment(Map<String, List<String>> orgChart, Map<String, String> employeeToDepartment, List<String> employees) {
-        // Build the parent map by reversing org chart
-        final Map<String, String> parentMap = new HashMap<>();
-        for (Map.Entry<String, List<String>> entry : orgChart.entrySet()) {
-            for (String child : entry.getValue()) {
-                parentMap.put(child, entry.getKey());
-            }
-        }
-        // Initialize with ancestors for the first employee
+        // Build the parent map by reversing the org chart
+        final Map<String, String> childParentMappings = new HashMap<>();
+        orgChart.forEach((parent, children) -> children.forEach(child -> childParentMappings.put(child, parent)));
+        // Start with the first employee and find its base department
         final String firstEmployee = employees.getFirst();
-        final Set<String> ancestors = getAncestors(employeeToDepartment.get(firstEmployee), parentMap);
-        // Intersect with ancestors of other employees
+        // Department of the first employee
+        String baseDepartment = employeeToDepartment.get(firstEmployee);
+        // Find common ancestors to this base department
+        final Set<String> ancestors = getAncestors(baseDepartment, childParentMappings);
+        // Intersect with ancestors of remaining employees
         for (int i = 1; i < employees.size(); i++) {
-            final String currentEmployee = employees.get(i);
-            final String currentDepartment = employeeToDepartment.get(currentEmployee);
-            final Set<String> currentAncestors = getAncestors(currentDepartment, parentMap);
-            ancestors.retainAll(currentAncestors);
+            final String currentDepartment = employeeToDepartment.get(employees.get(i));
+            ancestors.retainAll(getAncestors(currentDepartment, childParentMappings));
         }
-        // Find the closest department
-        String department = employeeToDepartment.get(firstEmployee);
-        while (department != null) {
-            if (ancestors.contains(department)) {
-                return department;
+        // Walk up from the base department to find LCA
+        while (baseDepartment != null) {
+            if (ancestors.contains(baseDepartment)) {
+                return baseDepartment;
             }
-            department = parentMap.get(department);
+            baseDepartment = childParentMappings.get(baseDepartment);
         }
         return null;
     }
