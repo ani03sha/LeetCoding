@@ -6,24 +6,29 @@ import java.util.List;
 public class TextJustification {
 
     public List<String> fullJustifyOne(String[] words, int maxWidth) {
-        // List to store the justified text
+        // List to store each line of the justified text
         final List<String> justifiedText = new ArrayList<>();
-        // Traverse through all the words
+        // Index to keep track of words in the array
         int index = 0;
-        while (index < words.length) {
+        // Total number of words
+        final int n = words.length;
+        // Process every word in the array
+        while (index < n) {
             // Get the words in the current line
             final List<String> currentLineWords = getCurrentLineWords(index, words, maxWidth);
-            // Jump i pointer by currentLineWords.size()
+            // Hop index by size of the currentLineWords list
             index += currentLineWords.size();
-            // Use words in the current line to create the current line
-            justifiedText.add(createLine(currentLineWords, index, words, maxWidth));
+            // Using the above words creates a line and adds it to an output list
+            justifiedText.add(createLine(currentLineWords, index, n, maxWidth));
         }
         return justifiedText;
     }
 
     private List<String> getCurrentLineWords(int index, String[] words, int maxWidth) {
-        final List<String> currentLineWords = new ArrayList<>();
+        // Length of the current line
         int currentLineLength = 0;
+        // List of words in the current line
+        final List<String> currentLineWords = new ArrayList<>();
         while (index < words.length && currentLineLength + words[index].length() <= maxWidth) {
             currentLineWords.add(words[index]);
             currentLineLength += words[index].length() + 1;
@@ -32,28 +37,29 @@ public class TextJustification {
         return currentLineWords;
     }
 
-    private String createLine(List<String> currentLineWords, int index, String[] words, int maxWidth) {
-        // To offset no space after last word, we start baseLength with -1
+    private String createLine(List<String> currentLineWords, int index, int n, int maxWidth) {
+        // To offset no space after the last word, we initialize with -1;
         int baseLength = -1;
-        // Traverse the words that need to be placed in the current line
         for (String word : currentLineWords) {
             baseLength += word.length() + 1;
         }
-        // Extra spaces left
+        // The extra spaces we need
         final int extraSpaces = maxWidth - baseLength;
-        // Last line or only one word in a line
-        if (currentLineWords.size() == 1 || index == words.length) {
+        // If there's only one word in the list, or it is the last word
+        if (currentLineWords.size() == 1 || index == n) {
             return String.join(" ", currentLineWords) + " ".repeat(extraSpaces);
         }
         // Word count not considering last word
         final int wordCount = currentLineWords.size() - 1;
-        // Spaces needed per word
-        int spacesPerWord = extraSpaces / wordCount;
-        // If extra space is needed
-        int remainingSpaces = extraSpaces % wordCount;
+        // Spaces needed per word - equal distribution
+        final int spacesPerWord = extraSpaces / wordCount;
+        // Remaining spaces - which need to be packed left
+        final int remainingSpaces = extraSpaces % wordCount;
+        // Pack remaining spaces as a left as possible
         for (int i = 0; i < remainingSpaces; i++) {
             currentLineWords.set(i, currentLineWords.get(i) + " ");
         }
+        // Distribute spacesPerWord
         for (int i = 0; i < wordCount; i++) {
             currentLineWords.set(i, currentLineWords.get(i) + " ".repeat(spacesPerWord));
         }
