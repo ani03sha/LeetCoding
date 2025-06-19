@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Function Signature Matcher</title>
+    <style>
+        body {
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f8f9fa;
+          margin: 0;
+          padding: 2rem;
+          color: #1a1a1a;
+        }
+
+        .container {
+          max-width: 800px;
+          margin: auto;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+          padding: 2rem;
+        }
+
+        h1 {
+          font-size: 24px;
+          margin-bottom: 1rem;
+        }
+
+        h2 {
+          font-size: 18px;
+          margin-top: 2rem;
+          color: #333;
+        }
+
+        p, li {
+          font-size: 15px;
+          line-height: 1.6;
+        }
+
+        pre {
+          background-color: #f4f4f4;
+          padding: 1rem;
+          border-radius: 4px;
+          overflow-x: auto;
+          font-family: Consolas, monospace;
+          font-size: 14px;
+        }
+
+        code {
+          background: #f0f0f0;
+          padding: 0.2rem 0.4rem;
+          border-radius: 4px;
+        }
+
+        ul {
+          padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Function Signature Matcher</h1>
+    <p>
+        Given a list of function signatures and a list of input arguments, return all matching functions based on
+        parameter compatibility.
+    </p>
+
+    <h2>Function Signature</h2>
+    <p><code>List&lt;String&gt; findMatchingFunctions(List&lt;String&gt; functionSignatures, List&lt;Class&lt;?&gt;&gt;
+        inputTypes)</code></p>
+
+    <h2>Constraints</h2>
+    <ul>
+        <li>Function names are lowercase alphanumeric and may be overloaded.</li>
+        <li>Parameter types include classes like <code>Integer</code>, <code>String</code>, <code>Number</code>, <code>Object</code>.
+        </li>
+        <li>Functions may include variadic parameters denoted as <code>Type...</code>.</li>
+        <li><code>inputTypes</code> contains Java class types (e.g., <code>Integer.class</code>).</li>
+    </ul>
+
+    <h2>Input</h2>
+    <ul>
+        <li><strong>functionSignatures</strong>: List of strings representing function definitions.</li>
+        <li><strong>inputTypes</strong>: List of Java class types representing the actual input types.</li>
+    </ul>
+
+    <h2>Output</h2>
+    <p>
+        A list of function signatures (as strings) that match the provided input types.
+    </p>
+
+    <h2>Example</h2>
+    <p><strong>Input:</strong></p>
+    <pre>
+functionSignatures = [
+  "foo(Integer)",
+  "foo(String, Integer)",
+  "foo(Integer...)",
+  "foo(String, Integer...)"
+]
+
+inputTypes = [Integer.class, Integer.class, Integer.class]
+    </pre>
+
+    <p><strong>Output:</strong></p>
+    <pre>
+[
+  "foo(Integer...)"
+]
+    </pre>
+
+    <h2>Follow-Up</h2>
+    <ul>
+        <li>Extend the solution to support primitive types like <code>int</code>, <code>double</code>.</li>
+        <li>Implement overload resolution that prioritizes exact matches over varargs.</li>
+        <li>Make the matching resilient to null inputs or ambiguous cases.</li>
+    </ul>
+</div>
+</body>
+</html>
