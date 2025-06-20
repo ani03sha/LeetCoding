@@ -24,11 +24,11 @@ public class IntegerToEnglishWords {
     private String helper(int num) {
         // StringBuilder to store the result
         final StringBuilder result = new StringBuilder();
-        if (num >= 1000000000) {
+        if (num >= 1_000_000_000) {
             result.append(helper(num / 1000000000)).append(" Billion ").append(helper(num % 1000000000));
-        } else if (num >= 1000000) {
+        } else if (num >= 1_000_000) {
             result.append(helper(num / 1000000)).append(" Million ").append(helper(num % 1000000));
-        } else if (num >= 1000) {
+        } else if (num >= 1_000) {
             result.append(helper(num / 1000)).append(" Thousand ").append(helper(num % 1000));
         } else if (num >= 100) {
             result.append(helper(num / 100)).append(" Hundred ").append(helper(num % 100));
