@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fix and Optimize Quicksort</title>
+    <style>
+        body {
+          background-color: #f8f9fa;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 20px;
+        }
+
+        .problem-statement {
+          background-color: #ffffff;
+          max-width: 800px;
+          margin: auto;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-statement h3 {
+          font-size: 24px;
+          font-weight: 600;
+          color: #2d2d2d;
+          margin-bottom: 16px;
+        }
+
+        .problem-statement h4 {
+          font-size: 18px;
+          font-weight: 600;
+          color: #333333;
+          margin-top: 24px;
+          margin-bottom: 12px;
+        }
+
+        .problem-statement p {
+          font-size: 16px;
+          line-height: 1.6;
+          color: #444444;
+        }
+
+        .problem-statement ul {
+          padding-left: 20px;
+          color: #444444;
+        }
+
+        .problem-statement li {
+          margin-bottom: 8px;
+          font-size: 15px;
+        }
+
+        .problem-statement pre {
+          background-color: #f1f1f1;
+          padding: 12px 16px;
+          border-radius: 6px;
+          font-size: 15px;
+          overflow-x: auto;
+          color: #222;
+        }
+    </style>
+</head>
+<body>
+<div class="problem-statement">
+    <h3>Fix and Optimize Quicksort</h3>
+    <p>
+        Given a buggy implementation of the Quicksort algorithm, fix any issues and ensure it sorts arrays correctly.
+        Then, optimize the implementation by applying various pivot strategies to reduce the risk of degraded
+        performance to O(n²).
+    </p>
+
+    <h4>Strategies to Apply</h4>
+    <ul>
+        <li>Randomized pivot selection</li>
+        <li>Median-of-three pivot</li>
+        <li>Dual-pivot Quicksort</li>
+    </ul>
+
+    <h4>Example</h4>
+    <pre>
+Input: nums = [3, 2, 1, 5, 4]
+Output: [1, 2, 3, 4, 5]
+    </pre>
+
+    <h4>Constraints</h4>
+    <ul>
+        <li>1 ≤ nums.length ≤ 10⁵</li>
+        <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
+    </ul>
+</div>
+</body>
+</html>
