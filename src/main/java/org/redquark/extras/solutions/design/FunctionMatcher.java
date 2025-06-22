@@ -6,18 +6,20 @@ import java.util.Map;
 
 public class FunctionMatcher {
 
-    private final Map<String, Class<?>> typeMapping = Map.of(
+    // Map to store type and its class type
+    private final Map<String, Class<?>> typeMappings = Map.of(
             "Integer", Integer.class,
             "String", String.class,
             "Number", Number.class,
             "Object", Object.class
     );
 
-    public List<String> findMatchingFunctions(List<String> functionSignatures, List<Class<?>> inputTypes) {
-        // List to store parsed signatures
+    private List<String> findMatchingFunctions(List<String> functionSignatures, List<Class<?>> inputTypes) {
+        // Get the parsed list of function signatures
         final List<FunctionSignature> parsedSignatures = parseSignatures(functionSignatures);
         // List to store the final result
         final List<String> result = new ArrayList<>();
+        // Process all parsed signatures
         for (FunctionSignature signature : parsedSignatures) {
             if (isMatching(signature, inputTypes)) {
                 result.add(signature.toString());
@@ -26,63 +28,63 @@ public class FunctionMatcher {
         return result;
     }
 
-    private List<FunctionSignature> parseSignatures(List<String> functionSignatures) {
+    private List<FunctionSignature> parseSignatures(List<String> signatures) {
         final List<FunctionSignature> parsedSignatures = new ArrayList<>();
-        for (String signature : functionSignatures) {
+        for (String signature : signatures) {
             // Get the name of the function
-            final String functionName = signature.substring(0, signature.indexOf('(')).trim();
-            // Get arguments of the function
-            final String arguments = signature.substring(signature.indexOf("(") + 1, signature.lastIndexOf(")")).trim();
-            // List to store parameter types
-            final List<Class<?>> parameterTypes = new ArrayList<>();
+            final String functionName = signature.substring(0, signature.indexOf("(")).trim();
+            final String argumentList = signature.substring(signature.indexOf("(") + 1, signature.lastIndexOf(")")).trim();
+            // List to store argument types
+            final List<Class<?>> arguments = new ArrayList<>();
             boolean isVariadic = false;
-            if (!arguments.isEmpty()) {
-                final String[] args = arguments.split(",");
+            if (!argumentList.isEmpty()) {
+                final String[] args = argumentList.split(",");
                 for (int i = 0; i < args.length; i++) {
-                    String type = args[i].trim();
-                    if (type.endsWith("...")) {
+                    String arg = args[i].trim();
+                    if (arg.endsWith("...")) {
                         isVariadic = true;
-                        type = type.substring(0, type.length() - 3).trim();
+                        arg = arg.substring(0, arg.length() - 3).trim();
                     }
-                    Class<?> clazz = typeMapping.get(type);
-                    if (clazz == null) {
-                        throw new IllegalArgumentException("Unknown type: " + type);
+                    final Class<?> type = this.typeMappings.get(arg);
+                    if (type == null) {
+                        throw new IllegalArgumentException("Unknown type");
                     }
-                    parameterTypes.add(clazz);
+                    arguments.add(type);
                 }
             }
-            parsedSignatures.add(new FunctionSignature(functionName, parameterTypes, isVariadic));
+            parsedSignatures.add(new FunctionSignature(functionName, arguments, isVariadic));
         }
         return parsedSignatures;
     }
 
     private boolean isMatching(FunctionSignature signature, List<Class<?>> inputTypes) {
-        final int parameterCount = signature.parameterTypes.size();
-        final int argumentCount = inputTypes.size();
+        // Lengths of signature arguments and input types
+        final int m = signature.parameterTypes.size();
+        final int n = inputTypes.size();
         if (!signature.isVariadic) {
-            // If the function is not variadic, the number of parameters must match exactly
-            if (parameterCount != argumentCount) {
+            // If the signature is not variadic, both sizes must match
+            if (m != n) {
                 return false;
             }
-            for (int i = 0; i < parameterCount; i++) {
+            for (int i = 0; i < m; i++) {
                 if (!signature.parameterTypes.get(i).isAssignableFrom(inputTypes.get(i))) {
                     return false;
                 }
             }
             return true;
         }
-        // If the function is variadic, the first (parameterCount - 1) parameters must match
-        if (parameterCount - 1 > argumentCount) {
+        // If the signature is variadic
+        if (m - 1 > n) {
             return false;
         }
-        for (int i = 0; i < parameterCount - 1; i++) {
+        for (int i = 0; i < m - 1; i++) {
             if (!signature.parameterTypes.get(i).isAssignableFrom(inputTypes.get(i))) {
                 return false;
             }
         }
-        Class<?> classType = signature.parameterTypes.get(parameterCount - 1);
-        for (int i = 0; i < parameterCount - 1; i++) {
-            if (!classType.isAssignableFrom(inputTypes.get(i))) {
+        final Class<?> type = signature.parameterTypes.get(m - 1);
+        for (int i = m - 1; i < n; i++) {
+            if (!type.isAssignableFrom(inputTypes.get(i))) {
                 return false;
             }
         }
@@ -102,13 +104,13 @@ public class FunctionMatcher {
 
         @Override
         public String toString() {
-            final StringBuilder sb = new StringBuilder(this.name + "(");
-            for (int i = 0; i < parameterTypes.size(); i++) {
-                sb.append(parameterTypes.get(i).getSimpleName());
-                if (this.isVariadic && i == parameterTypes.size() - 1) {
+            final StringBuilder sb = new StringBuilder(this.name).append("(");
+            for (int i = 0; i < this.parameterTypes.size(); i++) {
+                sb.append(this.parameterTypes.get(i).getSimpleName());
+                if (this.isVariadic && i == this.parameterTypes.size() - 1) {
                     sb.append("...");
                 }
-                if (i < parameterTypes.size() - 1) {
+                if (i < this.parameterTypes.size() - 1) {
                     sb.append(", ");
                 }
             }
