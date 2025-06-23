@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Concurrent LRU Cache</title>
+    <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background-color: #f8f9fa;
+          color: #333;
+          margin: 2rem auto;
+          max-width: 800px;
+          line-height: 1.6;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+          color: #2c3e50;
+        }
+
+        h2 {
+          font-size: 1.4rem;
+          margin-top: 2rem;
+          color: #34495e;
+        }
+
+        code {
+          background-color: #f1f1f1;
+          padding: 2px 4px;
+          border-radius: 4px;
+          font-family: Consolas, monospace;
+        }
+
+        pre {
+          background-color: #f4f6f8;
+          border-left: 4px solid #3498db;
+          padding: 1rem;
+          overflow-x: auto;
+          border-radius: 5px;
+        }
+
+        ul {
+          margin-left: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<h1>Design Concurrent LRU Cache</h1>
+
+<p>
+    Design and implement a thread-safe <strong>LRU (Least Recently Used) Cache</strong>. Your implementation should
+    support concurrent
+    <code>get</code> and <code>put</code> operations with proper synchronization to avoid race conditions.
+</p>
+
+<h2>Implement the class:</h2>
+<pre><code>ConcurrentLRUCache&lt;K, V&gt; {
+  ConcurrentLRUCache(int capacity)
+  V get(K key)
+  void put(K key, V value)
+}</code></pre>
+
+<h2>Constraints:</h2>
+<ul>
+    <li>The cache must support <code>O(1)</code> average time complexity for <code>get</code> and <code>put</code>
+        operations.
+    </li>
+    <li>Must handle concurrent access from multiple threads safely.</li>
+    <li>Evict the least recently used entry when the cache exceeds capacity.</li>
+</ul>
+
+<h2>Example:</h2>
+<pre><code>
+ConcurrentLRUCache&lt;Integer, Integer&gt; cache = new ConcurrentLRUCache&lt;&gt;(2);
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns null (not found)
+  </code></pre>
+</body>
+</html>
