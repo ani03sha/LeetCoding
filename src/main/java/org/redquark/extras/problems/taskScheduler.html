@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Scheduler</title>
+    <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          margin: 2rem auto;
+          max-width: 800px;
+          background-color: #f9f9f9;
+          color: #333;
+          line-height: 1.6;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+          color: #2c3e50;
+        }
+
+        h2 {
+          font-size: 1.4rem;
+          margin-top: 1.5rem;
+          color: #34495e;
+        }
+
+        pre {
+          background-color: #f1f1f1;
+          border-left: 4px solid #3498db;
+          padding: 1rem;
+          overflow-x: auto;
+          border-radius: 5px;
+        }
+
+        code {
+          font-family: Consolas, monospace;
+          background: #eee;
+          padding: 2px 4px;
+          border-radius: 4px;
+        }
+
+        ul {
+          margin-left: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<h1>Design a Concurrent Task Scheduler</h1>
+
+<p>Design and implement a <strong>TaskScheduler</strong> class that allows scheduling of tasks to be executed after a
+    specified delay. The scheduler should support concurrent scheduling and must execute tasks with correct timing and
+    thread safety.</p>
+
+<h2>Implement the class:</h2>
+<pre><code>TaskScheduler {
+  TaskScheduler(int workerThreads)
+  void schedule(Runnable task, long delayMillis)
+  void shutdown()
+}</code></pre>
+
+<h2>Constraints:</h2>
+<ul>
+    <li>Tasks must be executed as close as possible to their scheduled time.</li>
+    <li>Multiple tasks can be scheduled concurrently from different threads.</li>
+    <li>Should use thread-safe data structures and efficient locking.</li>
+    <li>Tasks with the same execution time may run in parallel (based on thread pool).</li>
+</ul>
+
+<h2>Example:</h2>
+<pre><code>
+TaskScheduler scheduler = new TaskScheduler(2);
+scheduler.schedule(() -> System.out.println("A"), 1000);
+scheduler.schedule(() -> System.out.println("B"), 500);
+scheduler.schedule(() -> System.out.println("C"), 1500);
+scheduler.shutdown();
+  </code></pre>
+</body>
+</html>
