@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unix Tail -N Command</title>
+    <style>
+        body {
+          background-color: #f8f9fa;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 20px;
+        }
+
+        .problem-statement {
+          background-color: #ffffff;
+          max-width: 800px;
+          margin: auto;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-statement h3 {
+          font-size: 24px;
+          font-weight: 600;
+          color: #2d2d2d;
+          margin-bottom: 16px;
+        }
+
+        .problem-statement h4 {
+          font-size: 18px;
+          font-weight: 600;
+          color: #333333;
+          margin-top: 24px;
+          margin-bottom: 12px;
+        }
+
+        .problem-statement p {
+          font-size: 16px;
+          line-height: 1.6;
+          color: #444444;
+        }
+
+        .problem-statement ul {
+          padding-left: 20px;
+          color: #444444;
+        }
+
+        .problem-statement li {
+          margin-bottom: 8px;
+          font-size: 15px;
+        }
+
+        .problem-statement pre {
+          background-color: #f1f1f1;
+          padding: 12px 16px;
+          border-radius: 6px;
+          font-size: 15px;
+          overflow-x: auto;
+          color: #222;
+        }
+    </style>
+</head>
+<body>
+<div class="problem-statement">
+    <h3>Implement Unix Tail -N Command</h3>
+    <p>
+        Write a program that mimics the behavior of the Unix <code>tail -n</code> command. It should return the last N
+        lines from a given input stream or file content.
+    </p>
+
+    <h4>Function Signature</h4>
+    <pre>
+List&lt;String&gt; tail(InputStream input, int N)
+    </pre>
+
+    <h4>Example</h4>
+    <pre>
+Input:
+Stream:
+Line1
+Line2
+Line3
+Line4
+Line5
+
+N = 3
+
+Output:
+["Line3", "Line4", "Line5"]
+    </pre>
+
+    <h4>Constraints</h4>
+    <ul>
+        <li>0 ≤ N ≤ 10<sup>6</sup></li>
+        <li>The number of lines in input can be up to 10<sup>7</sup></li>
+        <li>You must use <strong>constant memory</strong> relative to input size (i.e., avoid storing the entire file)
+        </li>
+    </ul>
+</div>
+</body>
+</html>
