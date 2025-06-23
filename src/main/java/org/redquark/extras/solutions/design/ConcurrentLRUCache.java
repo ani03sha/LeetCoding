@@ -8,95 +8,81 @@ public class ConcurrentLRUCache<K, V> {
 
     private final int capacity;
     private final ConcurrentHashMap<K, Node<K, V>> entries;
-    private final DoublyLinkedList<K, V> dll;
+    private final Node<K, V> head;
+    private final Node<K, V> tail;
     private final Lock lock;
 
     public ConcurrentLRUCache(int capacity) {
         this.capacity = capacity;
         this.entries = new ConcurrentHashMap<>();
-        this.dll = new DoublyLinkedList<>();
         this.lock = new ReentrantLock();
+
+        // Dummy head and tail nodes
+        this.head = new Node<>(null, null);
+        this.tail = new Node<>(null, null);
+        this.head.next = this.tail;
+        this.tail.prev = this.head;
     }
 
     public V get(K key) {
-        final Node<K, V> node = this.entries.get(key);
+        Node<K, V> node = entries.get(key);
         if (node == null) {
             return null;
         }
-        this.lock.lock();
+
+        // Move the accessed node to the front (most recently used)
+        lock.lock();
         try {
-            this.dll.moveToFront(node);
+            removeNode(node);
+            addToFront(node);
         } finally {
             lock.unlock();
         }
+
         return node.value;
     }
 
     public void put(K key, V value) {
         lock.lock();
         try {
-            if (this.entries.containsKey(key)) {
-                final Node<K, V> node = this.entries.get(key);
+            if (entries.containsKey(key)) {
+                Node<K, V> node = entries.get(key);
                 node.value = value;
-                this.dll.moveToFront(node);
+                removeNode(node);
+                addToFront(node);
             } else {
-                if (this.entries.size() >= this.capacity) {
-                    final Node<K, V> node = this.dll.removeLast();
-                    if (node != null) {
-                        this.entries.remove(node.key);
+                if (entries.size() >= capacity) {
+                    Node<K, V> lru = tail.prev;
+                    if (lru != head) {
+                        removeNode(lru);
+                        entries.remove(lru.key);
                     }
                 }
-                final Node<K, V> newEntry = new Node<>(key, value);
-                this.dll.addToFront(newEntry);
-                this.entries.put(key, newEntry);
+                Node<K, V> newNode = new Node<>(key, value);
+                entries.put(key, newNode);
+                addToFront(newNode);
             }
         } finally {
-            this.lock.unlock();
+            lock.unlock();
         }
     }
 
-    static class DoublyLinkedList<K, V> {
-        private final Node<K, V> head;
-        private final Node<K, V> tail;
-
-        DoublyLinkedList() {
-            this.head = new Node<>(null, null);
-            this.tail = new Node<>(null, null);
-            this.head.next = this.tail;
-            this.tail.previous = this.head;
-        }
-
-        void addToFront(Node<K, V> node) {
-            node.next = this.head.next;
-            this.head.next.previous = node;
-            node.previous = this.head;
-            this.head.next = node;
-        }
-
-        public void remove(Node<K, V> node) {
-            node.previous.next = node.next;
-            node.next.previous = node.previous;
-        }
-
-        public void moveToFront(Node<K, V> node) {
-            remove(node);
-            addToFront(node);
-        }
-
-        public Node<K, V> removeLast() {
-            if (this.tail.previous == null) {
-                return null;
-            }
-            Node<K, V> node = this.tail.previous;
-            remove(node);
-            return node;
-        }
+    private void removeNode(Node<K, V> node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
     }
 
-    static class Node<K, V> {
-        K key;
+    private void addToFront(Node<K, V> node) {
+        node.next = head.next;
+        node.prev = head;
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    private static class Node<K, V> {
+        final K key;
         V value;
-        Node<K, V> previous;
+        Node<K, V> prev;
         Node<K, V> next;
 
         Node(K key, V value) {
