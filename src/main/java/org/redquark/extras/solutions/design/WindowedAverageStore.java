@@ -29,10 +29,18 @@ public class WindowedAverageStore {
     }
 
     public void put(String key, int value, long timestamp) {
-        this.entries.computeIfAbsent(key, _ -> new TreeMap<>()).put(timestamp, value);
-        this.expiryQueue.offer(new Entry(key, timestamp, value));
+        // Get the treeMap corresponding to the key
+        final TreeMap<Long, Integer> timeMap = this.entries.computeIfAbsent(key, _-> new TreeMap<>());
+        // Get the old value
+        Integer existingValue = timeMap.get(timestamp);
+        timeMap.put(timestamp, value);
+        if (existingValue != null) {
+            this.sum -= existingValue;
+        } else {
+            this.count++;
+        }
         this.sum += value;
-        this.count++;
+        this.expiryQueue.offer(new Entry(key, timestamp, value));
     }
 
     public Integer get(String key, long timestamp) {
@@ -60,7 +68,7 @@ public class WindowedAverageStore {
             final TreeMap<Long, Integer> timeMap = this.entries.get(expired.key);
             if (timeMap != null) {
                 final Integer value = timeMap.get(expired.timestamp);
-                if (value != null && value == expired.value) {
+                if (value != null && value.equals(expired.value)) {
                     this.sum -= value;
                     this.count--;
                     timeMap.remove(expired.timestamp);
@@ -77,11 +85,11 @@ public class WindowedAverageStore {
 
         windowedAverageStore.put("a", 10, 1000);
         windowedAverageStore.put("b", 20, 2000);
+        System.out.println("Average @2500: " + windowedAverageStore.getAverage(2500)); // 15.0
         windowedAverageStore.put("a", 30, 6000); // replaces previous "a" entry
 
         System.out.println("Get a@7000: " + windowedAverageStore.get("a", 7000));      // 30
         System.out.println("Get b@7000: " + windowedAverageStore.get("b", 7000));      // null (expired)
-        System.out.println("Average @2500: " + windowedAverageStore.getAverage(2500)); // 15.0
         System.out.println("Average @7000: " + windowedAverageStore.getAverage(7000)); // 30.0
     }
 
