@@ -1,5 +1,6 @@
 package org.redquark.extras.solutions.design;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
@@ -11,35 +12,40 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class TaskScheduler {
 
-    // Queue to store all tasks
-    private final Queue<ScheduledTask> tasks;
+    // Min heap to store all tasks based on their time
+    private final Queue<ScheduledTask> taskQueue;
+    // Lock for thread safety
     private final Lock lock;
+    // Condition that represents new task
     private final Condition newTask;
+    // Thread Pool Executor
     private final ExecutorService workerPool;
-    private final Thread scheduledThread;
-    private volatile boolean isShutdown;
+    // Background thread to actually perform the task
+    private final Thread schedulerThread;
+    // Flag to indicate if the scheduler is down
+    private volatile boolean isShutDown;
 
     public TaskScheduler(int threadPoolSize) {
-        this.tasks = new PriorityQueue<>();
+        this.taskQueue = new PriorityQueue<>(Comparator.comparingLong(task -> task.time));
         this.lock = new ReentrantLock();
         this.newTask = this.lock.newCondition();
         this.workerPool = Executors.newFixedThreadPool(threadPoolSize);
-        this.scheduledThread = new Thread(() -> {
+        this.schedulerThread = new Thread(() -> {
             try {
                 runSchedulerLoop();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         });
-        this.scheduledThread.start();
-        this.isShutdown = false;
+        this.schedulerThread.start();
+        this.isShutDown = false;
     }
 
     public void schedule(Runnable task, long delayMillis) {
         this.lock.lock();
         try {
-            ScheduledTask scheduledTask = new ScheduledTask(delayMillis, task);
-            this.tasks.offer(scheduledTask);
+            final ScheduledTask scheduledTask = new ScheduledTask(delayMillis, task);
+            this.taskQueue.offer(scheduledTask);
             this.newTask.signal();
         } finally {
             this.lock.unlock();
@@ -47,46 +53,41 @@ public class TaskScheduler {
     }
 
     public void shutdown() {
-        this.isShutdown = true;
-        this.scheduledThread.interrupt();
+        this.isShutDown = true;
+        this.schedulerThread.interrupt();
         this.workerPool.shutdown();
     }
 
     private void runSchedulerLoop() throws InterruptedException {
-        while (!this.isShutdown) {
+        while (!this.isShutDown) {
             this.lock.lock();
             try {
-                while (this.tasks.isEmpty()) {
-                    newTask.await();
+                while (this.taskQueue.isEmpty()) {
+                    this.newTask.await();
                 }
                 final long currentTime = System.currentTimeMillis();
-                final ScheduledTask nextTask = this.tasks.peek();
-                if (nextTask.time <= currentTime) {
-                    this.tasks.remove();
-                    workerPool.execute(nextTask.task);
+                // Get the next task from the queue
+                final ScheduledTask task = this.taskQueue.peek();
+                if (task.time <= currentTime) {
+                    this.taskQueue.remove();
+                    this.workerPool.execute(task.task);
                 } else {
-                    final long waitTime = nextTask.time - currentTime;
-                    newTask.await(waitTime, TimeUnit.MILLISECONDS);
+                    final long waitTime = task.time - currentTime;
+                    this.newTask.await(waitTime, TimeUnit.MILLISECONDS);
                 }
             } finally {
-                lock.unlock();
+                this.lock.unlock();
             }
         }
     }
 
-    static class ScheduledTask implements Comparable<ScheduledTask> {
-
+    static class ScheduledTask {
         final long time;
         final Runnable task;
 
-        ScheduledTask(long delayMillis, Runnable task) {
-            this.time = System.currentTimeMillis() + delayMillis;
+        ScheduledTask(long delayTimeMillis, Runnable task) {
+            this.time = System.currentTimeMillis() + delayTimeMillis;
             this.task = task;
-        }
-
-        @Override
-        public int compareTo(ScheduledTask other) {
-            return Long.compare(this.time, other.time);
         }
     }
 
