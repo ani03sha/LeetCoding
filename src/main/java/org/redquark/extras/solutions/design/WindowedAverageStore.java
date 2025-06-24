@@ -9,30 +9,30 @@ import java.util.TreeMap;
 
 public class WindowedAverageStore {
 
-    // Map to store key and mappings of timestamp and value
+    // Map to store key and the pair of different values at different timestamps
     private final Map<String, TreeMap<Long, Integer>> entries;
-    // Min heap to store entries sorted on time
-    private final Queue<Entry> expiryQueue;
-    // TTL of the cache
+    // Min heap to store the entries sorted on timestamp
+    private final Queue<Entry> minHeap;
+    // TTL for the entry
     private final long ttl;
-    // Sum of all unexpired tokens
+    // Total sum of elements
     private int sum;
-    // Count of all unexpired tokens
+    // Count of unexpired elements
     private int count;
 
     public WindowedAverageStore(long ttl) {
         this.entries = new HashMap<>();
-        this.expiryQueue = new PriorityQueue<>(Comparator.comparingLong(a -> a.timestamp));
+        this.minHeap = new PriorityQueue<>(Comparator.comparingLong(entry -> entry.timestamp));
         this.ttl = ttl;
         this.sum = 0;
         this.count = 0;
     }
 
     public void put(String key, int value, long timestamp) {
-        // Get the treeMap corresponding to the key
-        final TreeMap<Long, Integer> timeMap = this.entries.computeIfAbsent(key, _-> new TreeMap<>());
-        // Get the old value
-        Integer existingValue = timeMap.get(timestamp);
+        // Get timeMap against the key
+        final TreeMap<Long, Integer> timeMap = this.entries.computeIfAbsent(key, _ -> new TreeMap<>());
+        // Get the existing value against the timestamp if any
+        final Integer existingValue = timeMap.get(timestamp);
         timeMap.put(timestamp, value);
         if (existingValue != null) {
             this.sum -= existingValue;
@@ -40,7 +40,7 @@ public class WindowedAverageStore {
             this.count++;
         }
         this.sum += value;
-        this.expiryQueue.offer(new Entry(key, timestamp, value));
+        this.minHeap.offer(new Entry(key, value, timestamp));
     }
 
     public Integer get(String key, long timestamp) {
@@ -49,7 +49,7 @@ public class WindowedAverageStore {
         }
         final TreeMap<Long, Integer> timeMap = this.entries.get(key);
         // Get the floor entry
-        final Map.Entry<Long, Integer> floorEntry = timeMap.floorEntry(timestamp);
+        Map.Entry<Long, Integer> floorEntry = timeMap.floorEntry(timestamp);
         if (floorEntry == null || floorEntry.getKey() <= timestamp - this.ttl) {
             return null;
         }
@@ -57,27 +57,32 @@ public class WindowedAverageStore {
     }
 
     public double getAverage(long timestamp) {
-        // Expire old entries
-        expireOld(timestamp);
+        // Expire stale entries
+        expireStaleEntries(timestamp);
         return this.count == 0 ? 0.0 : this.sum * 1.0 / this.count;
     }
 
-    private void expireOld(long timestamp) {
-        while (!this.expiryQueue.isEmpty() && this.expiryQueue.peek().timestamp <= timestamp - this.ttl) {
-            final Entry expired = this.expiryQueue.remove();
-            final TreeMap<Long, Integer> timeMap = this.entries.get(expired.key);
+    private void expireStaleEntries(long timestamp) {
+        while (!this.minHeap.isEmpty() && this.minHeap.peek().timestamp < timestamp - this.ttl) {
+            final Entry expiredEntry = this.minHeap.remove();
+            // Get the timeMap for this entry
+            final TreeMap<Long, Integer> timeMap = this.entries.get(expiredEntry.key);
             if (timeMap != null) {
-                final Integer value = timeMap.get(expired.timestamp);
-                if (value != null && value.equals(expired.value)) {
-                    this.sum -= value;
+                // Get the integer value corresponding to it
+                final Integer value = timeMap.get(timestamp);
+                if (value != null) {
                     this.count--;
-                    timeMap.remove(expired.timestamp);
+                    this.sum -= value;
+                    timeMap.remove(timestamp);
                     if (timeMap.isEmpty()) {
-                        this.entries.remove(expired.key);
+                        this.entries.remove(expiredEntry.key);
                     }
                 }
             }
         }
+    }
+
+    record Entry(String key, int value, long timestamp) {
     }
 
     public static void main(String[] args) {
@@ -91,8 +96,5 @@ public class WindowedAverageStore {
         System.out.println("Get a@7000: " + windowedAverageStore.get("a", 7000));      // 30
         System.out.println("Get b@7000: " + windowedAverageStore.get("b", 7000));      // null (expired)
         System.out.println("Average @7000: " + windowedAverageStore.getAverage(7000)); // 30.0
-    }
-
-    record Entry(String key, long timestamp, int value) {
     }
 }
