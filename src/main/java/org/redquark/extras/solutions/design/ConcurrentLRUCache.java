@@ -6,86 +6,95 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ConcurrentLRUCache<K, V> {
 
+    // Capacity of the cache
     private final int capacity;
-    private final ConcurrentHashMap<K, Node<K, V>> entries;
-    private final Node<K, V> head;
-    private final Node<K, V> tail;
+    // Map to store all mappings of keys and their entry nodes
+    private final ConcurrentHashMap<K, Entry<K, V>> entries;
+    // Lock for thread safety
     private final Lock lock;
+    // Head and tail of the entry nodes (DLL)
+    private final Entry<K, V> head;
+    private final Entry<K, V> tail;
 
     public ConcurrentLRUCache(int capacity) {
         this.capacity = capacity;
         this.entries = new ConcurrentHashMap<>();
         this.lock = new ReentrantLock();
-
-        // Dummy head and tail nodes
-        this.head = new Node<>(null, null);
-        this.tail = new Node<>(null, null);
+        this.head = new Entry<>(null, null);
+        this.tail = new Entry<>(null, null);
+        // Connect both head and tail
         this.head.next = this.tail;
-        this.tail.prev = this.head;
+        this.tail.previous = this.head;
     }
 
     public V get(K key) {
-        Node<K, V> node = entries.get(key);
-        if (node == null) {
+        final Entry<K, V> entry = this.entries.get(key);
+        // If the key doesn't exist in the cache
+        if (entry == null) {
             return null;
         }
-
-        // Move the accessed node to the front (most recently used)
-        lock.lock();
+        this.lock.lock();
         try {
-            removeNode(node);
-            addToFront(node);
+            // Remove entry from its original position
+            removeEntry(entry);
+            // Add entry to the front of DLL
+            addToFront(entry);
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
-
-        return node.value;
+        return entry.value;
     }
 
     public void put(K key, V value) {
-        lock.lock();
+        this.lock.lock();
         try {
-            if (entries.containsKey(key)) {
-                Node<K, V> node = entries.get(key);
-                node.value = value;
-                removeNode(node);
-                addToFront(node);
-            } else {
-                if (entries.size() >= capacity) {
-                    Node<K, V> lru = tail.prev;
-                    if (lru != head) {
-                        removeNode(lru);
-                        entries.remove(lru.key);
-                    }
+            // If the key already exists, we just update the value
+            if (this.entries.containsKey(key)) {
+                final Entry<K, V> entry = this.entries.get(key);
+                entry.value = value;
+                // Since this node is accessed, we need to move it to
+                // the front after removing it from its original position
+                removeEntry(entry);
+                addToFront(entry);
+            }
+            // If this is a new key
+            else {
+                final Entry<K, V> newEntry = new Entry<>(key, value);
+                // If the cache is full, we evict the least recently
+                // accessed entry
+                if (this.entries.size() >= this.capacity) {
+                    final Entry<K, V> entryToBeRemoved = this.tail.previous;
+                    removeEntry(entryToBeRemoved);
+                    this.entries.remove(entryToBeRemoved.key);
                 }
-                Node<K, V> newNode = new Node<>(key, value);
-                entries.put(key, newNode);
-                addToFront(newNode);
+                this.entries.put(key, newEntry);
+                addToFront(newEntry);
             }
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
-    private void removeNode(Node<K, V> node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
+    private void addToFront(Entry<K,V> entry) {
+        final Entry<K, V> currentFrontEntry = this.head.next;
+        this.head.next = entry;
+        entry.next = currentFrontEntry;
+        entry.previous = this.head;
+        currentFrontEntry.previous = entry;
     }
 
-    private void addToFront(Node<K, V> node) {
-        node.next = head.next;
-        node.prev = head;
-        head.next.prev = node;
-        head.next = node;
+    private void removeEntry(Entry<K,V> entry) {
+        entry.previous.next = entry.next;
+        entry.next.previous = entry.previous;
     }
 
-    private static class Node<K, V> {
+    static class Entry<K, V> {
         final K key;
         V value;
-        Node<K, V> prev;
-        Node<K, V> next;
+        Entry<K,V> previous;
+        Entry<K,V> next;
 
-        Node(K key, V value) {
+        Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }

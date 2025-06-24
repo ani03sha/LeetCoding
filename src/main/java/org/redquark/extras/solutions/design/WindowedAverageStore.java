@@ -63,14 +63,14 @@ public class WindowedAverageStore {
     }
 
     private void expireStaleEntries(long timestamp) {
-        while (!this.minHeap.isEmpty() && this.minHeap.peek().timestamp < timestamp - this.ttl) {
+        while (!this.minHeap.isEmpty() && this.minHeap.peek().timestamp <= timestamp - this.ttl) {
             final Entry expiredEntry = this.minHeap.remove();
             // Get the timeMap for this entry
             final TreeMap<Long, Integer> timeMap = this.entries.get(expiredEntry.key);
             if (timeMap != null) {
                 // Get the integer value corresponding to it
-                final Integer value = timeMap.get(timestamp);
-                if (value != null) {
+                final Integer value = timeMap.get(expiredEntry.timestamp);
+                if (value != null && value.equals(expiredEntry.value)) {
                     this.count--;
                     this.sum -= value;
                     timeMap.remove(timestamp);
