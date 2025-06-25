@@ -38,7 +38,7 @@ public class NumberOfConnectedComponentsInAnUndirectedGraph {
 
         private int find(int a) {
             if (this.parents[a] != a) {
-                this.parents[a] = this.parents[this.parents[a]];
+                this.parents[a] = find(this.parents[a]);
             }
             return this.parents[a];
         }
