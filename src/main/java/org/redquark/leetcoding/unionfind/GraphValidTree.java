@@ -5,37 +5,37 @@ import java.util.Arrays;
 public class GraphValidTree {
 
     public boolean validTree(int n, int[][] edges) {
-        // Base case
-        if (n <= 0 || edges == null || edges.length == 0) {
+        // Base cases
+        if (n == 0) {
+            return false;
+        }
+        if (edges.length != n - 1) {
             return false;
         }
         final UnionFind unionFind = new UnionFind(n);
         for (int[] edge : edges) {
             if (!unionFind.union(edge[0], edge[1])) {
-                return false;
+                return false; // Cycle detected
             }
         }
-        return unionFind.count == 1;
+        return true;
     }
 
     static class UnionFind {
         private final int[] parents;
-        private int count;
 
         UnionFind(int n) {
             this.parents = new int[n];
             Arrays.setAll(this.parents, i -> i);
-            this.count = n;
         }
 
         public boolean union(int a, int b) {
             int rootA = find(a);
             int rootB = find(b);
             if (rootA == rootB) {
-                return false;
+                return false; // Cycle
             }
-            this.parents[a] = rootB;
-            count--;
+            this.parents[rootA] = rootB;
             return true;
         }
 
