@@ -1,6 +1,7 @@
 package org.redquark.leetcoding.backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NQueens {
@@ -78,10 +79,70 @@ public class NQueens {
         return position;
     }
 
+    /**
+     * Optimized solution for the N-Queens problem
+     */
+
+    public List<List<String>> solveNQueensOptimized(int n) {
+        // List to store all valid results
+        final List<List<String>> positions = new ArrayList<>();
+        // Arrays to mark positions of queens in columns, diagonals
+        // and anti-diagonals
+        final boolean[] columns = new boolean[n];
+        final boolean[] diagonals = new boolean[2 * n - 1];
+        final boolean[] antiDiagonals = new boolean[2 * n - 1];
+        // Position of queens
+        final int[] queens = new int[n];
+        // Perform backtracking
+        backtrack(0, n, queens, columns, diagonals, antiDiagonals, positions);
+        return positions;
+    }
+
+    private void backtrack(int row, int n, int[] queens, boolean[] columns, boolean[] diagonals, boolean[] antiDiagonals, List<List<String>> positions) {
+        // Base case
+        if (row == n) {
+            positions.add(buildBoard(queens, n));
+            return;
+        }
+        for (int column = 0; column < n; column++) {
+            final int diagonalIndex = row + column;
+            final int antiDiagonalIndex = row - column + (n - 1);
+            // If the current column doesn't yield the result, we return
+            if (columns[column] || diagonals[diagonalIndex] || antiDiagonals[antiDiagonalIndex]) {
+                continue;
+            }
+            // Place the queen in the current row
+            queens[row] = column;
+            // Mark corresponding cells as vulnerable to attack
+            columns[column] = true;
+            diagonals[diagonalIndex] = true;
+            antiDiagonals[antiDiagonalIndex] = true;
+            // Backtrack on next row
+            backtrack(row + 1, n, queens, columns, diagonals, antiDiagonals, positions);
+            // Unmark corresponding cells as vulnerable to attack
+            columns[column] = false;
+            diagonals[diagonalIndex] = false;
+            antiDiagonals[antiDiagonalIndex] = false;
+        }
+    }
+
+    private List<String> buildBoard(int[] queens, int n) {
+        final List<String> board = new ArrayList<>();
+        for (int row = 0; row < n; row++) {
+            final char[] rowArray = new char[n];
+            Arrays.fill(rowArray, '.');
+            rowArray[queens[row]] = 'Q';
+            board.add(new String(rowArray));
+        }
+        return board;
+    }
+
     public static void main(String[] args) {
         final NQueens nQueens = new NQueens();
 
         System.out.println(nQueens.solveNQueens(4));
         System.out.println(nQueens.solveNQueens(1));
+        System.out.println(nQueens.solveNQueensOptimized(4));
+        System.out.println(nQueens.solveNQueensOptimized(1));
     }
 }
