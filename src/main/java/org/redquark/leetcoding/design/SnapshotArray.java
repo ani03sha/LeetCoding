@@ -11,7 +11,7 @@ class SnapshotArray {
     // Snap Id;
     private int snapId;
 
-    public SnapshotArray(int length) {
+    public SnapshotArray() {
         this.mappings = new HashMap<>();
         this.snapId = 0;
     }
@@ -33,7 +33,7 @@ class SnapshotArray {
     }
 
     public static void main(String[] args) {
-        final SnapshotArray snapshotArray = new SnapshotArray(3);
+        final SnapshotArray snapshotArray = new SnapshotArray();
 
         snapshotArray.set(0, 5);
         System.out.println(snapshotArray.snap()); // 0
