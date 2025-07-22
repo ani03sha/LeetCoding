@@ -8,9 +8,9 @@ public class LongestRepeatingSubstring {
             return 0;
         }
         final int n = s.length();
-        // Lookup table to store longest repeating substring in the range i...j
+        // Lookup table to store the longest repeating substring in the range i...j
         final int[][] lookup = new int[n][n];
-        // Length of longest repeating character
+        // Length of the longest repeating character
         int longestLength = 0;
         // Process all the characters in the string
         for (int i = 0; i < n; i++) {
