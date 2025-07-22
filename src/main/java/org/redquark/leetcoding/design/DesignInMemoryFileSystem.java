@@ -10,90 +10,97 @@ public class DesignInMemoryFileSystem {
 
     static class FileSystem {
 
-        private final TrieNodeForFileSystem root;
+        private final TrieNode root;
 
-        FileSystem() {
-            root = new TrieNodeForFileSystem();
+        public FileSystem() {
+            this.root = new TrieNode();
         }
 
         public List<String> ls(String path) {
-            // List to store all directories and files at the path
+            // List to store the files/directories at the path
             final List<String> result = new ArrayList<>();
-            // Reference of the TrieNode with path
-            final TrieNodeForFileSystem node = this.root.search(path);
+            // Get the node corresponding to the path
+            final TrieNode node = search(path);
+            // If the path doesn't exist, return an empty list
             if (node == null) {
                 return result;
             }
+            // If the path represents a file, then we only return a list
+            // with that file name
             if (node.isFile) {
                 result.add(node.name);
-            } else {
+            }
+            // If the path represents a directory, we return all the
+            // children of that directory
+            else {
                 result.addAll(node.children.keySet());
             }
-            // Sort the result
+            // Sort in lexicographical order
             Collections.sort(result);
             return result;
         }
 
         public void mkdir(String path) {
-            this.root.insert(path, false);
+            insert(path, false);
         }
 
         public void addContentToFile(String filePath, String content) {
-            final TrieNodeForFileSystem node = root.insert(filePath, true);
+            // Create a file at path if it doesn't exist already
+            final TrieNode node = insert(filePath, true);
             node.content.append(content);
         }
 
         public String readContentFromFile(String filePath) {
-            final TrieNodeForFileSystem node = this.root.search(filePath);
-            if (node != null && node.isFile) {
-                return node.content.toString();
+            // Get the file at the path
+            final TrieNode node = search(filePath);
+            if (node == null || !node.isFile) {
+                return "";
             }
-            return "";
+            return node.content.toString();
         }
 
-        static class TrieNodeForFileSystem {
+        private TrieNode search(String path) {
+            // Reference to the current node
+            TrieNode temp = this.root;
+            final String[] directories = path.split("/");
+            // Traverse through directories
+            for (int i = 1; i < directories.length; i++) {
+                if (!temp.children.containsKey(directories[i])) {
+                    return null;
+                }
+                temp = temp.children.get(directories[i]);
+            }
+            return temp;
+        }
+
+        private TrieNode insert(String path, boolean isFile) {
+            // Reference to the current node
+            TrieNode temp = this.root;
+            final String[] directories = path.split("/");
+            // Traverse through directories
+            for (int i = 1; i < directories.length; i++) {
+                if (!temp.children.containsKey(directories[i])) {
+                    temp.children.put(directories[i], new TrieNode());
+                }
+                temp = temp.children.get(directories[i]);
+            }
+            temp.isFile = isFile;
+            // If a file, then set its name
+            if (isFile) {
+                temp.name = directories[directories.length - 1];
+            }
+            return temp;
+        }
+
+        static class TrieNode {
             String name;
             boolean isFile;
-            StringBuilder content;
-            Map<String, TrieNodeForFileSystem> children;
+            final StringBuilder content;
+            final Map<String, TrieNode> children;
 
-            TrieNodeForFileSystem() {
+            TrieNode() {
                 this.content = new StringBuilder();
                 this.children = new HashMap<>();
-            }
-
-            TrieNodeForFileSystem insert(String path, boolean isFile) {
-                // Reference to the root node
-                TrieNodeForFileSystem current = this;
-                // Split the path by slashes
-                final String[] parts = path.split("/");
-                // For every part
-                for (int i = 1; i < parts.length; i++) {
-                    final String part = parts[i];
-                    if (!current.children.containsKey(part)) {
-                        current.children.put(part, new TrieNodeForFileSystem());
-                    }
-                    current = current.children.get(part);
-                }
-                current.isFile = isFile;
-                if (isFile) {
-                    current.name = parts[parts.length - 1];
-                }
-                return current;
-            }
-
-            TrieNodeForFileSystem search(String path) {
-                // Reference to the current node
-                TrieNodeForFileSystem current = this;
-                final String[] parts = path.split("/");
-                for (int i = 1; i < parts.length; i++) {
-                    final String part = parts[i];
-                    if (!current.children.containsKey(part)) {
-                        return null;
-                    }
-                    current = current.children.get(part);
-                }
-                return current;
             }
         }
     }
