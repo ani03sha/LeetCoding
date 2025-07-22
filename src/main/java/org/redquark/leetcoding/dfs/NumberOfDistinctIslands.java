@@ -34,7 +34,7 @@ public class NumberOfDistinctIslands {
         for (int[] direction : directions) {
             int newX = i + direction[0];
             int newY = j + direction[1];
-            // Check for validity of this cell
+            // Check for the validity of this cell
             if (newX < 0 || newX >= m || newY < 0 || newY >= n || grid[newX][newY] == 0) {
                 continue;
             }
@@ -42,4 +42,24 @@ public class NumberOfDistinctIslands {
         }
     }
 
+    public static void main(String[] args) {
+        final NumberOfDistinctIslands numberOfDistinctIslands = new NumberOfDistinctIslands();
+
+        int[][] grid1 = {
+                {1, 1, 0, 0, 0},
+                {1, 0, 0, 1, 1},
+                {0, 0, 0, 1, 0},
+                {0, 1, 1, 0, 0}
+        };
+        System.out.println(numberOfDistinctIslands.numDistinctIslands(grid1)); // Output: 2
+
+        int[][] grid2 = {
+                {1, 1, 0, 0, 0},
+                {1, 0, 0, 1, 1},
+                {0, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0}
+        };
+        System.out.println(numberOfDistinctIslands.numDistinctIslands(grid2)); // Output: 2
+
+    }
 }
