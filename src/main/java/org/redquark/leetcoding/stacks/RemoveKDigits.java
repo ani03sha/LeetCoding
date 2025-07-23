@@ -37,12 +37,46 @@ public class RemoveKDigits {
         return result.isEmpty() ? "0" : result;
     }
 
+    public String removeKDigitsOptimized(String num, int k) {
+        // Special case
+        if (k >= num.length()) {
+            return "0";
+        }
+        final char[] characters = num.toCharArray();
+        // Index to keep track of current character
+        int i = 0;
+        // Process all characters in the array
+        for (char c : characters) {
+            while (k > 0 && i > 0 && characters[i - 1] > c) {
+                i--;
+                k--;
+            }
+            characters[i] = c;
+            i++;
+        }
+        // Length
+        final int length = i - k;
+        int j = 0;
+        // Skip leading zeroes
+        while (j < length && characters[j] == '0') {
+            j++;
+        }
+        return j == length ? "0" : new String(characters, j, length - j);
+    }
+
     public static void main(String[] args) {
         final RemoveKDigits removeKDigits = new RemoveKDigits();
 
         System.out.println(removeKDigits.removeKDigits("1432219", 3)); // 1219
+        System.out.println(removeKDigits.removeKDigitsOptimized("1432219", 3)); // 1219
+
         System.out.println(removeKDigits.removeKDigits("10200", 1)); // 200
+        System.out.println(removeKDigits.removeKDigitsOptimized("10200", 1)); // 200
+
         System.out.println(removeKDigits.removeKDigits("10", 2)); // 0
+        System.out.println(removeKDigits.removeKDigitsOptimized("10", 2)); // 0
+
         System.out.println(removeKDigits.removeKDigits("1234567890", 9)); // 0
+        System.out.println(removeKDigits.removeKDigitsOptimized("1234567890", 9)); // 0
     }
 }
