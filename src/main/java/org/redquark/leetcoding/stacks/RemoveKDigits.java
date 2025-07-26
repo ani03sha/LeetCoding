@@ -38,30 +38,37 @@ public class RemoveKDigits {
     }
 
     public String removeKDigitsOptimized(String num, int k) {
-        // Special case
+        // Edge case
         if (k >= num.length()) {
             return "0";
         }
-        final char[] characters = num.toCharArray();
-        // Index to keep track of current character
-        int i = 0;
-        // Process all characters in the array
-        for (char c : characters) {
-            while (k > 0 && i > 0 && characters[i - 1] > c) {
-                i--;
+        // Convert the string into its character array which we will
+        // use as a monotonic stack as well.
+        final char[] stack = num.toCharArray();
+        // Variable to keep track of top of the stack
+        int top = 0;
+        // Process all characters in the string
+        for (char c : stack) {
+            // If the current character is smaller than the top of the stack,
+            // we should remove the top and keep the current character instead
+            // and we have k left to remove digits
+            while (top > 0 && k > 0 && c < stack[top - 1]) {
+                top--;
                 k--;
             }
-            characters[i] = c;
+            // Add current character to the stack;
+            stack[top] = c;
+            top++;
+        }
+        // If k is still not zero, then it makes sense for us to remove characters
+        // from the right (this usually happens when the string is sorted, e.g. "12345")
+        final int length = top - k;
+        // Skip leading zeroes, if any
+        int i = 0;
+        while (i < length && stack[i] == '0') {
             i++;
         }
-        // Length
-        final int length = i - k;
-        int j = 0;
-        // Skip leading zeroes
-        while (j < length && characters[j] == '0') {
-            j++;
-        }
-        return j == length ? "0" : new String(characters, j, length - j);
+        return i == length ? "0" : new String(stack, i, length - i);
     }
 
     public static void main(String[] args) {
