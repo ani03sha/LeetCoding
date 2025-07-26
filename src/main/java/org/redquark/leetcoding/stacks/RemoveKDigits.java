@@ -42,15 +42,15 @@ public class RemoveKDigits {
         if (k >= num.length()) {
             return "0";
         }
-        // Convert the string into its character array which we will
+        // Convert the string into its character array, which we will
         // use as a monotonic stack as well.
         final char[] stack = num.toCharArray();
-        // Variable to keep track of top of the stack
+        // Variable to keep track of the stack's top
         int top = 0;
         // Process all characters in the string
         for (char c : stack) {
             // If the current character is smaller than the top of the stack,
-            // we should remove the top and keep the current character instead
+            // we should remove the top and keep the current character instead,
             // and we have k left to remove digits
             while (top > 0 && k > 0 && c < stack[top - 1]) {
                 top--;
