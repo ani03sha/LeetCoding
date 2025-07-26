@@ -7,47 +7,41 @@ import java.util.Map;
 
 public class ShoppingOffers {
 
-    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
-        // Memoization map to store the minimum cost for given needs
-        final Map<List<Integer>, Integer> memo = new HashMap<>();
-        // Start the depth-first search to find the minimum cost
-        return dfs(price, special, needs, memo);
+    public int shoppingOffers(List<Integer> prices, List<List<Integer>> specials, List<Integer> needs) {
+        // Map to store a combination of specific needs fulfilled and corresponding cost
+        final Map<List<Integer>, Integer> lookup = new HashMap<>();
+        // Perform DFS on the arrays
+        return dfs(prices, specials, needs, lookup);
     }
 
-    private int dfs(List<Integer> price, List<List<Integer>> special, List<Integer> needs, Map<List<Integer>, Integer> memo) {
-        // Base case: if needs is empty, return 0
-        if (memo.containsKey(needs)) {
-            return memo.get(needs);
+    private int dfs(List<Integer> prices, List<List<Integer>> specials, List<Integer> needs, Map<List<Integer>, Integer> lookup) {
+        // If we have already calculated this combination
+        if (lookup.containsKey(needs)) {
+            return lookup.get(needs);
         }
-        int n = needs.size();
+        final int n = needs.size();
+        // Minimum cost to fulfill all needs
         int minCost = 0;
-        // Calculate the cost without any special offers
         for (int i = 0; i < n; i++) {
-            minCost += needs.get(i) * price.get(i);
+            minCost += needs.get(i) * prices.get(i);
         }
-        // Try each special offer
-        for (List<Integer> offer : special) {
-            // Check if the offer can be applied to the current needs
-            List<Integer> newNeeds = new ArrayList<>();
-            // Assume the offer is valid
-            boolean validOffer = true;
-            // Check if the offer can be applied
+        // Check all the special offers to find minCost
+        for (List<Integer> special : specials) {
+            // List to store new needs
+            final List<Integer> newNeeds = new ArrayList<>();
+            boolean isValidOffer = true;
             for (int i = 0; i < n; i++) {
-                // If the offer exceeds the needs, it is not valid
-                if (offer.get(i) > needs.get(i)) {
-                    validOffer = false;
+                if (special.get(i) > needs.get(i)) {
+                    isValidOffer = false;
                     break;
                 }
-                // Calculate the new needs after applying the offer
-                newNeeds.add(needs.get(i) - offer.get(i));
+                newNeeds.add(needs.get(i) - special.get(i));
             }
-            // If the offer is valid, calculate the cost with this offer
-            if (validOffer) {
-                minCost = Math.min(minCost, offer.get(n) + dfs(price, special, newNeeds, memo));
+            if (isValidOffer) {
+                minCost = Math.min(minCost, special.get(n) + dfs(prices, specials, newNeeds, lookup));
             }
         }
-        // Store the minimum cost for the current needs in the memoization map
-        memo.put(needs, minCost);
+        lookup.put(needs, minCost);
         return minCost;
     }
 
