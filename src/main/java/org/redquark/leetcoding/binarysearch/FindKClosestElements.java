@@ -6,25 +6,29 @@ import java.util.List;
 public class FindKClosestElements {
 
     public List<Integer> findClosestElements(int[] nums, int k, int x) {
-        // List to store the final output
+        // List to store k-closest elements
         final List<Integer> kClosestElements = new ArrayList<>();
-        // Special case
+        // Edge case
         if (nums == null || nums.length < k) {
             return kClosestElements;
         }
-        // Left and right pointers
+        // Define our search space - we are searching for the best
+        // starting index of our k-element window.
+        // This window can start from 0 to n - k
         int left = 0;
         int right = nums.length - k;
-        // Process the array
+        // Binary search for the best start index
         while (left < right) {
             final int middle = left + (right - left) / 2;
+            // Compare the distance from x to the start of the window (nums[middle])
+            // with the distance from x to the element just outside the window on the right (nums[middle + k])
             if (x - nums[middle] > nums[middle + k] - x) {
                 left = middle + 1;
             } else {
                 right = middle;
             }
         }
-        // Add k elements from left
+        // Build the result
         for (int i = 0; i < k; i++) {
             kClosestElements.add(nums[i + left]);
         }
