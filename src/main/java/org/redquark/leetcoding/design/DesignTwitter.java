@@ -12,46 +12,46 @@ import java.util.Set;
 public class DesignTwitter {
 
     static class Twitter {
-
-        // Tweets posted by a user
-        private final Map<Integer, List<Integer>> userTweets;
-        // Users followed by a user
-        private final Map<Integer, Set<Integer>> userFollowing;
-        // Mappings of tweets and their timestamps
+        private final Map<Integer, List<Integer>> tweetsByUser;
+        // Following mappings => [follower -> [followee]]
+        private final Map<Integer, Set<Integer>> followings;
+        // Tweets and their timestamps [tweetId -> timestamp]
         private final Map<Integer, Integer> tweets;
         // Global clock
         private int timestamp;
 
         public Twitter() {
-            this.userTweets = new HashMap<>();
-            this.userFollowing = new HashMap<>();
+            this.tweetsByUser = new HashMap<>();
+            this.followings = new HashMap<>();
             this.tweets = new HashMap<>();
             this.timestamp = 0;
         }
 
         public void postTweet(int userId, int tweetId) {
-            this.userTweets.computeIfAbsent(userId, _ -> new ArrayList<>()).add(tweetId);
-            this.tweets.put(tweetId, timestamp++);
+            this.tweetsByUser.computeIfAbsent(userId, _ -> new ArrayList<>()).add(tweetId);
+            this.tweets.put(tweetId, this.timestamp++);
         }
 
         public List<Integer> getNewsFeed(int userId) {
-            // Get all the users this user is following
-            final Set<Integer> following = userFollowing.getOrDefault(userId, new HashSet<>());
-            // Set to have list of all users for which we need to get tweets
-            final Set<Integer> users = new HashSet<>(following);
-            users.add(userId);
-            // Max heap to store recent 10 tweets
-            final Queue<Integer> top10Tweets = new PriorityQueue<>(10, (a, b) -> tweets.get(b) - tweets.get(a));
-            // Collect tweets from every user but restrict to 10 recent tweets
-            for (int user : users) {
-                final List<Integer> tweets = userTweets.get(user);
-                if (tweets != null && !tweets.isEmpty()) {
-                    for (int i = tweets.size() - 1; i >= 0; i--) {
-                        top10Tweets.offer(tweets.get(i));
+            // Get all users this user follows
+            final Set<Integer> userIds = new HashSet<>(this.followings.getOrDefault(userId, new HashSet<>()));
+            // News feed will also include own tweets
+            userIds.add(userId);
+            // Heap to store all the latest tweets (only 10) for news feed for every user
+            final Queue<Integer> top10Tweets = new PriorityQueue<>(10, (a, b) -> this.tweets.get(b) - this.tweets.get(a));
+            // Process all users
+            for (int user : userIds) {
+                // Get all tweets for this user id
+                final List<Integer> tweetIds = this.tweetsByUser.get(user);
+                if (tweetIds != null && !tweetIds.isEmpty()) {
+                    int j = 0;
+                    for (int i = tweetIds.size() - 1; i >= 0 && j < 10; i--) {
+                        top10Tweets.offer(tweetIds.get(i));
+                        j++;
                     }
                 }
             }
-            // Retrieve 10 most recent tweets
+            // Populate the news feed
             final List<Integer> newsFeed = new ArrayList<>();
             while (!top10Tweets.isEmpty() && newsFeed.size() < 10) {
                 newsFeed.add(top10Tweets.remove());
@@ -60,11 +60,11 @@ public class DesignTwitter {
         }
 
         public void follow(int followerId, int followeeId) {
-            this.userFollowing.computeIfAbsent(followerId, _ -> new HashSet<>()).add(followeeId);
+            this.followings.computeIfAbsent(followerId, _ -> new HashSet<>()).add(followeeId);
         }
 
         public void unfollow(int followerId, int followeeId) {
-            this.userFollowing.computeIfAbsent(followerId, _ -> new HashSet<>()).remove(followeeId);
+            this.followings.computeIfAbsent(followerId, _ -> new HashSet<>()).remove(followeeId);
         }
     }
 
