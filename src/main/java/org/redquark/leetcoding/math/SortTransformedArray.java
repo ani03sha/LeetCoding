@@ -11,13 +11,14 @@ public class SortTransformedArray {
         int right = n - 1;
         // Array to store the transformed result
         final int[] transformedArray = new int[n];
-        // Based on the value of a, we will have sort index direction
+        // Based on the value of 'a', we will have the sort index direction
         int sortIndex = a < 0 ? 0 : n - 1;
-        // Process the array
+        // Process the array from both ends and fill the transformed array
         while (left <= right) {
             // Calculate transformed values
             final int leftValue = applyQuadraticFunction(nums[left], a, b, c);
             final int rightValue = applyQuadraticFunction(nums[right], a, b, c);
+            // If 'a' is negative, we will sort in ascending order
             if (a < 0) {
                 if (leftValue <= rightValue) {
                     transformedArray[sortIndex] = leftValue;
@@ -27,7 +28,9 @@ public class SortTransformedArray {
                     right--;
                 }
                 sortIndex++;
-            } else {
+            }
+            // If 'a' is positive, we will sort in descending order
+            else {
                 if (leftValue > rightValue) {
                     transformedArray[sortIndex] = leftValue;
                     left++;
