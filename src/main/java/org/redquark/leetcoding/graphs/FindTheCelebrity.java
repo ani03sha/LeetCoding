@@ -1,5 +1,7 @@
 package org.redquark.leetcoding.graphs;
 
+import org.redquark.leetcoding.utils.Relation;
+
 public class FindTheCelebrity extends Relation {
 
     FindTheCelebrity(int[][] graph) {
@@ -23,7 +25,7 @@ public class FindTheCelebrity extends Relation {
             if (celebrity != i) {
                 // Two checks
                 // 1. If celebrity knows i => violation
-                // 2. If i does not know celebrity => violation
+                // 2. If 'i' does not know celebrity => violation
                 if (knows(celebrity, i) || !knows(i, celebrity)) {
                     return -1;
                 }
@@ -36,18 +38,5 @@ public class FindTheCelebrity extends Relation {
         int[][] graph = {{1, 1, 0}, {0, 1, 0}, {1, 1, 1}};
         FindTheCelebrity findTheCelebrity = new FindTheCelebrity(graph);
         System.out.println(findTheCelebrity.findCelebrity(3));
-    }
-}
-
-class Relation {
-
-    private final int[][] graph;
-
-    Relation(int[][] graph) {
-        this.graph = graph;
-    }
-
-    boolean knows(int a, int b) {
-        return graph[a][b] == 1;
     }
 }
