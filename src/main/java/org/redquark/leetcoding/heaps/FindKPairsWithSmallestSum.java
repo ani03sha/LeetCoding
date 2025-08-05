@@ -21,9 +21,9 @@ public class FindKPairsWithSmallestSum {
         final int n = nums2.length;
         // Set to store visited cells
         final Set<List<Integer>> visited = new HashSet<>();
-        // Min heap to store sum and corresponding pairs
+        // Min heap to store the sum and corresponding pairs
         final Queue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        // Add first pair to heap and visited cells
+        // Add the first pair to heap and visited cells
         visited.add(List.of(0, 0));
         minHeap.offer(new int[]{nums1[0] + nums2[0], 0, 0});
         // Process remaining pairs
