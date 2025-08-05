@@ -50,7 +50,7 @@ public class LetterCombinationsOfAPhoneNumber {
         if (digits == null || digits.isEmpty()) {
             return combinations;
         }
-        // Digits to characters mapping
+        // Digits to character mapping
         final String[] mappings = {
                 "",
                 "",
@@ -71,7 +71,7 @@ public class LetterCombinationsOfAPhoneNumber {
             final String alphabets = mappings[c - '0'];
             // List to store current combinations of characters
             final List<String> currentCombinations = new ArrayList<>();
-            // For every existing combination in the combinations list,
+            // For every existing combination in the 'combinations' list,
             // we make a pair with the current set of alphabets
             for (String combination : combinations) {
                 for (char alphabet : alphabets.toCharArray()) {
