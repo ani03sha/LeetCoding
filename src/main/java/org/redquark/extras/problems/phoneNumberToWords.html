@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Phone Number to Words — Problem</title>
+    <style>
+        /* ===== Light theme LeetCode-style single-file page (inline CSS) ===== */
+        :root{
+          --bg: #f7fafc; /* light gray */
+          --surface: #ffffff;
+          --accent: #4f46e5; /* indigo */
+          --muted: #6b7280; /* gray-500 */
+          --card-border: #e6eef8;
+          --text: #0f172a;
+          --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        html,body{height:100%;}
+        body{
+          margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          background: var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
+        }
+
+        .container{max-width:1000px; margin:36px auto; padding:20px;}
+
+        .card{background:var(--surface); border-radius:10px; padding:22px; box-shadow: 0 6px 18px rgba(15,23,42,0.06); border:1px solid var(--card-border)}
+
+        .title-row{display:flex; align-items:center; gap:12px; margin-bottom:14px}
+        .title{font-size:20px; font-weight:700}
+        .meta{display:flex; gap:8px; margin-left:auto; align-items:center}
+
+        .chip{background:transparent; color:var(--muted); padding:6px 10px; font-size:12px; border-radius:6px; border:1px solid rgba(99,102,241,0.06)}
+        .difficulty{background:linear-gradient(90deg,#10b981,#059669); color:white; padding:6px 10px; border-radius:6px; font-weight:600}
+
+        .statement{color:var(--text); line-height:1.6; margin-bottom:14px}
+        .section-title{font-weight:700; margin-top:12px; margin-bottom:8px}
+
+        .examples{display:flex; flex-direction:column; gap:10px}
+        .example{background:#fbfdff; border-radius:8px; padding:12px; font-family:var(--mono); color:var(--text); border:1px solid #eef2ff}
+
+        .hints{font-size:13px; color:var(--muted); margin-top:10px}
+
+        .signature{background:#f8fafc; border-radius:6px; padding:12px; font-family:var(--mono); border:1px solid #eef2ff}
+
+        .footer{margin-top:14px; color:var(--muted); font-size:13px}
+
+        @media (max-width:760px){
+          .container{padding:12px}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="title-row">
+            <div>
+                <div class="title">Phone Number → Words</div>
+                <div style="color:var(--muted); font-size:13px; margin-top:6px">Map digits to English words using
+                    classic phone keypad mapping.
+                </div>
+            </div>
+            <div class="meta">
+                <div class="chip">String</div>
+                <div class="chip">Hash Table</div>
+                <div class="difficulty">Easy</div>
+            </div>
+        </div>
+
+        <div class="statement">
+            Given the standard mapping from English letters to digits on a phone keypad (2 → abc, 3 → def, 4 → ghi, 5 →
+            jkl, 6 → mno, 7 → pqrs, 8 → tuv, 9 → wxyz),
+            return all words from a provided dictionary (KNOWN_WORDS) that exactly map to a given n-digit phone number.
+            Words must match the phone number length exactly and mapping is case-insensitive.
+        </div>
+
+        <div class="section-title">Function signature (Java)</div>
+        <div class="signature">
+            public static List&lt;String&gt; wordsFromNumber(String phoneNumber, List&lt;String&gt; knownWords)
+        </div>
+
+        <div class="section-title">Examples</div>
+        <div class="examples">
+            <div class="example">Input: KNOWN_WORDS = ['careers','linkedin','hiring','interview','linkedgo']<br>phoneNumber
+                = <strong>2273377</strong><br>Output: <strong>['careers']</strong></div>
+            <div class="example">Input: KNOWN_WORDS = ['careers','linkedin','hiring','interview','linkedgo']<br>phoneNumber
+                = <strong>54653346</strong><br>Output: <strong>['linkedin','linkedgo']</strong></div>
+        </div>
+
+        <div class="section-title">Constraints</div>
+        <div class="hints">n = phoneNumber.length() ≤ 10⁵ across tests; words contain only English letters a–z or A–Z.
+            If you have many queries, precompute a mapping from digit-string → list of words for O(1) queries after
+            preprocessing.
+        </div>
+
+        <div class="section-title">Notes</div>
+        <div class="hints">Digits 0 and 1 have no letter mapping and therefore will not match any purely alphabetic
+            word. The solution is case-insensitive.
+        </div>
+
+        <div class="footer">You asked to remove code preview, demo, and run controls — this page is the simplified
+            light-theme problem statement suitable for printing or posting as a LeetCode-style prompt.
+        </div>
+    </div>
+</div>
+</body>
+</html>
