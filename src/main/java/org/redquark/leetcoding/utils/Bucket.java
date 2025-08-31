@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class Bucket {
 
-    public int frequency;
-    public Set<String> keys;
+    public final int frequency;
+    public final Set<String> keys;
     public Bucket next;
     public Bucket previous;
 
