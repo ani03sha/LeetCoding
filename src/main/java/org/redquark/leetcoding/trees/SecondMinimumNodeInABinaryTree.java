@@ -12,16 +12,20 @@ public class SecondMinimumNodeInABinaryTree {
         if (root == null) {
             return -1;
         }
-        // Queue to perform BFS
+        // Queue to perform the BFS on the tree
         final Queue<TreeNode> nodes = new LinkedList<>();
+        // Add root to the queue
         nodes.offer(root);
-        // Second minimum (We are using wrapper class so that I can assign null)
-        Integer secondMinimum = null;
-        // Process all the levels in the tree
+        // Variable to keep track of second minimum value
+        int secondMinimum = -1;
+        // Perform BFS
         while (!nodes.isEmpty()) {
             final TreeNode node = nodes.remove();
+            // Since node is always the minimum, if current node's value
+            // is not equal to the root's value, it can be a candidate of
+            // the second minimum value
             if (node.val != root.val) {
-                if (secondMinimum == null) {
+                if (secondMinimum == -1) {
                     secondMinimum = node.val;
                 } else {
                     secondMinimum = Math.min(secondMinimum, node.val);
@@ -34,7 +38,7 @@ public class SecondMinimumNodeInABinaryTree {
                 nodes.offer(node.right);
             }
         }
-        return secondMinimum == null ? -1 : secondMinimum;
+        return secondMinimum;
     }
 
     public static void main(String[] args) {

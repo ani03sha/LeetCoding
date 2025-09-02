@@ -29,7 +29,7 @@ public class PhoneNumberToWords {
         }
         // Check for all known words
         for (String word : knownWords) {
-            // If the length of the word is not equsal to the length of phone number
+            // If the length of the word is not equal to the length of phone number
             // skip this word
             if (word.length() != phoneNumber.length()) {
                 continue;
