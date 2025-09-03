@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Maximize Booth Experience Factor</title>
+    <style>
+        :root{
+          --bg:#f7fafc; --surface:#ffffff; --muted:#6b7280; --text:#0f172a;
+          --border:#e5e7eb; --accent:#4f46e5; --chip:#eef2ff; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        }
+        *{box-sizing:border-box}
+        body{margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+             background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased}
+        .container{max-width:960px; margin:40px auto; padding:0 16px}
+        .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:0 6px 24px rgba(15,23,42,0.06)}
+        .header{display:flex; gap:12px; align-items:flex-start; justify-content:space-between; padding:20px 20px 8px 20px}
+        .title{font-size:20px; font-weight:700}
+        .meta{display:flex; gap:8px}
+        .chip{background:var(--chip); border:1px solid var(--border); color:#374151; font-size:12px; padding:6px 10px; border-radius:999px}
+        .difficulty{background:#10b981; color:white; border:none}
+        .body{padding:4px 20px 20px 20px}
+        .section-title{font-weight:700; margin:16px 0 10px}
+        .text{line-height:1.65}
+        .block{background:#fbfdff; border:1px solid var(--border); border-radius:8px; padding:12px; margin:10px 0}
+        code, pre{font-family:var(--mono); font-size:13px}
+        .example{background:#f9fafb; border:1px solid var(--border); border-radius:8px; padding:12px; margin:10px 0}
+        .note{font-size:13px; color:var(--muted)}
+        .signature{background:#f8fafc; border:1px dashed var(--border); border-radius:8px; padding:12px}
+        .hr{height:1px; background:var(--border); margin:16px 0}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="header">
+            <div>
+                <div class="title">Maximize Booth Experience Factor</div>
+                <div class="note" style="margin-top:6px">String • Prefix Sum • Range Query</div>
+            </div>
+            <div class="meta">
+                <div class="chip">Array</div>
+                <div class="chip">Prefix Sum</div>
+                <div class="chip difficulty">Easy</div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="section-title">Problem</div>
+            <div class="text">
+                You are given <strong>m</strong> booths arranged in a line. Each booth displays either a robot
+                (<code>0</code>) or a drone (<code>1</code>), represented by a binary string <code>booths</code> of
+                length <code>m</code>.
+                You are also given <strong>n</strong> queries. The <em>k</em>-th query specifies a 1-based inclusive
+                range <code>[i, j]</code>, indicating that the <em>k</em>-th group visits exactly the booths from
+                position <code>i</code> to <code>j</code>.
+                <br/><br/>
+                For a range <code>[i, j]</code>, define:
+                <div class="block">
+                    <code>ones = number of '1' in booths[i..j]</code><br/>
+                    <code>zeros = (j - i + 1) - ones</code><br/>
+                    <code>experience(i, j) = ones × zeros</code>
+                </div>
+                For each query, compute <code>experience(i, j)</code>.
+            </div>
+
+            <div class="section-title">Function Signature</div>
+            <div class="signature">
+                <!-- [Inference]: Typical LeetCode-style signature -->
+                <code>public long[] experienceFactors(String booths, int[][] queries)</code>
+            </div>
+
+            <div class="section-title">Input/Output Format</div>
+            <div class="text">
+                <strong>Input</strong>:
+                <ul>
+                    <li><code>booths</code>: binary string of length <code>m</code> consisting only of characters <code>'0'</code>
+                        and <code>'1'</code>.
+                    </li>
+                    <li><code>queries</code>: array of length <code>n</code>, where each element is <code>[i, j]</code>
+                        (1-based inclusive).
+                    </li>
+                </ul>
+                <strong>Output</strong>:
+                <ul>
+                    <li>Array <code>ans</code> of length <code>n</code>, where <code>ans[k] = experience(i_k,
+                        j_k)</code>.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-title">Examples</div>
+
+            <div class="example">
+                <strong>Example 1</strong><br/><br/>
+                <div><strong>Input:</strong></div>
+                <pre><code>booths = "1100101"
+queries = [[2,6],[1,7],[3,5]]</code></pre>
+                <div><strong>Output:</strong></div>
+                <pre><code>[6, 12, 2]</code></pre>
+                <div><strong>Explanation:</strong></div>
+                <div class="note">
+                    For [2,6]: substring "10010" has ones=2, zeros=3 → 2×3=6.<br/>
+                    For [1,7]: substring "1100101" has ones=4, zeros=3 → 4×3=12.<br/>
+                    For [3,5]: substring "001" has ones=1, zeros=2 → 1×2=2.
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>Example 2</strong><br/><br/>
+                <div><strong>Input:</strong></div>
+                <pre><code>booths = "00000"
+queries = [[1,5],[2,4]]</code></pre>
+                <div><strong>Output:</strong></div>
+                <pre><code>[0, 0]</code></pre>
+                <div class="note">All characters are '0', so ones=0 in any range and the product is always 0.</div>
+            </div>
+
+            <div class="example">
+                <strong>Example 3</strong><br/><br/>
+                <div><strong>Input:</strong></div>
+                <pre><code>booths = "1"
+queries = [[1,1]]</code></pre>
+                <div><strong>Output:</strong></div>
+                <pre><code>[0]</code></pre>
+                <div class="note">Single booth with '1': ones=1, zeros=0 → product 0.</div>
+            </div>
+
+            <div class="section-title">Constraints</div>
+            <div class="text">
+                <!-- Labeling with [Inference] per your reality filter since exact limits weren't specified -->
+                <div class="note">[Inference] Typical limits for an efficient prefix-sum solution:</div>
+                <ul>
+                    <li>[Inference] <code>1 ≤ m ≤ 2×10<sup>5</sup></code></li>
+                    <li>[Inference] <code>1 ≤ n ≤ 2×10<sup>5</sup></code></li>
+                    <li>[Inference] Indices in <code>queries</code> are 1-based and satisfy <code>1 ≤ i ≤ j ≤ m</code>.
+                    </li>
+                    <li>Time goal: O(m + n) using prefix sums of <code>'1'</code> counts.</li>
+                </ul>
+            </div>
+
+            <div class="section-title">Approach</div>
+            <div class="text">
+                Build a prefix array <code>pref</code> where <code>pref[k]</code> is the number of <code>'1'</code> in
+                <code>booths[0..k-1]</code>.
+                For each query <code>[i, j]</code>:
+                <div class="block">
+                    <code>ones = pref[j] - pref[i-1]</code><br/>
+                    <code>len = j - i + 1</code><br/>
+                    <code>zeros = len - ones</code><br/>
+                    <code>ans = ones × zeros</code>
+                </div>
+                This answers each query in O(1) after O(m) preprocessing.
+            </div>
+
+            <div class="hr"></div>
+            <div class="note">
+                Clarification: This problem interprets each group’s range <code>[i, j]</code> as fixed. You do
+                <em>not</em> choose a subrange inside <code>[i, j]</code>; you simply compute the product for that exact
+                range.
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
