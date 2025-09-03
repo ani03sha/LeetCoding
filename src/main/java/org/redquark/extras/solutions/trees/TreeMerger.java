@@ -4,36 +4,36 @@ import org.redquark.extras.solutions.utils.TreeNodeWithKey;
 
 public class TreeMerger {
 
-    public TreeNodeWithKey mergeTrees(TreeNodeWithKey tree1, TreeNodeWithKey tree2) {
+    public TreeNodeWithKey mergeTrees(TreeNodeWithKey root1, TreeNodeWithKey root2) {
         // Edge cases
-        if (tree1 == null) {
-            return tree2;
+        if (root1 == null) {
+            return root2;
         }
-        if (tree2 == null) {
-            return tree1;
+        if (root2 == null) {
+            return root1;
         }
         // Sum the values of the current nodes
-        tree1.value += tree2.value;
-        // Process all children from tree2
-        for (TreeNodeWithKey child2 : tree2.children) {
-            final TreeNodeWithKey existingChild = findChild(tree1, child2.key);
+        root1.value += root2.value;
+        // Process all children from root2
+        for (TreeNodeWithKey child2 : root2.children) {
+            final TreeNodeWithKey existingChild = findChild(root1, child2.key);
             if (existingChild != null) {
-                // Child exists in tree1, merge it
+                // Child exists in root1, merge it
                 mergeTrees(existingChild, child2);
             } else {
-                // Child does not exist in tree1, add it
+                // Child does not exist in root1, add it
                 final TreeNodeWithKey newChild = cloneSubtree(child2);
-                tree1.addChild(newChild);
+                root1.addChild(newChild);
             }
         }
-        return tree1;
+        return root1;
     }
 
     private TreeNodeWithKey cloneSubtree(TreeNodeWithKey node) {
         if (node == null) {
             return null;
         }
-        final  TreeNodeWithKey clone = new TreeNodeWithKey(node.key, node.value);
+        final TreeNodeWithKey clone = new TreeNodeWithKey(node.key, node.value);
         for (TreeNodeWithKey child : node.children) {
             clone.children.add(cloneSubtree(child));
         }
