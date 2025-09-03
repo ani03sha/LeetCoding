@@ -11,12 +11,13 @@ public class ValidNumber {
         boolean hasNumberSeen = false;
         // Process the string
         for (int i = 0; i < s.length(); i++) {
+            final char c = s.charAt(i);
             // If the current character is a valid digit
-            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+            if (c >= '0' && c <= '9') {
                 hasNumberSeen = true;
             }
             // If the current character is a dot
-            else if (s.charAt(i) == '.') {
+            else if (c == '.') {
                 // If we have already seen dot or e
                 if (hasESeen || hasDotSeen) {
                     return false;
@@ -24,7 +25,7 @@ public class ValidNumber {
                 hasDotSeen = true;
             }
             // If the current character is e/E
-            else if (s.charAt(i) == 'e' || s.charAt(i) == 'E') {
+            else if (c == 'e' || c == 'E') {
                 // If e is before any number of we have seen it before
                 if (!hasNumberSeen || hasESeen) {
                     return false;
@@ -33,7 +34,7 @@ public class ValidNumber {
                 hasESeen = true;
             }
             // If the current character is '+' or '-'
-            else if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+            else if (c == '+' || c == '-') {
                 if (i != 0 && (s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E')) {
                     return false;
                 }
