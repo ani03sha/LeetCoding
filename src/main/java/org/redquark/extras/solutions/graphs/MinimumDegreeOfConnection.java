@@ -22,15 +22,15 @@ public class MinimumDegreeOfConnection {
         if (start == end) {
             return 0;
         }
-        // Initialize a queue for BFS
+        // Initialize start and end queues for bidirectional BFS
         Queue<Integer> startQueue = new LinkedList<>();
         Queue<Integer> endQueue = new LinkedList<>();
         // Initialize a map to track visited nodes from both ends
         Set<Integer> startVisited = new HashSet<>();
         Set<Integer> endVisited = new HashSet<>();
         // Add the start and end nodes to their respective queues
-        startQueue.add(start);
-        endQueue.add(end);
+        startQueue.offer(start);
+        endQueue.offer(end);
         // Mark the start and end nodes as visited
         startVisited.add(start);
         endVisited.add(end);
@@ -61,7 +61,7 @@ public class MinimumDegreeOfConnection {
                     // If the neighbor has not been visited from this end, add it to the queue and mark as visited
                     if (!startVisited.contains(neighbor)) {
                         startVisited.add(neighbor);
-                        startQueue.add(neighbor);
+                        startQueue.offer(neighbor);
                     }
                 }
             }
@@ -69,7 +69,7 @@ public class MinimumDegreeOfConnection {
         return -1; // If no connection is found, return -1
     }
 
-    public List<String> findPath(int[][] connections, int start, int end) {
+    public List<Integer> findPath(int[][] connections, int start, int end) {
         // Create a graph represented as an adjacency list
         final Map<Integer, List<Integer>> graph = buildGraph(connections);
         // Edge case: if start or end is not in the graph, return empty list
@@ -106,13 +106,13 @@ public class MinimumDegreeOfConnection {
             return List.of();
         }
         // Construct the path from end to start using the 'parents' map
-        final List<String> path = new ArrayList<>();
+        final List<Integer> path = new ArrayList<>();
         int currentNode = end;
         while (currentNode != start) {
-            path.addFirst(String.valueOf(currentNode)); // Add to the front of the list
+            path.addFirst(currentNode); // Add to the front of the list
             currentNode = parents.get(currentNode);
         }
-        path.addFirst(String.valueOf(start)); // Add the start node at the beginning
+        path.addFirst(start); // Add the start node at the beginning
         return path;
     }
 
@@ -146,7 +146,7 @@ public class MinimumDegreeOfConnection {
         int degree = minimumDegreeOfConnection.findMinimumDegreeOfConnection(connections, start, end);
         System.out.println("Minimum Degree of Connection from " + start + " to " + end + ": " + degree);
 
-        final List<String> path = minimumDegreeOfConnection.findPath(connections, start, end);
+        final List<Integer> path = minimumDegreeOfConnection.findPath(connections, start, end);
         System.out.println("Path from " + start + " to " + end + ": " + path);
 
         // Another complex example
@@ -167,7 +167,7 @@ public class MinimumDegreeOfConnection {
         int complexEnd = 12;
         int complexDegree = minimumDegreeOfConnection.findMinimumDegreeOfConnection(complexConnections, complexStart, complexEnd);
         System.out.println("Minimum Degree of Connection from " + complexStart + " to " + complexEnd + ": " + complexDegree);
-        final List<String> complexPath = minimumDegreeOfConnection.findPath(complexConnections, complexStart, complexEnd);
+        final List<Integer> complexPath = minimumDegreeOfConnection.findPath(complexConnections, complexStart, complexEnd);
         System.out.println("Path from " + complexStart + " to " + complexEnd + ": " + complexPath);
     }
 }
