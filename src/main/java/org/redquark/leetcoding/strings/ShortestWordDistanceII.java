@@ -9,19 +9,18 @@ public class ShortestWordDistanceII {
 
     static class WordDistance {
 
-        // Map to store the string and the indices where this key occurs
+        // Map to store the word and the indices where this word occurs
         private final Map<String, List<Integer>> mappings;
 
         public WordDistance(String[] wordsDict) {
             this.mappings = new HashMap<>();
             for (int i = 0; i < wordsDict.length; i++) {
-                this.mappings.putIfAbsent(wordsDict[i], new ArrayList<>());
-                this.mappings.get(wordsDict[i]).add(i);
+                this.mappings.computeIfAbsent(wordsDict[i], _ -> new ArrayList<>()).add(i);
             }
         }
 
         public int shortest(String word1, String word2) {
-            // Get indices of both words
+            // Get list of indices of both words
             final List<Integer> word1Indices = this.mappings.get(word1);
             final List<Integer> word2Indices = this.mappings.get(word2);
             // Find minimum difference between the elements of two lists
