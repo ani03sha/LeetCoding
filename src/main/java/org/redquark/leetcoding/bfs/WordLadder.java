@@ -101,7 +101,7 @@ public class WordLadder {
                     if (endSet.contains(tempWord)) {
                         return level + 1;
                     }
-                    // If tempWord doesn't exist in the words
+                    // If tempWord exists in the words
                     if (words.contains(tempWord)) {
                         nextLevel.add(tempWord);
                         words.remove(tempWord);
