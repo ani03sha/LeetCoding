@@ -39,7 +39,7 @@ public class PhoneNumberToWords {
             // Check for characters in the word
             for (int i = 0; i < word.length(); i++) {
                 // Get the digit for the character
-                char digit = LETTER_TO_DIGITS[word.charAt(i) - 'a'];
+                final char digit = LETTER_TO_DIGITS[word.charAt(i) - 'a'];
                 // If the digit does not match with the phone number digit at the same index
                 if (digit != phoneNumber.charAt(i)) {
                     isValid = false;
