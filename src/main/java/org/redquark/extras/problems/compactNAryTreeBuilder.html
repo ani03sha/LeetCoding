@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Extras 22. Compact N-ary Tree Builder</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f9f9f9;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 20px;
+          background: #fff;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+          font-size: 26px;
+          margin-bottom: 10px;
+        }
+        h2 {
+          font-size: 20px;
+          margin-top: 25px;
+        }
+        p {
+          line-height: 1.6;
+        }
+        <!--code {
+          background: #000;
+          padding: 2px 5px;
+          border-radius: 4px;
+          font-family: Consolas, monospace;
+        }-->
+        <!--pre {
+          background: #272822;
+          color: #f8f8f2;
+          padding: 12px;
+          border-radius: 6px;
+          overflow-x: auto;
+        }-->
+        .note {
+          background: #f0f7ff;
+          border-left: 4px solid #4a90e2;
+          padding: 10px 14px;
+          margin: 15px 0;
+          border-radius: 4px;
+        }
+        .tag {
+          display: inline-block;
+          padding: 4px 10px;
+          margin: 2px;
+          font-size: 12px;
+          background: #eef2f7;
+          border: 1px solid #ccc;
+          border-radius: 999px;
+        }
+        .example {
+          background: #fafafa;
+          border: 1px dashed #ccc;
+          padding: 12px;
+          border-radius: 6px;
+          margin: 15px 0;
+        }
+        ul {
+          margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <span class="tag">Tree</span>
+        <span class="tag">N-ary</span>
+        <span class="tag">BFS</span>
+        <span class="tag">Preorder</span>
+    </div>
+    <h1>Extras 22. Compact N‑ary Tree Builder</h1>
+    <p><strong>Description:</strong> You are given the root of a tree where each node may have any number of children.
+        Implement a function <code>compact(root, N)</code> that rebuilds the tree so that each node has either exactly
+        <code>N</code> children or is a leaf. At most one node may have between <code>1</code> and <code>N-1</code>
+        children (the exception node).</p>
+
+    <div class="note">
+        Ancestor relationships must not be inverted: if node <code>A</code> was an ancestor of node <code>B</code> in
+        the original tree, then in the resulting tree <code>B</code> must not become an ancestor of <code>A</code>.
+        Nodes may be rearranged otherwise.
+    </div>
+
+    <h2>Approach</h2>
+    <ol>
+        <li>Flatten the tree in preorder (ancestor before descendants) into a list of nodes.</li>
+        <li>Rebuild the tree level-by-level, giving each node up to <code>N</code> children, until all nodes are
+            assigned.
+        </li>
+    </ol>
+
+    <h2>Example</h2>
+    <div class="example">
+<pre>
+Input: Tree rooted at A, N = 2
+Output: A compacted tree where every node has 2 or 0 children, with at most one having 1 child.
+</pre>
+    </div>
+
+    <h2>Function Signature</h2>
+    <pre><code>Node&lt;T&gt; compact(Node&lt;T&gt; root, int N)</code></pre>
+
+    <h2>Constraints</h2>
+    <ul>
+        <li>1 ≤ N</li>
+        <li>Tree size up to environment limits.</li>
+        <li>Node values can be of any type.</li>
+    </ul>
+</div>
+</body>
+</html>
