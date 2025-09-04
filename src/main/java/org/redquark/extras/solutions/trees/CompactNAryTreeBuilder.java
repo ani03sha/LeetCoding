@@ -18,57 +18,41 @@ public class CompactNAryTreeBuilder {
             }
             // 1. Flatten the tree into a list using BFS
             final List<Node<T>> flatList = new ArrayList<>();
-            final Queue<Node<T>> nodes = new LinkedList<>();
+            Queue<Node<T>> nodes = new LinkedList<>();
             nodes.offer(root);
             // Perform BFS
             while (!nodes.isEmpty()) {
                 final Node<T> node = nodes.remove();
-                flatList.add(new Node<>(node.getData(), new ArrayList<>()));
-                for (Node<T> child : node.getChildren()) {
+                flatList.add(new Node<>(node.data(), new ArrayList<>()));
+                for (Node<T> child : node.children()) {
                     nodes.offer(child);
                 }
             }
             // 2. Rebuild the tree with N-ary compacting
-            final Queue<Node<T>> parents = new LinkedList<>();
-            final Node<T> newNode = flatList.getFirst();
-            parents.offer(newNode);
+            nodes = new LinkedList<>();
+            final Node<T> newRoot = flatList.getFirst();
+            nodes.offer(newRoot);
             // Start from the second node
             int index = 1;
             while (index < flatList.size()) {
-                final Node<T> parent = parents.remove();
-                final List<Node<T>> children = parent.getChildren();
+                final Node<T> node = nodes.remove();
+                final List<Node<T>> children = node.children();
+                // Add up to N children
                 for (int i = 0; i < N && index < flatList.size(); i++) {
                     final Node<T> child = flatList.get(index++);
                     children.add(child);
-                    parents.offer(child);
+                    nodes.offer(child);
                 }
             }
-            return newNode;
+            return newRoot;
         }
     }
-
 
     interface CompactTreeBuilder<T> {
         Node<T> compact(Node<T> root, int N);
     }
 
-    static class Node<T> {
-        private final T data;
-        private final List<Node<T>> children;
-
-        Node(T data, List<Node<T>> children) {
-            this.data = data;
-            this.children = children;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public List<Node<T>> getChildren() {
-            return children;
-        }
-    }
+    record Node<T>(T data, List<Node<T>> children) {}
 
     public static void main(String[] args) {
         Node<String> root = new Node<>("A", Arrays.asList(
@@ -91,8 +75,8 @@ public class CompactNAryTreeBuilder {
     }
 
     static <T> void printTree(Node<T> node, int depth) {
-        System.out.println("  ".repeat(depth) + node.getData());
-        for (Node<T> child : node.getChildren()) {
+        System.out.println("  ".repeat(depth) + node.data());
+        for (Node<T> child : node.children()) {
             printTree(child, depth + 1);
         }
     }
